@@ -1,0 +1,43 @@
+.navTab {
+  width: 100%;
+  display: flex;
+  padding-top: 80px;
+  padding-bottom: 30px;
+}
+
+.navTab__button {
+  width: 40.31%;
+  height: 36px;
+  font-weight: 500;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 133.33%;
+  border: 1px solid #FFFFFF;
+  border-radius: 3px;
+  background-color: transparent;
+  padding: 0;
+  color: #FFFFFF;
+  margin: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .navTab {
+    padding-top: 83px;
+    padding-bottom: 80px;
+  }
+
+  .navTab__button {
+    width: 16.80%;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .navTab {
+    padding-bottom: 75px;
+  }
+
+  .navTab__button {
+    margin: 0 0 0 70px;
+    width: 10.2%;
+  }
+}

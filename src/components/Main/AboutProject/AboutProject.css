@@ -1,0 +1,144 @@
+.aboutProject {
+  width: 88.75%;
+  color: #FFFFFF;
+  margin: auto;
+  padding-top: 70px;
+}
+
+.aboutProject__title {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 121%;
+  letter-spacing: -0.75px;
+  padding-bottom: 20px;
+  margin: 0;
+}
+
+.aboutProject__separator {
+  height: 1px;
+  background-color: #DADADA;
+  margin: 7px 0 63px 0;
+}
+
+.aboutProject__paragraph {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 11px;
+  line-height: 145.45%;
+  margin: 0;
+  padding-bottom: 50px;
+}
+
+.aboutProject__table {
+  padding: 0;
+  margin: 0;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 11px;
+  line-height: 121%;
+  display: flex;
+  justify-content: space-between;
+  list-style: none;
+}
+
+.aboutProject__table-cell {
+  width: 35.21%;
+  text-align: center;
+  margin: 0;
+}
+
+.aboutProject__table-cell:nth-child(2) {
+  width: 64.79%;
+}
+
+.aboutProject__table-cell h3 {
+  background-color: #303030;
+  min-height: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.aboutProject__table-cell h3:hover {
+  background-color: #3DDC84;
+}
+
+@media screen and (min-width: 768px) {
+  .aboutProject {
+    width: 87%;
+    padding-top: 90px;
+  }
+
+  .aboutProject__description {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  
+  .aboutProject__title_first {
+    font-size: 22px;
+  }
+
+  .aboutProject__title_three {
+    font-size: 20px;
+    padding-bottom: 27px;
+  }
+
+  .aboutProject__title_two {
+    font-size: 20px;
+    padding-bottom: 27px;
+  }
+
+  .aboutProject__paragraph {
+    padding-bottom: 80px;
+    font-size: 12px;
+    line-height: 150%;
+  }
+
+  .aboutProject__container {
+    width: 47.75%;
+  }
+
+  .aboutProject__table {
+    font-size: 14px;
+  }
+
+  .aboutProject__table-cell {
+    width: 20.95%;
+  }
+  
+  .aboutProject__table-cell:nth-child(2) {
+    width: 79%;
+  }
+
+  .aboutProject__separator {
+    margin: 0 0 68px 0;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .aboutProject {
+    width: 89%;
+    padding-top: 109px;
+  }
+
+  .aboutProject__container {
+    width: 48.28%;
+  }
+
+  .aboutProject__paragraph {
+    font-size: 14px;
+    line-height: 142.86%;
+    padding-bottom: 105px;
+  }
+
+  .aboutProject__table-cell {
+    width: 20%;
+  }
+  
+  .aboutProject__table-cell:nth-child(2) {
+    width: 80%;
+  }
+}
