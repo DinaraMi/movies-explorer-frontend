@@ -1,31 +1,30 @@
 import './Portfolio.css'
-import arrow from '../../../images/arrow.png';
+import { Link } from 'react-router-dom';
 
 function Portfolio() {
   return (
     <section className='portfolio'>
-      <h3 className='portfolio__subtitle'>Github</h3>
+      <h2 className='portfolio__subtitle'>Github</h2>
       <p className='portfolio__paragraph'>Портфолио</p>
-      <div className="portfolio-item">
-        <a className="portfolio__link" href='https://github.com/DinaraMi/how-to-learn.git' target="_blank" rel="noopener noreferrer">
-          <h2 className='portfolio__title'>Статичный сайт</h2>
-        </a>
-        <img className='portfolio__icon' src={arrow} alt='стрелка' />
-      </div>
-      <div className='portfolio__separator'></div>
-      <div className="portfolio-item">
-        <a className="portfolio__link" href='https://github.com/DinaraMi/russian-travel.git' target="_blank" rel="noopener noreferrer">
-          <h2 className='portfolio__title'>Адаптивный сайт</h2>
-        </a>
-        <img className='portfolio__icon' src={arrow} alt='стрелка' />
-      </div>
-      <div className='portfolio__separator'></div>
-      <div className="portfolio-item">
-        <a className="portfolio__link" href='https://github.com/DinaraMi/express-mesto-gha.git' target="_blank" rel="noopener noreferrer">
-          <h2 className='portfolio__title'>Одностраничное приложение</h2>
-        </a>
-        <img className='portfolio__icon' src={arrow} alt='стрелка' />
-      </div>
+      <ul className="portfolio-list">
+        <li className="portfolio-item">
+          <Link className="portfolio__link" to='https://github.com/DinaraMi/how-to-learn.git' target="_blank" rel="noopener noreferrer">
+            <h3 className='portfolio__title'>Статичный сайт</h3>
+          </Link>
+        </li>
+        <div className='portfolio__separator'></div>
+        <li className="portfolio-item">
+          <Link className="portfolio__link" to='https://github.com/DinaraMi/russian-travel.git' target="_blank" rel="noopener noreferrer">
+            <h3 className='portfolio__title'>Адаптивный сайт</h3>
+          </Link>
+        </li>
+        <div className='portfolio__separator'></div>
+        <li className="portfolio-item">
+          <Link className="portfolio__link" to='https://github.com/DinaraMi/express-mesto-gha.git' target="_blank" rel="noopener noreferrer">
+            <h3 className='portfolio__title'>Одностраничное приложение</h3>
+          </Link>
+        </li>
+      </ul>
     </section>
   )
 }

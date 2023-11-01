@@ -24,6 +24,11 @@
   line-height: 121%;
   text-align: center;
   margin: 50px auto 143px;
+  cursor: pointer;
+}
+
+.movies-card-list__button:hover {
+  opacity: 0.8;
 }
 
 @media screen and (min-width: 768px) {

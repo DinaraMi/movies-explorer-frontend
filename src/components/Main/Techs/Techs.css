@@ -49,21 +49,19 @@
   margin-bottom: 45px;
 }
 
-.techs__table {
+.techs__list {
   border-spacing: 10px;
   border-collapse: separate;
-}
-
-tr {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
   width: 68%;
   margin: auto;
   justify-content: space-between;
+  padding: 0;
 }
 
-td {
+.techs__item {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -106,13 +104,9 @@ td {
     margin-bottom: 83px;
   }
 
-  .techs__table {
-    white-space: nowrap;
-    width: 100%;
-  }
-
-  tr {
-    width: 100%;
+  .techs__item {
+    width: 84px;
+    height: 57px;
   }
 }
 
@@ -140,13 +134,7 @@ td {
     margin-bottom: 93px;
   }
 
-  .techs__table {
-    white-space: nowrap;
-    width: 62.5%;
-
-  }
-
-  td {
+  .techs__item {
     width: 90px;
     height: 60px;
   }

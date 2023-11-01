@@ -31,8 +31,8 @@ function MoviesCardList({ handleSaveMovie }) {
   return (
     <section className="movies-card-list">
       <div className='movies-card-list__content'>
-        {moviesToDisplay.map((movie, id) => (
-          <MoviesCard key={id} movie={movie} handleSaveMovie={handleSaveMovie} />
+        {moviesToDisplay.map((movie) => (
+          <MoviesCard key={movie.id} movie={movie} handleSaveMovie={handleSaveMovie} />
         ))}
       </div>
       {visibleMovies < movies.length && (

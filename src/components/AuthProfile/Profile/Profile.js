@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Profile.css';
-import Input from '../../Input/Input';
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
 
-function Profile({ onUpdateUser }) {
+function Profile({ onUpdateUser, onLogout }) {
   const currentUser = useContext(CurrentUserContext);
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const [isEditing, setIsEditing] = useState(false);
+  const [error, setError] = useState('');
 
   const handleNameChange = (e) => {
     setName(e.target.value);
@@ -27,21 +28,35 @@ function Profile({ onUpdateUser }) {
 
   const titleText = currentUser ? `Привет, ${name}!` : 'Привет';
 
-  const handleSubmit = (evt) => {
+  const handleEditClick = () => {
+    setIsEditing(true);
+  };
+
+  const handleSaveClick = async (evt) => {
     evt.preventDefault();
-    onUpdateUser({
-      name: name,
-      email: email,
-    });
+    try {
+      await onUpdateUser({
+        name: name,
+        email: email,
+      });
+      setIsEditing(false);
+      setError('');
+    } catch (err) {
+      setError('При обновлении профиля произошла ошибка.: ' + err.message);
+    }
+  };
+
+  const handleLogoutClick = () => {
+    onLogout();
   };
 
   return (
-    <section className='profile'>
-      <h2 className='profile__title'>{titleText}</h2>
-      <form className='profile__form' onSubmit={handleSubmit}>
+    <main className='profile'>
+      <h1 className='profile__title'>{titleText}</h1>
+      <form className='profile__form' name='profile__form' onSubmit={handleSaveClick}>
         <div className='profile__input-container'>
-          <p className='profile__placeholder'>Имя</p>
-          <Input
+          <label className='profile__placeholder'>Имя</label>
+          <input
             id="name"
             name="name"
             className="profile__input"
@@ -49,12 +64,13 @@ function Profile({ onUpdateUser }) {
             required
             value={name || ''}
             onChange={handleNameChange}
+            disabled={!isEditing}
           />
         </div>
         <div className='profile__separator'></div>
         <div className='profile__input-container'>
-          <p className='profile__placeholder'>Email</p>
-          <Input
+          <label className='profile__placeholder'>Email</label>
+          <input
             id="email"
             name="email"
             className="profile__input"
@@ -62,14 +78,24 @@ function Profile({ onUpdateUser }) {
             required
             value={email || ''}
             onChange={handleEmailChange}
+            disabled={!isEditing}
           />
         </div>
-        <button className='profile__submit' type="submit">Редактировать</button>
+        {error && <span className='profile__error'>{error}</span>}
+        {isEditing ? (
+          <button className='profile__submit' type="button" onClick={handleSaveClick}>
+            Сохранить
+          </button>
+        ) : (
+          <button className='profile__edit' type="button" onClick={handleEditClick}>
+            Редактировать
+          </button>
+        )}
       </form>
-      <Link className="profile__link" to="/">
+      <Link className="profile__link" to="/" onClick={handleLogoutClick}>
         Выйти из аккаунта
       </Link>
-    </section>
+    </main>
   );
 }
 

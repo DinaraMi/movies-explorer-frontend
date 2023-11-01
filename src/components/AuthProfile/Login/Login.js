@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
 import './Login.css';
 import AuthForm from '../AuthForm';
 import Input from '../../Input/Input';
@@ -26,13 +25,16 @@ function Login({ onLogin }) {
   }
 
   return (
-    <>
+    <main className='login'>
       <AuthForm
         title="Рады видеть!"
         name="login"
         isLoading={isLoading}
         ariaLabel="Войти"
         onSubmit={handleSubmit}
+        gray="Ещё не зарегистрированы?"
+        blue="Регистрация"
+        link="/signup"
       >
         <Input
           id="email"
@@ -43,6 +45,7 @@ function Login({ onLogin }) {
           required
           value={values.email || ''}
           onChange={handleChange}
+          placeholder="Email"
         />
         <Input
           id="password"
@@ -55,13 +58,10 @@ function Login({ onLogin }) {
           required
           value={values.password || ''}
           onChange={handleChange}
+          placeholder="Пароль"
         />
       </AuthForm>
-      <Link className="login__link" to="/signup">
-        <span className='login__link_gray'>Ещё не зарегистрированы?</span>
-        <span className='login__link_blue'> Регистрация</span>
-      </Link>
-    </>
+    </main>
   );
 }
 

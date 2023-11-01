@@ -1,11 +1,11 @@
-.navTab {
+.nav-tab {
   width: 100%;
   display: flex;
   padding-top: 80px;
   padding-bottom: 30px;
 }
 
-.navTab__button {
+.nav-tab__button {
   width: 40.31%;
   height: 36px;
   font-weight: 500;
@@ -18,25 +18,30 @@
   padding: 0;
   color: #FFFFFF;
   margin: auto;
+  cursor: pointer;
+}
+
+.nav-tab__button:hover {
+  opacity: 0.8;
 }
 
 @media screen and (min-width: 768px) {
-  .navTab {
+  .nav-tab {
     padding-top: 83px;
     padding-bottom: 80px;
   }
 
-  .navTab__button {
+  .nav-tab__button {
     width: 16.80%;
   }
 }
 
 @media screen and (min-width: 1280px) {
-  .navTab {
+  .nav-tab {
     padding-bottom: 75px;
   }
 
-  .navTab__button {
+  .nav-tab__button {
     margin: 0 0 0 70px;
     width: 10.2%;
   }

@@ -34,6 +34,11 @@
   line-height: 121%;
   color: #4285F4;
   text-decoration: none;
+  cursor: pointer;
+}
+
+.error-not-found__link:hover {
+  opacity: 0.8;
 }
 
 @media screen and (min-width: 768px) {

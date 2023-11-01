@@ -1,9 +1,10 @@
+import React from 'react';
 import './Input.css';
 
 function Input({ id, className, type, name, minLength, maxLength, label, placeholder, required, value, onChange, error }) {
   return (
     <div className="input-container">
-      <div className='input__label'>{label}
+      <div className='input-label'>{label}
         <input
           id={id}
           className={className}
@@ -16,9 +17,10 @@ function Input({ id, className, type, name, minLength, maxLength, label, placeho
           value={value}
           onChange={onChange}
         />
-        <span id={`${name}-error`} className="input__error">{error}</span>
+        <span id={`${name}-error`} className="input-error">{error}</span>
       </div>
     </div>
   );
 }
+
 export default Input;

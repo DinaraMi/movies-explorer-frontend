@@ -22,14 +22,26 @@
   margin: 70px 0 30px;
 }
 
+.portfolio-list {
+  padding: 0;
+  margin: 0;
+}
+
 .portfolio-item {
+  list-style: none;
+}
+
+.portfolio__link {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-}
-.portfolio__link {
   text-decoration: none;
-    color: #FFFFFF;
+  color: #FFFFFF;
+  align-items: center;
+  cursor: pointer;
+}
+
+.portfolio__link:hover {
+  opacity: 0.8;
 }
 
 .portfolio__separator {
@@ -39,12 +51,17 @@
 }
 
 .portfolio__title {
+  display: flex;
   font-weight: 400;
   font-style: normal;
   font-size: 18px;
   line-height: 155.55%;
   letter-spacing: -0.75px;
   margin: 12px 0 15px;
+}
+
+.portfolio__link::after {
+  content: url('../../../images/arow.svg');
 }
 
 @media screen and (min-width: 768px) {
@@ -64,8 +81,8 @@
     line-height: 178.57%;
   }
 
-  .portfolio__icon {
-    width: 17px;
+  .portfolio__link::after {
+    content: url('../../../images/arow768.svg');
   }
 }
 
@@ -76,5 +93,9 @@
 
   .portfolio__paragraph {
     margin: 97px 0 40px;
+  }
+
+  .portfolio__link::after {
+    content: url('../../../images/arow1280.svg');
   }
 }

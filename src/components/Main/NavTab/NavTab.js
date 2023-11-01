@@ -1,10 +1,15 @@
 import './NavTab.css'
 
-function NavTab (){
+function NavTab() {
+  const scrollToAbout = () => {
+    const aboutSection = document.getElementById("about-project");
+    aboutSection.scrollIntoView({ behavior: "smooth" });
+  }
   return (
-<section className='navTab'>
-  <button className='navTab__button'>Узнать больше</button>
-</section>
+    <section className='nav-tab'>
+      <button className='nav-tab__button' onClick={scrollToAbout}>Узнать больше</button>
+    </section>
+
   )
 }
 

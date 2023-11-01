@@ -9,7 +9,8 @@
   background-color: #073042;
 }
 
-.promo__logo {
+.promo::before{
+  content: url('../../../images/PromoLogo.png');
   width: 210px;
   height: 206px;
 }
@@ -44,9 +45,10 @@
     padding-top: 140px;
   }
 
-  .promo__logo {
+  .promo::before {
     width: 310px;
     height: 304px;
+    content: url('../../../images/promologo768.png');
   }
 
   .promo__title {
@@ -70,9 +72,10 @@
     align-items: start;
   }
 
-  .promo__logo {
+  .promo::before {
     grid-column: 2;
     align-items: center;
+    content: url('../../../images/promologo1280.png');
   }
   
   .promo__description {

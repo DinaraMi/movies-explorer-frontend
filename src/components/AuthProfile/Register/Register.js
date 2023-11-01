@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import './Register.css';
 import AuthForm from '../AuthForm';
 import Input from '../../Input/Input';
@@ -31,7 +31,7 @@ function Register({ onRegister }) {
   };
 
   return (
-    <>
+    <main className='register'>
       <AuthForm
         title="Добро пожаловать!"
         name="register"
@@ -39,6 +39,10 @@ function Register({ onRegister }) {
         ariaLabel="Зарегистрироваться"
         onSubmit={handleSubmit}
         formType="register"
+        gray="Уже зарегистрированы?"
+        blue="Войти"
+        link="/signin"
+        
       >
         <Input
           id="name"
@@ -49,6 +53,7 @@ function Register({ onRegister }) {
           required
           value={values.name || ''}
           onChange={handleChange}
+          placeholder="Имя"
         />
         <Input
           id="email"
@@ -59,6 +64,7 @@ function Register({ onRegister }) {
           required
           value={values.email || ''}
           onChange={handleChange}
+          placeholder="Email"
         />
         <Input
           id="password"
@@ -71,13 +77,10 @@ function Register({ onRegister }) {
           required
           value={values.password || ''}
           onChange={handleChange}
+          placeholder="Пароль"
         />
       </AuthForm>
-      <Link className="register__link" to="/signin">
-        <span className='register__link_gray'>Уже зарегистрированы?</span>
-        <span className='register__link_blue'> Войти</span>
-      </Link>
-    </>
+    </main>
   );
 }
 

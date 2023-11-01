@@ -3,24 +3,21 @@ import './Techs.css';
 function Techs() {
   return (
     <section className='techs'>
-      <h3 className='techs__subtitle'>Технологии</h3>
+      <h2 className='techs__subtitle'>Технологии</h2>
       <div className='techs__separator'></div>
       <div className='techs__container'>
-        <h2 className='techs__title'>7 технологий</h2>
+        <h3 className='techs__title'>7 технологий</h3>
         <p className='techs__paragraph'>На курсе веб-разработки мы освоили технологии, которые применили в дипломном проекте.</p>
-        <table className='techs__table'>
-          <tbody>
-            <tr>
-              <td>HTML</td>
-              <td>CSS</td>
-              <td>JS</td>
-              <td>React</td>
-              <td>Git</td>
-              <td>Express.js</td>
-              <td>mongoDB</td>
-            </tr>
-          </tbody>
-        </table>
+        <ul className='techs__list'>
+          <li className='techs__item'>HTML</li>
+          <li className='techs__item'>CSS</li>
+          <li className='techs__item'>JS</li>
+          <li className='techs__item'>React</li>
+          <li className='techs__item'>Git</li>
+          <li className='techs__item'>Express.js</li>
+          <li className='techs__item'>mongoDB</li>
+        </ul>
+
       </div>
     </section>
   )

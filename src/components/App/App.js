@@ -137,11 +137,17 @@ function App() {
       });
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem('token');
+    setLoggedIn(false);
+    navigate('/');
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
-          {displayHeader && <Header loggedIn={loggedIn} currentUser={currentUser}/>}
+          {displayHeader && <Header loggedIn={loggedIn} currentUser={currentUser} onLogout={handleLogout}/>}
           {isLoading ? <Preloader /> : null}
           <Routes>
             <Route path="/" element={<Main isLoading={isLoading} />} />
@@ -149,7 +155,7 @@ function App() {
             <Route path='/saved-movies' element={<SavedMovies savedMovies={savedMovies} handleRemoveMovie={handleRemoveMovie} />} />
             <Route path="/signin" element={<Login onLogin={handleLogin} />} />
             <Route path="/signup" element={<Register onRegister={handleRegister} />} />
-            <Route path="/profile" element={<Profile onUpdateUser={handleUpdateUser} />} />
+            <Route path="/profile" element={<Profile onUpdateUser={handleUpdateUser} onLogout={handleLogout}/>} />
             <Route path="*" element={<ErrorNotFound />} />
           </Routes>
           {displayFooter && <Footer />}

@@ -41,6 +41,10 @@
   cursor: pointer;
 }
 
+.searchForm__button:hover {
+  opacity: 0.8;
+}
+
 .searchForm__separator {
   height: 1px;
   background-color: #AAAAAA;

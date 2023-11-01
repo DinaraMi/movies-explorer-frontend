@@ -31,6 +31,10 @@
   cursor: pointer;
 }
 
+.auth__submit-register:hover {
+  opacity: 0.8;
+}
+
 .register__link {
   display: block;
   font-style: normal;
@@ -42,12 +46,22 @@
   margin: 0 auto 30px;
 }
 
-.register__link_gray {
+.register__link-gray {
   color: #8B8B8B;
+  cursor: pointer;
 }
 
-.register__link_blue {
+.register__link-gray:hover{
+  opacity: 0.8;
+}
+
+.register__link-blue {
   color: #4285F4;
+  cursor: pointer;
+}
+
+.register__link-blue:hover {
+  opacity: 0.8;
 }
 
 @media screen and (min-width: 768px) {

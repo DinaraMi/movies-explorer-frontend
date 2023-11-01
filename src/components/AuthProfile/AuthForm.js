@@ -1,15 +1,16 @@
 import React from 'react';
 import './AuthForm.css';
-import logoAuthForm from '../../images/logoAuthForm.png'
+import logoAuthForm from '../../images/logo.svg'
+import { Link } from 'react-router-dom';
 
-function AuthForm({ name, title, children, ariaLabel, onSubmit, formType }) {
+function AuthForm({ name, title, children, ariaLabel, onSubmit, formType, gray, blue, link }) {
   const submitButtonClassName = formType === 'register' ? 'auth__submit-register' : 'auth__submit-login';
 
   return (
     <div className={`auth auth_type_${name}`}>
       <div className="auth__container">
-        <img className='auth__logo' src={logoAuthForm} alt={title} />
-        <h3 className="auth__title">{title}</h3>
+        <Link className='auth__logo' to="/"><img className='auth__logo-img' src={logoAuthForm} alt={title} /></Link>
+        <h1 className="auth__title">{title}</h1>
         <form className={`auth__form-element auth__form-element_type_${name}`} name={`${name}-form`} onSubmit={onSubmit} >
           {children}
           <button
@@ -19,6 +20,10 @@ function AuthForm({ name, title, children, ariaLabel, onSubmit, formType }) {
           >{ariaLabel}
           </button>
         </form>
+        <Link className="auth__link" to={link}>
+          <span className="auth__link-gray">{gray}</span>&nbsp;
+          <span className="auth__link-blue">{blue}</span>
+        </Link>
       </div>
     </div>
   )
