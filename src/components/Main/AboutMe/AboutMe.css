@@ -1,7 +1,7 @@
 .about-me {
   width: 91.25%;
   color: #FFFFFF;
-  margin: 125px auto 0;
+  margin: 140px auto 0;
   grid-template-columns: 1fr;
   grid-template-rows: auto auto auto auto auto auto;
   grid-auto-flow: row;
@@ -49,7 +49,7 @@
 @media screen and (min-width: 768px) {
   .about-me {
     width: 87%;
-    margin: 85px auto 0;
+    margin: 105px auto 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-rows: auto auto 40px auto;
@@ -99,7 +99,7 @@
 @media screen and (min-width: 1280px) {
   .about-me {
     width: 89%;
-    margin: 110px auto 0;
+    margin: 120px auto 0;
   }
   .about-me__title {
     font-size: 50px;

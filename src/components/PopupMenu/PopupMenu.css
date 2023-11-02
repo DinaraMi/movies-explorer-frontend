@@ -72,7 +72,7 @@
 }
 
 .popup-menu-list:nth-child(3) {
-  padding-bottom: 427px;
+  padding-bottom: 444px;
   text-decoration: none;
   font-size: 14px;
   line-height: 114.28%;
@@ -105,6 +105,6 @@
   }
 
   .popup-menu-list:nth-child(3) {
-    padding-bottom: 610px;
+    padding-bottom: 625px;
   }
 }

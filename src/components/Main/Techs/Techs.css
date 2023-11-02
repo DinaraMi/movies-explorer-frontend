@@ -45,7 +45,7 @@
   letter-spacing: -0.5px;
   text-align: center;
   margin-top: 0;
-  margin-bottom: 45px;
+  margin-bottom: 50px;
 }
 
 .techs__list {
@@ -54,7 +54,7 @@
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  width: 68%;
+  width: 63%;
   margin: auto;
   justify-content: space-between;
   padding: 0;
@@ -107,6 +107,10 @@
     width: 84px;
     height: 57px;
   }
+
+  .techs__list {
+    width: 97%;
+  }
 }
 
 @media screen and (min-width: 1280px) {
@@ -136,5 +140,9 @@
   .techs__item {
     width: 90px;
     height: 60px;
+  }
+
+  .techs__list {
+    width: 62%;
   }
 }

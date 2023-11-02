@@ -62,6 +62,8 @@
 
 .portfolio__link::after {
   content: url('../../../images/arow.svg');
+  padding-right: 5px;
+  padding-bottom: 5px;
 }
 
 @media screen and (min-width: 768px) {
@@ -92,10 +94,15 @@
   }
 
   .portfolio__paragraph {
-    margin: 97px 0 40px;
+    margin: 103px 0 40px;
   }
 
   .portfolio__link::after {
     content: url('../../../images/arow1280.svg');
+  }
+
+  .portfolio__title {
+    font-size: 30px;
+    line-height: 166.66%;
   }
 }
