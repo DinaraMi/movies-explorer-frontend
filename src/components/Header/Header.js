@@ -57,10 +57,10 @@ function Header({ loggedIn }) {
       } else {
         return (
           <>
-            <Link to="/signup" className='menu-list' onClick={handleLinkClick}>
+            <Link to="/signup" className='menu-list-auth' onClick={handleLinkClick}>
               Регистрация
             </Link>
-            <Link to="/signin" className='menu-list' onClick={handleLinkClick}>
+            <Link to="/signin" className='menu-list-auth' onClick={handleLinkClick}>
               Войти
             </Link>
           </>
@@ -104,10 +104,10 @@ function Header({ loggedIn }) {
                 <PopupMenu isOpen={isMenuOpen} onClose={closeMenu} />
               ) : (
                 <>
-                  <Link to="/signup" className='menu__list' onClick={handleLinkClick}>
+                  <Link to="/signup" className='menu__list-auth' onClick={handleLinkClick}>
                     Регистрация
                   </Link>
-                  <Link to="/signin" className='menu__list' onClick={handleLinkClick}>
+                  <Link to="/signin" className='menu__list-auth' onClick={handleLinkClick}>
                     Войти
                   </Link>
                 </>

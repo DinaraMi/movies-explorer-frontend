@@ -1,7 +1,7 @@
 const moviesData = [
   {
     id: 1,
-    nameRU: 'В погоне за Бенксирррррррррррррррррррррррр',
+    nameRU: 'В погоне за Бенкси',
     duration: '0ч 42м',
     image: '/images/pic1.png',
   },

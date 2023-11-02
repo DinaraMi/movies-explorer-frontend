@@ -6,7 +6,7 @@
   background-color: transparent;
   color: #FFFFFF;
   margin: 5px 0 25px 0;
-  width: 100%;
+  width: 99%;
 }
 
 .auth__submit-login {
@@ -30,8 +30,6 @@
   opacity: 0.8;
 }
 
-
-
 @media screen and (min-width: 768px) {
   .auth__submit-login {
     margin: 195px auto 14px;
@@ -42,3 +40,4 @@
     font-size: 14px;
   }
 }
+

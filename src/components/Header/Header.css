@@ -21,6 +21,7 @@
   padding: 18px 0 18px;
   display: flex;
   justify-content: space-between;
+  align-items: center;
 }
 
 .header__logo-img {
@@ -62,27 +63,13 @@
   background-color: transparent;
 }
 
-.menu__list {
+.menu__list-auth {
   font-weight: 500;
   font-style: normal;
   font-size: 10px;
   line-height: 160%;
   margin: 0;
-  padding: 5px 12px;
-  border: 0;
-  cursor: pointer;
-  color: #FFFFFF;
-  background-color: transparent;
-  transition: background-color 0.3s;
-  text-decoration: none;
-}
-.menu-list {
-  font-weight: 500;
-  font-style: normal;
-  font-size: 10px;
-  line-height: 160%;
-  margin: 0;
-  padding: 5px 12px;
+  padding: 5px 0 5px;
   border: 0;
   cursor: pointer;
   color: #FFFFFF;
@@ -91,25 +78,13 @@
   text-decoration: none;
 }
 
-.menu-list.active {
-  font-weight: bold;
-}
-
-.menu-list.active::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 2px;
-  background-color: #FFFFFF;
-  bottom: 0;
-  left: 0;
-}
-
-.menu-list:hover {
-  color: #000000;
+.menu__list-auth:nth-child(2) {
   background-color: #3DDC84;
+  border-radius: 3px;
+  color: #000000;
+  margin-left: 14px;
+  padding: 5px 12px;
 }
-
 
 @media screen and (min-width: 768px) {
   .header__container {
@@ -124,6 +99,17 @@
   .menu-list {
     padding: 8px 20px;
   }
+
+  .menu__list-auth {
+    font-size: 12px;
+    margin: 0;
+    padding: 8px 0 8px;
+  }
+  
+  .menu__list-auth:nth-child(2) {
+    margin-left: 30px;
+    padding: 8px 20px;
+  }
 }
 
 @media screen and (min-width: 1280px) {
@@ -131,11 +117,50 @@
     width: 89%;
   }
 
+  .menu-list-auth {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 160%;
+    margin: 0;
+    padding: 8px 0 8px;
+    border: 0;
+    cursor: pointer;
+    color: #FFFFFF;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    text-decoration: none;
+  }
+  
+  .menu-list-auth:nth-child(2) {
+    background-color: #3DDC84;
+    border-radius: 3px;
+    color: #000000;
+    margin-left: 30px;
+    padding: 8px 20px;
+  }
+
   .menu-list {
-    padding: 10px 23px;
-    font-weight: 400;
+    font-weight: 500;
     font-style: normal;
     font-size: 14px;
     line-height: 128.57%;
+    margin-right: 20px;
+    padding: 10px 0;
+    border: 0;
+    cursor: pointer;
+    color: #FFFFFF;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    text-decoration: none;
+  }
+  
+  .menu-list:nth-child(3) {
+    margin-left: 30px;
+    margin-right: 0;
+  }
+
+  .menu-list.active {
+    font-weight: bold;
   }
 }
