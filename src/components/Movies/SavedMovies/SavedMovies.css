@@ -1,6 +1,7 @@
 .saved-movies {
   width: 93.75%;
   margin: auto;
+  margin-bottom: 107px;
 }
 
 .saved-movies__content {
@@ -13,6 +14,7 @@
 @media screen and (min-width: 768px) {
   .saved-movies {
     width: 92.1875%;
+    margin-bottom: 135px;
   }
 
   .saved-movies__content {
@@ -25,6 +27,7 @@
 @media screen and (min-width: 1280px) {
   .saved-movies {
     width: 89.0625%;
+    margin-bottom: 180px;
   }
 
   .saved-movies__content {

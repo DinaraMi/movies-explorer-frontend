@@ -22,7 +22,7 @@
   font-size: 12px;
   line-height: 121%;
   text-align: center;
-  margin: 80px auto 143px;
+  margin: 80px auto 25px;
   cursor: pointer;
 }
 
@@ -42,7 +42,7 @@
   }
 
   .movies-card-list__button {
-    margin: 110px auto 143px;
+    margin: 110px auto 7px;
   }
 }
 
@@ -58,6 +58,6 @@
   }
 
   .movies-card-list__button {
-    margin: 85px auto 143px;
+    margin: 85px auto 0;
   }
 }

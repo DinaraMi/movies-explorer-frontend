@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import './Header.css';
 import logo from '../../images/logo.svg';
-import accountIcon from '../../images/acount.svg';
 import PopupMenu from '../PopupMenu/PopupMenu';
 
 function Header({ loggedIn }) {
@@ -47,9 +46,8 @@ function Header({ loggedIn }) {
             <Link to="/saved-movies" className={`menu-list ${isSavedMoviesPage ? 'active' : ''}`} onClick={handleLinkClick}>
               Сохранённые фильмы
             </Link>
-            <Link to="/profile" className={`menu-list ${isProfilePage ? 'active' : ''}`} onClick={handleLinkClick}>
+            <Link to="/profile" className={`menu-list menu-list_account menu-list_account_background ${isProfilePage ? 'active' : ''}`} onClick={handleLinkClick}>
               Аккаунт&nbsp;&nbsp;&nbsp;
-              <img src={accountIcon} alt="Аккаунт" />
             </Link>
           </>
         );
@@ -74,9 +72,8 @@ function Header({ loggedIn }) {
           <Link to="/saved-movies" className={`menu-list ${isSavedMoviesPage ? 'active' : ''}`} onClick={handleLinkClick}>
             Сохранённые фильмы
           </Link>
-          <Link to="/profile" className={`menu-list ${isProfilePage ? 'active' : ''}`} onClick={handleLinkClick}>
-            Аккаунт&nbsp;&nbsp;&nbsp;
-            <img src={accountIcon} alt="Аккаунт" />
+          <Link to="/profile" className={`menu-list menu-list_account ${isProfilePage ? 'active' : ''}`} onClick={handleLinkClick}>
+            Аккаунт&nbsp;&nbsp;&nbsp;&nbsp;
           </Link>
         </>
       );
@@ -85,7 +82,7 @@ function Header({ loggedIn }) {
 
   return (
     <header className={`header ${isProfilePage ? 'profile-header' : ''} ${isMoviesPage ? 'movies-header' : ''} ${isSavedMoviesPage ? 'saved-movies-header' : ''}`}>
-      <div className='header__container'>
+      <div className={`header__container ${isMoviesPage ? 'header__container-movies' : ''} ${isSavedMoviesPage ? 'header__container-saved-movies' : ''}${isProfilePage ? 'header__container-profile' : ''}${isHomePage ? 'header__container-home-page' : ''} `}>
         <Link className='header__logo' to="/"><img className='header__logo-img' src={logo} alt="логотип" /></Link>
         <nav>
           {isLargeScreen ? (

@@ -38,7 +38,7 @@ function PopupMenu({ isOpen, onClose }) {
             </li>
             <li className={`popup-menu-list ${isProfilePage ? 'active' : ''}`}>
               <Link to="/profile" className="popup-menu-list__item popup-menu-list__item_acount" onClick={() => handleLinkClick('/profile')}>
-                Аккаунт&nbsp;
+                Аккаунт&nbsp;&nbsp;&nbsp;
               </Link>
             </li>
           </ul>

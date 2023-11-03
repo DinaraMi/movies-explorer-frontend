@@ -10,15 +10,15 @@
   font-style: normal;
   font-size: 18px;
   line-height: 121%;
-  letter-spacing: -0.75px;
-  padding-bottom: 20px;
+  letter-spacing: -0.7px;
+  padding-bottom: 18px;
   margin: 0;
 }
 
 .about-project__separator {
   height: 1px;
   background-color: #DADADA;
-  margin: 7px 0 63px 0;
+  margin: 8px 0 62px 0;
 }
 
 .about-project__paragraph {
@@ -27,16 +27,12 @@
   font-size: 11px;
   line-height: 145.45%;
   margin: 0;
-  padding-bottom: 50px;
+  padding-bottom: 55px;
 }
 
 .about-project__table {
   padding: 0;
   margin: 0;
-  font-weight: 400;
-  font-style: normal;
-  font-size: 11px;
-  line-height: 121%;
   display: flex;
   justify-content: space-between;
   list-style: none;
@@ -58,17 +54,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 10px;
+  margin-top: 4px;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 11px;
+  line-height: 121%;
 }
 
 .about-project__table-cell-title_background {
   background-color: #3DDC84;
 }
 
+.about-project__table-cell-paragraph {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 11px;
+  line-height: 121%;
+}
+
 @media screen and (min-width: 768px) {
   .about-project {
     width: 87%;
-    padding-top: 90px;
+    padding-top: 95px;
   }
 
   .about-project__description {
@@ -79,16 +86,16 @@
 
   .about-project__title-large {
     font-size: 22px;
-    padding-bottom: 25px;
+    padding-bottom: 22px;
   }
 
   .about-project__title-medium {
     font-size: 20px;
-    padding-bottom: 27px;
+    padding-bottom: 23px;
   }
 
   .about-project__paragraph {
-    padding-bottom: 80px;
+    padding-bottom: 88px;
     font-size: 12px;
     line-height: 150%;
   }
@@ -110,14 +117,22 @@
   }
 
   .about-project__separator {
-    margin: 0 0 68px 0;
+    margin: 0 0 70px 0;
+  }
+
+  .about-project__table-cell-title {
+    font-size: 14px;
+  }
+
+  .about-project__table-cell-paragraph {
+    font-size: 14px;
   }
 }
 
 @media screen and (min-width: 1280px) {
   .about-project {
     width: 89%;
-    padding-top: 109px;
+    padding-top: 110px;
   }
 
   .about-project__container {
@@ -127,7 +142,7 @@
   .about-project__paragraph {
     font-size: 14px;
     line-height: 142.86%;
-    padding-bottom: 105px;
+    padding-bottom: 107px;
   }
 
   .about-project__table-cell {
@@ -136,5 +151,13 @@
 
   .about-project__table-cell:nth-child(2) {
     width: 80%;
+  }
+
+  .about-project__separator {
+    margin: 0 0 72px 0;
+  }
+
+  .about-project__title-medium {
+    padding-bottom: 25px;
   }
 }

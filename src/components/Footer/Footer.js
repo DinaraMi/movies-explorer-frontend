@@ -1,9 +1,11 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './Footer.css'
 
 function Footer() {
+  const location = useLocation();
+  const isMoviesPage = location.pathname === '/movies';
   return (
-    <footer className="footer">
+    <footer className={`footer ${isMoviesPage ? 'movies-footer' : ''}`}>
       <h4 className="footer__title">Учебный проект Яндекс.Практикум х BeatFilm.</h4>
       <div className='footer__separator'></div>
       <ul className='footer__links'>
@@ -14,7 +16,7 @@ function Footer() {
           <Link to='https://github.com/DinaraMi' target='_blank' rel="noopener noreferrer" className='footer__link-item'>Github</Link>
         </li>
       </ul>
-      <span className='footer__icon'>© {new Date().getFullYear()}</span>
+      <span className='footer__icon'>©{new Date().getFullYear()}</span>
     </footer>
   )
 }

@@ -79,11 +79,25 @@
   line-height: 114.28%;
 }
 
-.popup-menu-list__item_acount::after {
-  content: url('../../images/acount.svg');
+.popup-menu-list__item_acount {
   text-decoration: none;
   font-size: 14px;
   line-height: 114.28%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-menu-list__item_acount::after {
+  content: url('../../images/acount.svg');
+  background-color: #313131;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
 }
 
 .popup-menu-list__item_acount::after:hover {
@@ -97,15 +111,19 @@
 
 @media screen and (min-width: 768px) {
   .popup::after {
-    top: 20px;
-    right: 30px;
+    top: 22px;
+    right: 32px;
   }
 
   .popup__menu {
-    margin: 163px auto 0;
+    margin: 160px auto 0;
   }
 
   .popup-menu-list:nth-child(3) {
-    padding-bottom: 625px;
+    padding-bottom: 620px;
+  }
+
+  .popup-menu-list {
+    padding-bottom: 28px;
   }
 }

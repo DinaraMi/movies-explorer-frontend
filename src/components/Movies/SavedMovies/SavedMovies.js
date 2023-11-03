@@ -6,12 +6,12 @@ import MoviesCard from '../MoviesCard/MoviesCard';
 function SavedMovies({ savedMovies, handleRemoveMovie }) {
   return (
     <div className="saved-movies">
-      <SearchForm/>
+      <SearchForm />
       <div className='saved-movies__content'>
-      {savedMovies.map((movie) => (
-        <MoviesCard key={movie.id} movie={movie} handleRemoveMovie={handleRemoveMovie}/>
-      ))}
-    </div>
+        {savedMovies.map((movie) => (
+          <MoviesCard key={movie.id} movie={movie} handleRemoveMovie={handleRemoveMovie} />
+        ))}
+      </div>
     </div>
   );
 }

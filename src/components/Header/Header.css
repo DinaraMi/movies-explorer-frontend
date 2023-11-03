@@ -8,6 +8,7 @@
 
 .movies-header {
   background-color: #202020;
+  width: 91.25%;
 }
 
 .saved-movies-header {
@@ -22,6 +23,16 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+.header__container-movies {
+  margin: 0 0 0 28px;
+  width: 100%;
+  padding: 13px 0 21px;
+}
+
+.header__container-saved-movies {
+  padding: 16px 0 20px;
 }
 
 .header__logo-img {
@@ -67,13 +78,15 @@
   background-color: transparent;
 }
 
+.menu {
+  margin-bottom: 5px;
+}
+
 .menu__list-auth {
   font-weight: 500;
   font-style: normal;
   font-size: 10px;
   line-height: 160%;
-  margin: 0;
-  padding: 7px 0 7px;
   border: 0;
   cursor: pointer;
   color: #FFFFFF;
@@ -97,6 +110,29 @@ menu__list-auth:hover {
 @media screen and (min-width: 768px) {
   .header__container {
     width: 92.19%;
+    padding: 18px 0 20px;
+  }
+
+  .header__container-saved-movies {
+    padding: 14px 0 22px;
+  }
+
+  .header__container-profile {
+    padding: 13px 0 20px;
+  }
+
+  .header__container-movies {
+    padding: 13px 0 22px;
+  }
+
+  .movies-header {
+    width: 100%;
+    margin: 0;
+  }
+
+  .menu-button-active {
+    width: 44px;
+    height: 44px;
   }
 
   .header__menu.open {
@@ -123,6 +159,20 @@ menu__list-auth:hover {
 @media screen and (min-width: 1280px) {
   .header__container {
     width: 89%;
+    padding: 13px 0 15px;
+  }
+
+  .header__container-home-page {
+    padding: 18px 0 20px;
+  }
+
+  .header__container-movies {
+    margin: auto;
+    padding: 13px 0 15px;
+  }
+
+  .header__container-saved-movies {
+    padding: 13px 0 15px;
   }
 
   .menu-list-auth {
@@ -143,7 +193,7 @@ menu__list-auth:hover {
   .menu-list-auth:hover {
     opacity: 0.8;
   }
-  
+
   .menu-list-auth:nth-child(2) {
     background-color: #3DDC84;
     border-radius: 3px;
@@ -167,12 +217,44 @@ menu__list-auth:hover {
     text-decoration: none;
   }
   
+  .menu-list_account::after {
+    content: url(../../images/acount.svg);
+    background-color: #313131;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu-list_account_background::after {
+    background-color: #0F4157;
+  }
+
+  .menu-list:hover {
+    opacity: 0.8;
+  }
+
   .menu-list:nth-child(3) {
     margin-left: 30px;
-
+    margin-right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 
   .menu-list.active {
     font-weight: 500;
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .movies-header {
+    width: 100%;
   }
 }

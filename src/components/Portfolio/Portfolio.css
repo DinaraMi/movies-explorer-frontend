@@ -81,10 +81,16 @@
   .portfolio__title {
     font-size: 28px;
     line-height: 178.57%;
+    margin: 8px 0 20px 0;
+    letter-spacing: -1.1px;
   }
 
   .portfolio__link::after {
     content: url('../../images/arow768.svg');
+  }
+
+  .portfolio__separator {
+    margin: 0 0 10px;
   }
 }
 

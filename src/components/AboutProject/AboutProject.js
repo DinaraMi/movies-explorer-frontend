@@ -17,11 +17,11 @@ function AboutProject() {
       <ul className='about-project__table'>
         <li className='about-project__table-cell'>
           <h3 className='about-project__table-cell-title about-project__table-cell-title_background'>1 неделя</h3>
-          <p>Back-end</p>
+          <p className='about-project__table-cell-paragraph'>Back-end</p>
         </li>
         <li className='about-project__table-cell'>
           <h3 className='about-project__table-cell-title'>4 недели</h3>
-          <p>Front-end</p>
+          <p className='about-project__table-cell-paragraph'>Front-end</p>
         </li>
       </ul>
     </section>
