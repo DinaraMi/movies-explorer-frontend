@@ -73,6 +73,8 @@
   line-height: 121%;
   margin: 370px auto 16px;
   cursor: pointer;
+  border: 0;
+  border-radius: 3px;
 }
 
 .profile__submit:hover {

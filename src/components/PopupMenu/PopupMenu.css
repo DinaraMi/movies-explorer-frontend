@@ -16,13 +16,8 @@
   z-index: 1000;
 }
 
-.popup_opened{
-  visibility: visible;
-  opacity: 1;
-  transition-delay: 0s;
-}
-
-.popup__close {
+.popup::after {
+  content: url(../../images/close.svg);
   width: 22px;
   height: 22px;
   background-color: transparent;
@@ -33,6 +28,12 @@
   right: 23px;
   z-index: 40;
   cursor: pointer;
+}
+
+.popup_opened{
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
 }
 
 .popup__close:hover {
@@ -95,7 +96,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .popup__close {
+  .popup::after {
     top: 20px;
     right: 30px;
   }

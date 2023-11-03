@@ -61,7 +61,7 @@
 }
 
 .portfolio__link::after {
-  content: url('../../../images/arow.svg');
+  content: url('../../images/arow.svg');
   padding-right: 5px;
   padding-bottom: 5px;
 }
@@ -84,7 +84,7 @@
   }
 
   .portfolio__link::after {
-    content: url('../../../images/arow768.svg');
+    content: url('../../images/arow768.svg');
   }
 }
 
@@ -98,7 +98,7 @@
   }
 
   .portfolio__link::after {
-    content: url('../../../images/arow1280.svg');
+    content: url('../../images/arow1280.svg');
   }
 
   .portfolio__title {

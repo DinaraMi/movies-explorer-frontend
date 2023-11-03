@@ -3,7 +3,6 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useMediaQuery } from 'react-responsive';
 import './Header.css';
 import logo from '../../images/logo.svg';
-import burger from '../../images/burger.svg';
 import accountIcon from '../../images/acount.svg';
 import PopupMenu from '../PopupMenu/PopupMenu';
 
@@ -95,7 +94,6 @@ function Header({ loggedIn }) {
             </div>
           ) : (
             <button className={`menu-button-active ${isMenuOpen ? 'menu-button' : ''}`} onClick={toggleMenu}>
-              <img src={burger} alt="бургер" />
             </button>
           )}
           {isMenuOpen && isHomePage && (

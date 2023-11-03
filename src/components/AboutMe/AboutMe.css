@@ -52,7 +52,7 @@
     margin: 105px auto 0;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-template-rows: auto auto 40px auto;
+    grid-template-rows: auto auto auto auto;
   }
 
   .about-me__subtitle {

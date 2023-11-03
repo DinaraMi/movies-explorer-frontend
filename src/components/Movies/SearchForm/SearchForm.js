@@ -6,7 +6,7 @@ function SearchForm() {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   return (
-    <section className={`searchForm ${isSavedMoviesPage ? 'searchForm-movies' : ''}`}>
+    <div className={`searchForm ${isSavedMoviesPage ? 'searchForm-movies' : ''}`}>
       <div className='searchForm__content'>
         <form>
           <input type="text" className="searchForm__input" placeholder="Фильм" />
@@ -15,7 +15,7 @@ function SearchForm() {
       </div>
       <FilterCheckbox />
       <div className='searchForm__separator'></div>
-    </section>
+    </div>
   )
 }
 

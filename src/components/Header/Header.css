@@ -56,6 +56,10 @@
   display: none;
 }
 
+.menu-button-active::after {
+  content: url(../../images/burger.svg);
+}
+
 .header__menu.open {
   display: flex;
   margin: 0;
@@ -76,6 +80,10 @@
   background-color: transparent;
   transition: background-color 0.3s;
   text-decoration: none;
+}
+
+menu__list-auth:hover {
+  opacity: 0.8;
 }
 
 .menu__list-auth:nth-child(2) {
@@ -132,6 +140,10 @@
     text-decoration: none;
   }
   
+  .menu-list-auth:hover {
+    opacity: 0.8;
+  }
+  
   .menu-list-auth:nth-child(2) {
     background-color: #3DDC84;
     border-radius: 3px;
@@ -141,7 +153,7 @@
   }
 
   .menu-list {
-    font-weight: 500;
+    font-weight: 400;
     font-style: normal;
     font-size: 14px;
     line-height: 128.57%;
@@ -161,6 +173,6 @@
   }
 
   .menu-list.active {
-    font-weight: bold;
+    font-weight: 500;
   }
 }

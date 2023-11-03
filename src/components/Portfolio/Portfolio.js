@@ -11,14 +11,14 @@ function Portfolio() {
           <Link className="portfolio__link" to='https://github.com/DinaraMi/how-to-learn.git' target="_blank" rel="noopener noreferrer">
             <h3 className='portfolio__title'>Статичный сайт</h3>
           </Link>
+          <div className='portfolio__separator'></div>
         </li>
-        <div className='portfolio__separator'></div>
         <li className="portfolio-item">
           <Link className="portfolio__link" to='https://github.com/DinaraMi/russian-travel.git' target="_blank" rel="noopener noreferrer">
             <h3 className='portfolio__title'>Адаптивный сайт</h3>
           </Link>
+          <div className='portfolio__separator'></div>
         </li>
-        <div className='portfolio__separator'></div>
         <li className="portfolio-item">
           <Link className="portfolio__link" to='https://github.com/DinaraMi/express-mesto-gha.git' target="_blank" rel="noopener noreferrer">
             <h3 className='portfolio__title'>Одностраничное приложение</h3>

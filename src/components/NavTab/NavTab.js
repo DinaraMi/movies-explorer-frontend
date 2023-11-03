@@ -6,10 +6,9 @@ function NavTab() {
     aboutSection.scrollIntoView({ behavior: "smooth" });
   }
   return (
-    <section className='nav-tab'>
+    <div className='nav-tab'>
       <button className='nav-tab__button' onClick={scrollToAbout}>Узнать больше</button>
-    </section>
-
+    </div>
   )
 }
 

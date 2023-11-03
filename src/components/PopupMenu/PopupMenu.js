@@ -1,6 +1,5 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import './PopupMenu.css';
-import close from '../../images/close.svg';
 
 function PopupMenu({ isOpen, onClose }) {
   const navigate = useNavigate();
@@ -18,11 +17,8 @@ function PopupMenu({ isOpen, onClose }) {
   };
 
   return (
-    <div className={`popup ${isOpen ? 'popup_opened' : ''}`}>
+    <div className={`popup ${isOpen ? 'popup_opened' : ''}`} onClick={onClose}>
       <div className="popup__container">
-        <button className="popup__close" onClick={onClose}>
-          <img src={close} alt="Крестик" />
-        </button>
         <nav className="popup__menu">
           <ul className='popup__menu-all'>
             <li className={`popup-menu-list ${isHomePage ? 'active' : ''}`}>

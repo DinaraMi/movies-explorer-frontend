@@ -2,11 +2,16 @@
   width: 100%;
   display: flex;
   align-items: center;
+  
+}
+
+.filterCheckbox__title {
   color: #FFFFFF;
   font-weight: 400;
   font-style: normal;
   font-size: 11px;
   line-height: 163.63%;
+  margin: 0;
 }
 
 .checkbox-input {
@@ -53,7 +58,7 @@
 }
 
 @media screen and (min-width: 768px) {
-  .filterCheckbox {
+  .filterCheckbox__title {
     font-size: 13px;
     line-height: 138.46%;
   }

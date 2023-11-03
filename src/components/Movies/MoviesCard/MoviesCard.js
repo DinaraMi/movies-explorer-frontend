@@ -35,17 +35,13 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
             <button type="submit" className="movie-card__remove-icon">
               <img className="movie-card__remove-icon-img" src={removeIcon} alt="удалить" onClick={handleRemoveClick} />
             </button>
-          ) : (
-            isSaved ? (
-              <button type="submit" className="movie-card__save-icon_saved">
-                <img className="movie-card__save-icon_saved-img" src={saved} alt="Сохранено" onClick={handleSaveClick} />
-              </button>
+          ) : <button type="submit" className={isSaved ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveClick}>
+            {isSaved ? (
+              <img className="movie-card__save-icon-saved-img" src={saved} alt="Сохранено" />
             ) : (
-              <button type="submit" className="movie-card__save-button">
-                Сохранить
-              </button>
-            )
-          )}
+              "Сохранить"
+            )}
+          </button>}
         </form>
       </div>
     </div>
