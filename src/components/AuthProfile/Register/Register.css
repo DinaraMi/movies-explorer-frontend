@@ -31,6 +31,10 @@
   cursor: pointer;
 }
 
+.auth__submit-register_inactive {
+  background-color: #F8F8F8;
+}
+
 .auth__submit-register:hover {
   opacity: 0.8;
 }

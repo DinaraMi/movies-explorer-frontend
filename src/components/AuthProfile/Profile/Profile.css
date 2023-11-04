@@ -77,6 +77,10 @@
   border-radius: 3px;
 }
 
+.profile__submit_inactive {
+  background-color: #F8F8F8;
+}
+
 .profile__submit:hover {
   opacity: 0.8;
 }
@@ -105,11 +109,16 @@
 }
 
 .profile__error {
-  font-style: normal;
+  width: 70%;
+  display: flex;
+  margin: 6px 0 0 73px;
   font-weight: 400;
-  font-size: 11px;
+  font-size: 10px;
   line-height: 121%;
   color: #FF004C;
+  word-wrap: break-word;
+  min-height: 35px;
+  position: relative;
 }
 
 @media screen and (min-width: 768px) {
@@ -132,6 +141,10 @@
 
   .profile__link {
     font-size: 13px;
+  }
+
+  .profile__error {
+    margin: 6px 0 0 118px;
   }
 }
 

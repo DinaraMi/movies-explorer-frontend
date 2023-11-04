@@ -15,7 +15,7 @@ import ErrorNotFound from '../ErrorNotFound/ErrorNotFound';
 import Preloader from '../Preloader/Preloader';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import * as authentication from '../../utils/authentication.js';
-import api from '../../utils/api';
+import api from '../../utils/MainApi';
 
 function App() {
   const [isLoading, setLoading] = useState(false);

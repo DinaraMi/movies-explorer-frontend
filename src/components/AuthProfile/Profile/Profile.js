@@ -2,31 +2,22 @@ import React, { useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import './Profile.css';
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
+import { useFormValidation } from '../../../hooks/useFormValidation';
 
 function Profile({ onUpdateUser, onLogout }) {
   const currentUser = useContext(CurrentUserContext);
-
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const { values, handleChange, errors, isValid } = useFormValidation();
   const [isEditing, setIsEditing] = useState(false);
-  const [error, setError] = useState('');
-
-  const handleNameChange = (e) => {
-    setName(e.target.value);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
-  };
+  const [isButtonActive, setIsButtonActive] = useState(true);
 
   useEffect(() => {
     if (currentUser) {
-      setName(currentUser.name);
-      setEmail(currentUser.email);
+      values.name = currentUser.name;
+      values.email = currentUser.email;
     }
   }, [currentUser]);
 
-  const titleText = currentUser ? `Привет, ${name}!` : 'Привет';
+  const titleText = currentUser ? `Привет, ${values.name}!` : 'Привет';
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -34,17 +25,28 @@ function Profile({ onUpdateUser, onLogout }) {
 
   const handleSaveClick = async (evt) => {
     evt.preventDefault();
-    try {
-      await onUpdateUser({
-        name: name,
-        email: email,
-      });
-      setIsEditing(false);
-      setError('');
-    } catch (err) {
-      setError('При обновлении профиля произошла ошибка.: ' + err.message);
+    if (isValid && isButtonActive) {
+      try {
+        await onUpdateUser({
+          name: values.name,
+          email: values.email,
+        });
+        setIsEditing(false);
+        // Если все успешно, сбросить ошибки
+        errors.name = '';
+        errors.email = '';
+      } catch (err) {
+        // Установить ошибку валидации
+        errors.name = `При обновлении профиля произошла ошибка: ${err.message}`;
+        errors.email = `При обновлении профиля произошла ошибка: ${err.message}`;
+      }
     }
   };
+
+  useEffect(() => {
+    // Обновить состояние активности кнопки при изменении isValid и значений полей
+    setIsButtonActive(isValid && values.name && values.email);
+  }, [isValid, values.name, values.email]);
 
   const handleLogoutClick = () => {
     onLogout();
@@ -61,12 +63,14 @@ function Profile({ onUpdateUser, onLogout }) {
             name="name"
             className="profile__input"
             type="text"
+            minLength="2"
             required
-            value={name || ''}
-            onChange={handleNameChange}
+            value={values.name || ''}
+            onChange={handleChange}
             disabled={!isEditing}
           />
         </div>
+        {errors.name && <span className="profile__error">{errors.name}</span>}
         <div className='profile__separator'></div>
         <div className='profile__input-container'>
           <label className='profile__placeholder'>Email</label>
@@ -76,14 +80,18 @@ function Profile({ onUpdateUser, onLogout }) {
             className="profile__input"
             type="email"
             required
-            value={email || ''}
-            onChange={handleEmailChange}
+            value={values.email || ''}
+            onChange={handleChange}
             disabled={!isEditing}
           />
         </div>
-        {error && <span className='profile__error'>{error}</span>}
+        {errors.email && <span className="profile__error">{errors.email}</span>}
         {isEditing ? (
-          <button className='profile__submit' type="button" onClick={handleSaveClick}>
+          <button
+            className={`profile__submit ${isButtonActive ? '' : 'profile__submit_inactive'}`}
+            type="button"
+            onClick={handleSaveClick}
+          >
             Сохранить
           </button>
         ) : (
