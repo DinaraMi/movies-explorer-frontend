@@ -1,0 +1,260 @@
+.header {
+  background-color: #073042;
+}
+
+.profile-header {
+  background-color: #202020;
+}
+
+.movies-header {
+  background-color: #202020;
+  width: 91.25%;
+}
+
+.saved-movies-header {
+  background-color: #202020;
+}
+
+.header__container {
+  color: #FFFFFF;
+  width: 91.25%;
+  margin: auto;
+  padding: 18px 0 18px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.header__container-movies {
+  margin: 0 0 0 28px;
+  width: 100%;
+  padding: 13px 0 21px;
+}
+
+.header__container-saved-movies {
+  padding: 16px 0 20px;
+}
+
+.header__logo-img {
+  width: 38px;
+  height: 38px;
+  cursor: pointer;
+}
+
+.header__logo-img:hover {
+  opacity: 0.8;
+}
+
+.header__menu {
+  list-style: none;
+  padding: 0;
+}
+
+.menu-button-active {
+  width: 40px;
+  height: 43px;
+  background-color: transparent;
+  padding: 0;
+  border: 0;
+  cursor: pointer;
+}
+
+.menu-button-active:hover {
+  opacity: 0.8;
+}
+
+.menu-button {
+  display: none;
+}
+
+.menu-button-active::after {
+  content: url(../../images/burger.svg);
+}
+
+.header__menu.open {
+  display: flex;
+  margin: 0;
+  width: 100%;
+  background-color: transparent;
+}
+
+.menu {
+  margin-bottom: 5px;
+}
+
+.menu__list-auth {
+  font-weight: 500;
+  font-style: normal;
+  font-size: 10px;
+  line-height: 160%;
+  border: 0;
+  cursor: pointer;
+  color: #FFFFFF;
+  background-color: transparent;
+  transition: background-color 0.3s;
+  text-decoration: none;
+}
+
+menu__list-auth:hover {
+  opacity: 0.8;
+}
+
+.menu__list-auth:nth-child(2) {
+  background-color: #3DDC84;
+  border-radius: 3px;
+  color: #000000;
+  margin-left: 14px;
+  padding: 7px 12px;
+}
+
+@media screen and (min-width: 768px) {
+  .header__container {
+    width: 92.19%;
+    padding: 18px 0 20px;
+  }
+
+  .header__container-saved-movies {
+    padding: 14px 0 22px;
+  }
+
+  .header__container-profile {
+    padding: 13px 0 20px;
+  }
+
+  .header__container-movies {
+    padding: 13px 0 22px;
+  }
+
+  .movies-header {
+    width: 100%;
+    margin: 0;
+  }
+
+  .menu-button-active {
+    width: 44px;
+    height: 44px;
+  }
+
+  .header__menu.open {
+    font-size: 12px;
+    line-height: 133.33%;
+  }
+
+  .menu-list {
+    padding: 8px 20px;
+  }
+
+  .menu__list-auth {
+    font-size: 12px;
+    margin: 0;
+    padding: 8px 0 8px;
+  }
+  
+  .menu__list-auth:nth-child(2) {
+    margin-left: 30px;
+    padding: 8px 20px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .header__container {
+    width: 89%;
+    padding: 13px 0 15px;
+  }
+
+  .header__container-home-page {
+    padding: 18px 0 20px;
+  }
+
+  .header__container-movies {
+    margin: auto;
+    padding: 13px 0 15px;
+  }
+
+  .header__container-saved-movies {
+    padding: 13px 0 15px;
+  }
+
+  .menu-list-auth {
+    font-weight: 500;
+    font-style: normal;
+    font-size: 12px;
+    line-height: 160%;
+    margin: 0;
+    padding: 8px 0 8px;
+    border: 0;
+    cursor: pointer;
+    color: #FFFFFF;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    text-decoration: none;
+  }
+  
+  .menu-list-auth:hover {
+    opacity: 0.8;
+  }
+
+  .menu-list-auth:nth-child(2) {
+    background-color: #3DDC84;
+    border-radius: 3px;
+    color: #000000;
+    margin-left: 30px;
+    padding: 8px 20px;
+  }
+
+  .menu-list {
+    font-weight: 400;
+    font-style: normal;
+    font-size: 14px;
+    line-height: 128.57%;
+    margin-right: 20px;
+    padding: 10px 0;
+    border: 0;
+    cursor: pointer;
+    color: #FFFFFF;
+    background-color: transparent;
+    transition: background-color 0.3s;
+    text-decoration: none;
+  }
+  
+  .menu-list_account::after {
+    content: url(../../images/acount.svg);
+    background-color: #313131;
+    width: 30px;
+    height: 30px;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu-list_account_background::after {
+    background-color: #0F4157;
+  }
+
+  .menu-list:hover {
+    opacity: 0.8;
+  }
+
+  .menu-list:nth-child(3) {
+    margin-left: 30px;
+    margin-right: 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .menu-list.active {
+    font-weight: 500;
+  }
+
+  .menu {
+    display: flex;
+    align-items: center;
+    margin: 0;
+  }
+
+  .movies-header {
+    width: 100%;
+  }
+}

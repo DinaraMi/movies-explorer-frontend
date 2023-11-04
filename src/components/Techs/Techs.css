@@ -1,0 +1,156 @@
+.techs {
+  width: 88.75%;
+  color: #FFFFFF;
+  margin: auto;
+  background-color: #272727;
+}
+
+.techs__subtitle {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 121%;
+  letter-spacing: -0.75px;
+  padding: 113px 0 0 0;
+}
+
+.techs__separator {
+  margin-top: 27px;
+  height: 1px;
+  background-color: #000000;
+}
+
+.techs__container {
+  margin-top: 35px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.techs__title {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 121%;
+  letter-spacing: -1px;
+  margin: 25px 0 25px 0;
+}
+
+.techs__paragraph {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 11px;
+  line-height: 145.45%;
+  letter-spacing: -0.5px;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 50px;
+}
+
+.techs__list {
+  border-spacing: 10px;
+  border-collapse: separate;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  width: 63%;
+  margin: auto;
+  justify-content: space-between;
+  padding: 0;
+}
+
+.techs__item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 57px;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 12px;
+  line-height: 121%;
+  letter-spacing: -0.75px;
+  border-radius: 10px;
+  background-color: #303030;
+  padding: 0;
+}
+
+@media screen and (min-width: 768px) {
+  .techs{
+    width: 87%;
+    margin: 77px auto 0;
+    padding-bottom: 90px;
+  }
+  
+  .techs__subtitle {
+    padding: 90px 0 0 0;
+    font-size: 22px;
+    margin: 0;
+  }
+
+  .techs__title {
+    font-size: 50px;
+    line-height: 116%;
+    letter-spacing: -1.5px;
+    margin: 45px 0 20px 0;
+  }
+
+  .techs__paragraph {
+    width: 68.86%;
+    font-size: 12px;
+    line-height: 150%;
+    margin-bottom: 83px;
+  }
+
+  .techs__item {
+    width: 84px;
+    height: 57px;
+  }
+
+  .techs__list {
+    width: 97%;
+  }
+
+  .techs__separator {
+    margin-top: 24px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .techs{
+    width: 89%;
+    margin: 93px auto 0;
+    padding-bottom: 100px;
+  }
+
+  .techs__title {
+    margin: 55px 0 25px 0;
+  }
+
+  .techs__subtitle {
+    padding: 105px 0 0 0;
+    font-size: 22px;
+    margin: 0;
+  }
+
+  .techs__paragraph {
+    width: 40.4%;
+    font-size: 14px;
+    line-height: 142.86%;
+    margin-bottom: 100px;
+  }
+
+  .techs__item {
+    width: 90px;
+    height: 60px;
+  }
+
+  .techs__list {
+    width: 61%;
+  }
+
+  .techs__separator {
+    margin-top: 22px;
+  }
+}

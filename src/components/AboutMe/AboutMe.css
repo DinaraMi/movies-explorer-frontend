@@ -1,0 +1,130 @@
+.about-me {
+  width: 91.25%;
+  color: #FFFFFF;
+  margin: 140px auto 0;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto auto auto auto;
+  grid-auto-flow: row;
+}
+
+.about-me__subtitle {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 18px;
+  line-height: 121%;
+  letter-spacing: -0.75px;
+  margin: 0;
+}
+
+.about-me__separator {
+  height: 1px;
+  background-color: #DADADA;
+  margin: 27px 0 60px;
+}
+
+.about-me__title {
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 121%;
+  letter-spacing: -1px;
+  margin: 37px 0 20px;
+}
+
+.about-me__paragraph {
+  font-weight: 500;
+  font-style: normal;
+  font-size: 11px;
+  line-height: 145.45%;
+  margin: 10px 0 20px;
+}
+
+.about-me__photo {
+  width: 292px;
+  height: 352px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+@media screen and (min-width: 768px) {
+  .about-me {
+    width: 87%;
+    margin: 93px auto 0;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto auto auto;
+  }
+
+  .about-me__subtitle {
+    grid-column: 1 / span 1;
+    grid-row: 1 / span 1;
+    font-size: 22px;
+  }
+  
+  .about-me__separator {
+    grid-column: 1 / span 2;
+    grid-row: 2 / span 1;
+    margin: 22px 0 65px;
+  }
+
+  .about-me__title {
+    grid-column: 1 / span 1;
+    grid-row: 3 / span 1;
+    margin: 0;
+    font-size: 40px;
+    line-height: 100%;
+  }
+  
+  .about-me__description {
+    grid-column: 1 / span 1;
+    grid-row: 4 / span 1;
+  }
+  
+  .about-me__paragraph {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 150%;
+    margin-top: 0;
+  }
+
+  .about-me__paragraph:nth-child(1) {
+    margin-top: -65px;
+  }
+
+  .about-me__photo {
+    grid-column: 2 / span 1;
+    grid-row: 3 / span 2;
+    justify-self: end;
+    width: 255px;
+    height: 307px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .about-me {
+    width: 89%;
+    margin: 114px auto 0;
+  }
+
+  .about-me__title {
+    font-size: 50px;
+    line-height: 116%;
+  }
+
+  .about-me__paragraph:nth-child(1) {
+    font-size: 18px;
+    line-height: 111.11%;
+    margin-top: -83px;
+    margin-bottom: 27px;
+  }
+
+  .about-me__paragraph:nth-child(2) {
+    font-size: 14px;
+    line-height: 157.14%;
+  }
+
+  .about-me__photo {
+    width: 270px;
+    height: 327px;
+  }
+}

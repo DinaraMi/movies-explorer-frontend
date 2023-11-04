@@ -1,0 +1,99 @@
+.promo {
+  width: 88.75%;
+  padding-top: 65px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: #073042;
+}
+
+.promo::before{
+  content: url('../../images/PromoLogo.png');
+  width: 210px;
+  height: 206px;
+}
+
+.promo__description {
+  color: #FFFFFF;
+  text-align: center;
+}
+
+.promo__title {
+  margin: 45px 0 25px 0;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+  line-height: 126.66%;
+  letter-spacing: -1.3px;
+}
+
+.promo__subtitle {
+  width: 91.55%;
+  margin: auto;
+  text-align: center;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 13px;
+  line-height: 121%;
+}
+
+@media screen and (min-width: 768px) {
+  .promo {
+    width: 88.54%;
+    padding-top: 140px;
+  }
+
+  .promo::before {
+    width: 310px;
+    height: 304px;
+    content: url('../../images/promologo768.png');
+  }
+
+  .promo__title {
+    font-size: 40px;
+    line-height: 125%;
+    margin: 45px 0 23px 0;
+    letter-spacing: 0;
+  }
+
+  .promo__subtitle {
+    width: 36.72%;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .promo {
+    width: 89%;
+    padding-top: 70px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: start;
+  }
+
+  .promo::before {
+    grid-column: 2;
+    align-items: center;
+    content: url('../../images/promologo1280.png');
+  }
+  
+  .promo__description {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .promo__title {
+    margin: 0;
+    text-align: start;
+    width: 77%;
+    font-size: 50px;
+    line-height: 116%;
+  }
+
+  .promo__subtitle {
+    text-align: start;
+    margin: 35px 0 0 0;
+    width: 40%;
+  }
+}

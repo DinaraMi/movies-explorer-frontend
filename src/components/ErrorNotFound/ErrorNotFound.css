@@ -1,0 +1,64 @@
+.error-not-found {
+  width: 93.75%;
+  margin: auto;
+  color: #FFFFFF;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.error-not-found__number {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 80px;
+  line-height: 121%;
+  padding: 0;
+  margin: 329px 0 10px;
+}
+
+.error-not-found__paragraph {
+  margin-bottom: 284px;
+  margin-top: 0;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 121%;
+}
+
+.error-not-found__link {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 121%;
+  color: #4285F4;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.error-not-found__link:hover {
+  opacity: 0.8;
+}
+
+@media screen and (min-width: 768px) {
+  .error-not-found__number {
+    font-size: 140px;
+    margin: 408px 0 5px;
+  }
+
+  .error-not-found__paragraph {
+    margin-bottom: 183px;
+    font-size: 16px;
+  }
+
+  .error-not-found__link {
+    font-size: 14px;
+  }
+}
+
+@media screen and (min-width: 1280px) {
+  .error-not-found__number {
+    margin: 246px 0 5px;
+  }
+}

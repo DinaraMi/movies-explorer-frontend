@@ -1,0 +1,129 @@
+.popup{
+  width: 100%;
+  max-width: 520px;
+  max-height: 100%;
+  background-color: #202020;
+  font-family: "inter", Arial, sans-serif;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s linear 0.25s, opacity 0.25s linear;
+  z-index: 1000;
+}
+
+.popup::after {
+  content: url(../../images/close.svg);
+  width: 22px;
+  height: 22px;
+  background-color: transparent;
+  border: 0;
+  padding: 0;
+  position: absolute;
+  top: 13px;
+  right: 23px;
+  z-index: 40;
+  cursor: pointer;
+}
+
+.popup_opened{
+  visibility: visible;
+  opacity: 1;
+  transition-delay: 0s;
+}
+
+.popup__close:hover {
+  opacity: 0.8;
+}
+
+.popup__menu {
+  margin: 145px auto 0;
+}
+
+.popup__menu-all {
+  padding: 0;
+  margin: 0;
+}
+
+.popup-menu-list {
+  list-style: none;
+  padding-bottom: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.popup-menu-list__item {
+  color: #FFFFFF;
+  text-decoration: none;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 121%;
+  cursor: pointer;
+}
+
+.popup-menu-list:hover {
+  opacity: 0.8;
+}
+
+.popup-menu-list:nth-child(3) {
+  padding-bottom: 444px;
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 114.28%;
+}
+
+.popup-menu-list__item_acount {
+  text-decoration: none;
+  font-size: 14px;
+  line-height: 114.28%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.popup-menu-list__item_acount::after {
+  content: url('../../images/acount.svg');
+  background-color: #313131;
+  display: flex;
+  width: 30px;
+  height: 30px;
+  border-radius: 6px;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+}
+
+.popup-menu-list__item_acount::after:hover {
+  opacity: 0.8;
+}
+
+.popup-menu-list.active {
+  text-decoration: underline;
+  color: #FFFFFF;
+}
+
+@media screen and (min-width: 768px) {
+  .popup::after {
+    top: 22px;
+    right: 32px;
+  }
+
+  .popup__menu {
+    margin: 160px auto 0;
+  }
+
+  .popup-menu-list:nth-child(3) {
+    padding-bottom: 620px;
+  }
+
+  .popup-menu-list {
+    padding-bottom: 28px;
+  }
+}
