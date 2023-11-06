@@ -1,11 +1,11 @@
 import MoviesCardList from './MoviesCardList/MoviesCardList';
 import SearchForm from './SearchForm/SearchForm';
 
-function Movies({ handleMoviesSaved, handleSaveMovie, handleRemoveMovie, savedMovies, onSearch, searchResults }) {
+function Movies({ handleMoviesSaved, onFilter, handleSaveMovie, handleRemoveMovie, savedMovies, onSearch, searchResults }) {
 
   return (
     <main className='movies'>
-      <SearchForm onSearch={onSearch} />
+      <SearchForm onSearch={onSearch} onFilter={onFilter}/>
       <MoviesCardList
         savedMovies={savedMovies}
         searchResults={searchResults}

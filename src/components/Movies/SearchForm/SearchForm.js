@@ -1,25 +1,43 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 import Preloader from '../../Preloader/Preloader';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox'
 
-function SearchForm({ onSearch, isLoading }) {
+function SearchForm({ onSearch, onFilter, isLoading }) {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   const [searchQuery, setSearchQuery] = useState('');
   const [searchResults, setSearchResults] = useState([]);
   const [error, setError] = useState(null);
 
+  const saveSearchDataToLocalStorage = (query, results) => {
+    localStorage.setItem('searchQuery', query);
+    localStorage.setItem('searchResults', JSON.stringify(results));
+  };
+
+  useEffect(() => {
+    const savedQuery = localStorage.getItem('searchQuery');
+    const savedResults = localStorage.getItem('searchResults');
+
+    if (savedQuery && savedResults) {
+      setSearchQuery(savedQuery);
+      setSearchResults(JSON.parse(savedResults));
+    }
+  }, []);
+
   const handleSearchInputChange = (e) => {
-    setSearchQuery(e.target.value);
+    const newSearchQuery = e.target.value;
+    setSearchQuery(newSearchQuery);
+    onFilter(newSearchQuery);
+    saveSearchDataToLocalStorage(newSearchQuery, searchResults);
   };
 
   const handleSearchFormSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim() === '') {
       setError('Нужно ввести ключевое слово');
-      setSearchResults([]);
+      // onFilter('');
     } else {
       setError(null);
       onSearch(searchQuery);

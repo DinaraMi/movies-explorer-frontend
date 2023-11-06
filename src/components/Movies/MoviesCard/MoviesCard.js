@@ -20,13 +20,23 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
     handleRemoveMovie(movie);
   };
 
+  const convertDuration = (duration) => {
+    const minutes = duration % 60;
+    const hours = Math.floor(duration / 60);
+    if (hours < 1) {
+      return `${minutes}м`;
+    } else {
+      return `${hours}ч ${minutes}м`;
+    }
+  }
+
   return (
     <div className="movie-card">
       <Link to={movie.trailerLink} target="_blank" rel="noopener noreferrer" className='trailerLink'>
       <div className='movie-card__content'>
         <div className='movie-card__description'>
           <h2 className="movie-card__title">{movie.nameRU}</h2>
-          <p className="movie-card__duration">{movie.duration}</p>
+          <p className="movie-card__duration">{(convertDuration(movie.duration))}</p>
         </div>
         <img className="movie-card__image" src={movie.image} alt={movie.nameRU} />
         <form onSubmit={isSavedMoviesPage ? handleRemoveMovieClick : handleSaveMovieClick}>

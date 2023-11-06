@@ -143,6 +143,7 @@ function App() {
     navigate('/');
   };
 
+
   const handleSearch = (searchQuery) => {
     setLoading(true);
     apiMovies.getSearchMovies(searchQuery)
@@ -162,6 +163,9 @@ function App() {
         }));
         setSearchResults(formatMovies);
         localStorage.setItem('searchResults', JSON.stringify(formatMovies));
+        if (formatMovies.length > 0) {
+          // console.log("Первый фильм в массиве:", formatMovies[0]);
+        }
       })
       .catch((err) => {
         err('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
@@ -184,6 +188,16 @@ function App() {
     }
   }, []);
   
+  const filterMovies = (searchQuery) => {
+    const lowercaseQuery = searchQuery.toLowerCase();
+    const filteredMovies = searchResults.filter((movie) => {
+      const nameRU = movie.nameRU.toLowerCase();
+      const nameEN = movie.nameEN.toLowerCase();
+      return nameRU.includes(lowercaseQuery) || nameEN.includes(lowercaseQuery);
+    });
+    setSearchResults(filteredMovies);
+  };
+
   // const handleSaveMovie = (movie) => {
   //   setSavedMovies([...savedMovies, movie]);
   // };
@@ -233,7 +247,13 @@ useEffect(() => {
 }, [loggedIn]);
 
 const handleSaveMovie = (movie) => {
-  api.addSaved(movie.movieId, movie)
+  const userId = currentUser._id;
+  const movieWithUserId = {
+    ...movie,
+    owner: userId
+  };
+  console.log('Movie to be sent:', movieWithUserId);
+  api.addSaved( movie, movieWithUserId)
     .then((newCard) => {
       setSavedMovies([...savedMovies, newCard]);
       const updatedMovies = searchResults.map(searchMovie => {
@@ -268,6 +288,7 @@ const handleRemoveMovie = (movieToRemove) => {
 };
 
 
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
@@ -280,6 +301,7 @@ const handleRemoveMovie = (movieToRemove) => {
               searchQuery={searchQuery}
               onSearch={handleSearch}
               searchResults={searchResults}
+              onFilter={filterMovies}
               handleSaveMovie={handleSaveMovie}
               handleRemoveMovie={handleRemoveMovie}
               // handleMoviesSaved={handleMoviesSaved}

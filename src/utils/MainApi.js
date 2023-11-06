@@ -40,7 +40,7 @@ class Api {
       .then(res => this._checkResponse(res));
   }
   
-  addSaved(movie, movieId) {
+  addSaved(movie, userId) {
     const token = localStorage.getItem('token');
     return fetch(`${this._url}/movies`, {
       method: 'POST',
@@ -48,11 +48,12 @@ class Api {
         authorization: `Bearer ${token}`
       },
       body: JSON.stringify({
+        owner: userId,
         image: movie.image,
         thumbnail: movie.thumbnail,
         trailerLink: movie.trailerLink,
         movieId: movie.movieId,
-        country: movie.country || "Не известно",
+        country: String(movie.country || "Нет"),
         director: movie.director,
         duration: movie.duration,
         description: movie.description,
