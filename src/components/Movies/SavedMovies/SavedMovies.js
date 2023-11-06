@@ -9,7 +9,7 @@ function SavedMovies({ savedMovies, handleRemoveMovie }) {
       <SearchForm />
       <div className='saved-movies__content'>
         {savedMovies.map((movie) => (
-          <MoviesCard key={movie.id} movie={movie} handleRemoveMovie={handleRemoveMovie} />
+          <MoviesCard key={movie.movieId} movie={movie} handleRemoveMovie={handleRemoveMovie} />
         ))}
       </div>
     </div>

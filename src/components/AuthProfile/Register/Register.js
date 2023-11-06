@@ -43,6 +43,7 @@ function Register({ onRegister }) {
         gray="Уже зарегистрированы?"
         blue="Войти"
         link="/signin"
+        isActive={isButtonActive}
       >
         <Input
           id="name"
@@ -83,14 +84,6 @@ function Register({ onRegister }) {
           placeholder="Пароль"
           error={errors.password}
         />
-        <button
-          className={`auth__submit-register ${isButtonActive ? '' : 'auth__submit-register_inactive'}`}
-          type="submit"
-          aria-label="Зарегистрироваться"
-          disabled={!isButtonActive}
-        >
-          Зарегистрироваться
-        </button>
       </AuthForm>
     </main>
   );

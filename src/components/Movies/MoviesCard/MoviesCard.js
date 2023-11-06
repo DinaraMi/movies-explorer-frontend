@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import saved from '../../../images/saved.svg';
 import removeIcon from '../../../images/removeIcon.svg';
@@ -10,40 +10,40 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
   const [isRemoved, setIsRemoved] = useState(false);
   const isSavedMoviesPage = location.pathname === '/saved-movies';
 
-  const handleSaveClick = (e) => {
+  const handleSaveMovieClick = (e) => {
     e.preventDefault();
     handleSaveMovie(movie);
-    setIsSaved(true);
   };
-
-  const handleRemoveClick = (e) => {
+  
+  const handleRemoveMovieClick = (e) => {
     e.preventDefault();
     handleRemoveMovie(movie);
-    setIsRemoved(true);
   };
 
   return (
     <div className="movie-card">
+      <Link to={movie.trailerLink} target="_blank" rel="noopener noreferrer" className='trailerLink'>
       <div className='movie-card__content'>
         <div className='movie-card__description'>
           <h2 className="movie-card__title">{movie.nameRU}</h2>
           <p className="movie-card__duration">{movie.duration}</p>
         </div>
         <img className="movie-card__image" src={movie.image} alt={movie.nameRU} />
-        <form onSubmit={isSavedMoviesPage ? handleRemoveClick : handleSaveClick}>
+        <form onSubmit={isSavedMoviesPage ? handleRemoveMovieClick : handleSaveMovieClick}>
           {isSavedMoviesPage ? (
             <button type="submit" className="movie-card__remove-icon">
-              <img className="movie-card__remove-icon-img" src={removeIcon} alt="удалить" onClick={handleRemoveClick} />
+              <img className="movie-card__remove-icon-img" src={removeIcon} alt="удалить" onClick={handleRemoveMovieClick} />
             </button>
-          ) : <button type="submit" className={isSaved ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveClick}>
-            {isSaved ? (
-              <img className="movie-card__save-icon-saved-img" src={saved} alt="Сохранено" />
-            ) : (
-              "Сохранить"
-            )}
-          </button>}
+          ) : <button type="submit" className={isSaved ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveMovieClick}>
+          {isSaved ? (
+            <img className="movie-card__save-icon-saved-img" src={saved} alt="Сохранено" />
+          ) : (
+            "Сохранить"
+          )}
+        </button>}
         </form>
       </div>
+      </Link>
     </div>
   );
 }

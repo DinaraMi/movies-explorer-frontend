@@ -35,6 +35,7 @@ function Login({ onLogin }) {
         gray="Ещё не зарегистрированы?"
         blue="Регистрация"
         link="/signup"
+        isActive={isButtonActive}
       >
         <Input
           id="email"

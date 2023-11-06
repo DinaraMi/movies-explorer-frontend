@@ -31,7 +31,7 @@
   cursor: pointer;
 }
 
-.auth__submit-register_inactive {
+.auth__submit_inactive {
   background-color: #F8F8F8;
 }
 

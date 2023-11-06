@@ -30,6 +30,49 @@ class Api {
     })
       .then(this._checkResponse);
   }
+  getSavedMovies() {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._url}/movies`, {
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    })
+      .then(res => this._checkResponse(res));
+  }
+  
+  addSaved(movie, movieId) {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._url}/movies`, {
+      method: 'POST',
+      headers: {
+        authorization: `Bearer ${token}`
+      },
+      body: JSON.stringify({
+        image: movie.image,
+        thumbnail: movie.thumbnail,
+        trailerLink: movie.trailerLink,
+        movieId: movie.movieId,
+        country: movie.country || "Не известно",
+        director: movie.director,
+        duration: movie.duration,
+        description: movie.description,
+        year: movie.year,
+        nameRU: movie.nameRU,
+        nameEN: movie.nameEN,
+      }),
+    })
+      .then(this._checkResponse);
+  }
+  deleteSaved(movieId) {
+    const token = localStorage.getItem('token');
+    return fetch(`${this._url}/movies/${movieId}`, {
+      method: 'DELETE',
+      headers: {
+        authorization: `Bearer ${token}`
+      }
+    })
+      .then(this._checkResponse);
+  }
 }
 
 const api = new Api({

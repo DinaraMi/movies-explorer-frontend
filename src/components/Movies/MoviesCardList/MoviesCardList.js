@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
-import moviesData from '../data/moviesData';
 import useViewport from '../../../hooks/useViewport';
 
-function MoviesCardList({ handleSaveMovie }) {
-  const movies = moviesData;
-  const [visibleMovies, setVisibleMovies] = useState(5);
+function MoviesCardList({ handleMoviesSaved, handleSaveMovie, handleRemoveMovie, searchResults, savedMovies }) {
   const { width } = useViewport();
   const moviesToShowRef = useRef(5);
 
@@ -18,24 +15,33 @@ function MoviesCardList({ handleSaveMovie }) {
     } else {
       moviesToShowRef.current = 5;
     }
-
-    setVisibleMovies(moviesToShowRef.current);
   }, [width]);
 
+  const [visibleMovies, setVisibleMovies] = useState(moviesToShowRef.current);
+
   const handleShowMoreClick = () => {
-    setVisibleMovies(visibleMovies + 2);
+    const newVisibleMovies = visibleMovies + 2;
+    setVisibleMovies(newVisibleMovies);
+    if (newVisibleMovies >= searchResults.length) {
+      setVisibleMovies(searchResults.length);
+    }
   };
 
-  const moviesToDisplay = movies.slice(0, visibleMovies);
+  const flatSearchResults = searchResults.flat();
+  const moviesToDisplay = flatSearchResults.slice(0, visibleMovies);
 
   return (
     <section className="movies-card-list">
       <div className='movies-card-list__content'>
         {moviesToDisplay.map((movie) => (
-          <MoviesCard key={movie.id} movie={movie} handleSaveMovie={handleSaveMovie} />
+          <MoviesCard key={movie.movieId} movie={movie} 
+          onMovieSaved={handleMoviesSaved} 
+          handleSaveMovie={handleSaveMovie}
+          onRemoveMovie={handleRemoveMovie}
+          savedMovies={savedMovies} />
         ))}
       </div>
-      {visibleMovies < movies.length && (
+      {visibleMovies < flatSearchResults.length && (
         <button className="movies-card-list__button" onClick={handleShowMoreClick}>
           Ещё
         </button>

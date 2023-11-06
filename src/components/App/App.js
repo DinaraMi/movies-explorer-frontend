@@ -16,25 +16,19 @@ import Preloader from '../Preloader/Preloader';
 import CurrentUserContext from '../../contexts/CurrentUserContext';
 import * as authentication from '../../utils/authentication.js';
 import api from '../../utils/MainApi';
+import apiMovies from '../../utils/MoviesApi';
 
 function App() {
   const [isLoading, setLoading] = useState(false);
   const [loggedIn, setLoggedIn] = useState(false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [savedMovies, setSavedMovies] = useState([]);
+  const [searchResults, setSearchResults] = useState([]);
+  const [searchQuery, setSearchQuery] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
   const displayHeader = ['/', '/saved-movies', '/movies', '/profile'].includes(location.pathname);
   const displayFooter = ['/', '/saved-movies', '/movies'].includes(location.pathname);
-
-  const handleSaveMovie = (movie) => {
-    setSavedMovies([...savedMovies, movie]);
-  };
-
-  const handleRemoveMovie = (movieToRemove) => {
-    const updatedMovies = savedMovies.filter(movie => movie.id !== movieToRemove.id);
-    setSavedMovies(updatedMovies);
-  };
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -138,24 +132,162 @@ function App() {
   }
 
   const handleLogout = () => {
+    localStorage.removeItem('searchResults');
+    localStorage.removeItem('searchQuery');
+    localStorage.removeItem('shortMovies');
+    setSearchResults([]);
+    setSearchQuery('');
+  // setShortMovies(false);
     localStorage.removeItem('token');
     setLoggedIn(false);
     navigate('/');
   };
 
+  const handleSearch = (searchQuery) => {
+    setLoading(true);
+    apiMovies.getSearchMovies(searchQuery)
+      .then((res) => {
+        const formatMovies = res.map((filterMovie) => ({
+          image: `https://api.nomoreparties.co${filterMovie.image.url}`,
+          thumbnail: `https://api.nomoreparties.co${filterMovie.image.url}`,
+          trailerLink: filterMovie.trailerLink,
+          movieId: filterMovie.id,
+          country: filterMovie.country || "Не известно",
+          director: filterMovie.director,
+          duration: filterMovie.duration,
+          description: filterMovie.description,
+          year: filterMovie.year,
+          nameRU: filterMovie.nameRU,
+          nameEN: filterMovie.nameEN,
+        }));
+        setSearchResults(formatMovies);
+        localStorage.setItem('searchResults', JSON.stringify(formatMovies));
+      })
+      .catch((err) => {
+        err('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
+        console.error(err);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
+  };
+
+  useEffect(() => {
+    const savedSearchResults = JSON.parse(localStorage.getItem('searchResults'));
+    const savedQuery = localStorage.getItem('searchQuery');
+    if (savedSearchResults) {
+      setSearchResults(savedSearchResults);
+    }
+    if (savedQuery) {
+      setSearchQuery(savedQuery);
+      handleSearch(savedQuery)
+    }
+  }, []);
+  
+  // const handleSaveMovie = (movie) => {
+  //   setSavedMovies([...savedMovies, movie]);
+  // };
+
+  // const handleRemoveMovie = (movieToRemove) => {
+  //   const updatedMovies = savedMovies.filter(movie => movie.id !== movieToRemove.id);
+  //   setSavedMovies(updatedMovies);
+  // };
+  
+  // const handleMoviesSaved = (movie) => {
+  //   const isLiked = movie.some(i => i.id === currentUser.id);
+  //   if (isLiked) {
+  //     apiMovies.addSaved(movie._id)
+  //       .then((newCard) => {
+  //         setSavedMovies((state) => state.map((c) => c.id === movie.id ? newCard : c));
+  //       })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   } else {
+  //     apiMovies.deleteSaved(movie._id).then((newCard) => {
+  //       setSavedMovies((state) => state.map((c) => c.id === movie.id ? newCard : c));
+  //     })
+  //       .catch((error) => {
+  //         console.log(error);
+  //       });
+  //   }
+  // };
+
+  // При старте приложения
+useEffect(() => {
+  if (loggedIn) {
+    // Запрос к серверу для получения сохраненных фильмов
+    api.getSavedMovies()
+      .then((savedMovies) => {
+        // Обновление состояния с флагом isLiked
+        const updatedMovies = searchResults.map(movie => ({
+          ...movie,
+          isLiked: savedMovies.some(savedMovie => savedMovie.movieId === movie.movieId),
+        }));
+        setSearchResults(updatedMovies);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }
+}, [loggedIn]);
+
+const handleSaveMovie = (movie) => {
+  api.addSaved(movie.movieId, movie)
+    .then((newCard) => {
+      setSavedMovies([...savedMovies, newCard]);
+      const updatedMovies = searchResults.map(searchMovie => {
+        if (searchMovie.movieId === newCard.movieId) {
+          return { ...searchMovie, isLiked: true };
+        }
+        return searchMovie;
+      });
+      setSearchResults(updatedMovies);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+const handleRemoveMovie = (movieToRemove) => {
+  api.deleteSaved(movieToRemove._id)
+    .then(() => {
+      const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== movieToRemove._id);
+      setSavedMovies(updatedSavedMovies);
+      const updatedMovies = searchResults.map(searchMovie => {
+        if (searchMovie.movieId === movieToRemove.movieId) {
+          return { ...searchMovie, isLiked: false };
+        }
+        return searchMovie;
+      });
+      setSearchResults(updatedMovies);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
         <div className="page">
-          {displayHeader && <Header loggedIn={loggedIn} currentUser={currentUser} onLogout={handleLogout}/>}
+          {displayHeader && <Header loggedIn={loggedIn} currentUser={currentUser} onLogout={handleLogout} />}
           {isLoading ? <Preloader /> : null}
           <Routes>
             <Route path="/" element={<Main isLoading={isLoading} />} />
-            <Route path="/movies" element={<Movies handleSaveMovie={handleSaveMovie} />} />
+            <Route path="/movies" element={<Movies
+              searchQuery={searchQuery}
+              onSearch={handleSearch}
+              searchResults={searchResults}
+              handleSaveMovie={handleSaveMovie}
+              handleRemoveMovie={handleRemoveMovie}
+              // handleMoviesSaved={handleMoviesSaved}
+              savedMovies={savedMovies} />} />
             <Route path='/saved-movies' element={<SavedMovies savedMovies={savedMovies} handleRemoveMovie={handleRemoveMovie} />} />
             <Route path="/signin" element={<Login onLogin={handleLogin} />} />
             <Route path="/signup" element={<Register onRegister={handleRegister} />} />
-            <Route path="/profile" element={<Profile onUpdateUser={handleUpdateUser} onLogout={handleLogout}/>} />
+            <Route path="/profile" element={<Profile onUpdateUser={handleUpdateUser} onLogout={handleLogout} />} />
             <Route path="*" element={<ErrorNotFound />} />
           </Routes>
           {displayFooter && <Footer />}
