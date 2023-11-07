@@ -9,6 +9,7 @@ function Profile({ onUpdateUser, onLogout }) {
   const { values, handleChange, errors, isValid } = useFormValidation();
   const [isEditing, setIsEditing] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(true);
+  const [submitError, setSubmitError] = useState('');
 
   useEffect(() => {
     if (currentUser) {
@@ -32,19 +33,16 @@ function Profile({ onUpdateUser, onLogout }) {
           email: values.email,
         });
         setIsEditing(false);
-        // Если все успешно, сбросить ошибки
         errors.name = '';
         errors.email = '';
+        setSubmitError('');
       } catch (err) {
-        // Установить ошибку валидации
-        errors.name = `При обновлении профиля произошла ошибка: ${err.message}`;
-        errors.email = `При обновлении профиля произошла ошибка: ${err.message}`;
+        setSubmitError(`При обновлении профиля произошла ошибка: ${err.message}`);
       }
     }
   };
-
+  
   useEffect(() => {
-    // Обновить состояние активности кнопки при изменении isValid и значений полей
     setIsButtonActive(isValid && values.name && values.email);
   }, [isValid, values.name, values.email]);
 
@@ -86,6 +84,7 @@ function Profile({ onUpdateUser, onLogout }) {
           />
         </div>
         {errors.email && <span className="profile__error">{errors.email}</span>}
+        {submitError && <span className="profile__error">{submitError}</span>}
         {isEditing ? (
           <button
             className={`profile__submit ${isButtonActive ? '' : 'profile__submit_inactive'}`}

@@ -25,6 +25,7 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLiked, setIsLiked] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
   const displayHeader = ['/', '/saved-movies', '/movies', '/profile'].includes(location.pathname);
@@ -125,19 +126,24 @@ function App() {
       .then((res) => {
         setCurrentUser(res);
       })
-      .catch(console.error)
+      .catch((error) => {
+        if (error.response && error.response.status === 409) {
+          alert('Пользователь с таким email уже существует');
+        } else {
+          console.error(error);
+        }
+      })
       .finally(() => {
         setLoading(false);
       });
-  }
-
+  };
+  
   const handleLogout = () => {
     localStorage.removeItem('searchResults');
     localStorage.removeItem('searchQuery');
     localStorage.removeItem('shortMovies');
     setSearchResults([]);
     setSearchQuery('');
-  // setShortMovies(false);
     localStorage.removeItem('token');
     setLoggedIn(false);
     navigate('/');
@@ -163,9 +169,9 @@ function App() {
         }));
         setSearchResults(formatMovies);
         localStorage.setItem('searchResults', JSON.stringify(formatMovies));
-        if (formatMovies.length > 0) {
-          // console.log("Первый фильм в массиве:", formatMovies[0]);
-        }
+        // if (formatMovies.length > 0) {
+        //   console.log("Поле country первой карточки:", formatMovies[0].country);
+        // }
       })
       .catch((err) => {
         err('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
@@ -184,56 +190,14 @@ function App() {
     }
     if (savedQuery) {
       setSearchQuery(savedQuery);
-      handleSearch(savedQuery)
+      handleSearch(savedQuery);
     }
   }, []);
   
-  const filterMovies = (searchQuery) => {
-    const lowercaseQuery = searchQuery.toLowerCase();
-    const filteredMovies = searchResults.filter((movie) => {
-      const nameRU = movie.nameRU.toLowerCase();
-      const nameEN = movie.nameEN.toLowerCase();
-      return nameRU.includes(lowercaseQuery) || nameEN.includes(lowercaseQuery);
-    });
-    setSearchResults(filteredMovies);
-  };
-
-  // const handleSaveMovie = (movie) => {
-  //   setSavedMovies([...savedMovies, movie]);
-  // };
-
-  // const handleRemoveMovie = (movieToRemove) => {
-  //   const updatedMovies = savedMovies.filter(movie => movie.id !== movieToRemove.id);
-  //   setSavedMovies(updatedMovies);
-  // };
-  
-  // const handleMoviesSaved = (movie) => {
-  //   const isLiked = movie.some(i => i.id === currentUser.id);
-  //   if (isLiked) {
-  //     apiMovies.addSaved(movie._id)
-  //       .then((newCard) => {
-  //         setSavedMovies((state) => state.map((c) => c.id === movie.id ? newCard : c));
-  //       })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   } else {
-  //     apiMovies.deleteSaved(movie._id).then((newCard) => {
-  //       setSavedMovies((state) => state.map((c) => c.id === movie.id ? newCard : c));
-  //     })
-  //       .catch((error) => {
-  //         console.log(error);
-  //       });
-  //   }
-  // };
-
-  // При старте приложения
 useEffect(() => {
   if (loggedIn) {
-    // Запрос к серверу для получения сохраненных фильмов
     api.getSavedMovies()
       .then((savedMovies) => {
-        // Обновление состояния с флагом isLiked
         const updatedMovies = searchResults.map(movie => ({
           ...movie,
           isLiked: savedMovies.some(savedMovie => savedMovie.movieId === movie.movieId),
@@ -247,13 +211,7 @@ useEffect(() => {
 }, [loggedIn]);
 
 const handleSaveMovie = (movie) => {
-  const userId = currentUser._id;
-  const movieWithUserId = {
-    ...movie,
-    owner: userId
-  };
-  console.log('Movie to be sent:', movieWithUserId);
-  api.addSaved( movie, movieWithUserId)
+  api.addSaved(movie)
     .then((newCard) => {
       setSavedMovies([...savedMovies, newCard]);
       const updatedMovies = searchResults.map(searchMovie => {
@@ -287,8 +245,6 @@ const handleRemoveMovie = (movieToRemove) => {
     });
 };
 
-
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
@@ -301,11 +257,10 @@ const handleRemoveMovie = (movieToRemove) => {
               searchQuery={searchQuery}
               onSearch={handleSearch}
               searchResults={searchResults}
-              onFilter={filterMovies}
               handleSaveMovie={handleSaveMovie}
               handleRemoveMovie={handleRemoveMovie}
-              // handleMoviesSaved={handleMoviesSaved}
-              savedMovies={savedMovies} />} />
+              savedMovies={savedMovies}
+              isLiked={isLiked} />} />
             <Route path='/saved-movies' element={<SavedMovies savedMovies={savedMovies} handleRemoveMovie={handleRemoveMovie} />} />
             <Route path="/signin" element={<Login onLogin={handleLogin} />} />
             <Route path="/signup" element={<Register onRegister={handleRegister} />} />

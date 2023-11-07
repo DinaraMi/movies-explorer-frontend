@@ -3,7 +3,7 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import useViewport from '../../../hooks/useViewport';
 
-function MoviesCardList({ handleMoviesSaved, handleSaveMovie, handleRemoveMovie, searchResults, savedMovies }) {
+function MoviesCardList({ handleMoviesSaved, handleSaveMovie, handleRemoveMovie, searchResults, savedMovies, isLiked }) {
   const { width } = useViewport();
   const moviesToShowRef = useRef(5);
 
@@ -38,7 +38,8 @@ function MoviesCardList({ handleMoviesSaved, handleSaveMovie, handleRemoveMovie,
           onMovieSaved={handleMoviesSaved} 
           handleSaveMovie={handleSaveMovie}
           onRemoveMovie={handleRemoveMovie}
-          savedMovies={savedMovies} />
+          savedMovies={savedMovies}
+          isLiked={isLiked} />
         ))}
       </div>
       {visibleMovies < flatSearchResults.length && (

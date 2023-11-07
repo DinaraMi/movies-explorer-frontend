@@ -40,26 +40,26 @@ class Api {
       .then(res => this._checkResponse(res));
   }
   
-  addSaved(movie, userId) {
+  addSaved(data ) {
     const token = localStorage.getItem('token');
     return fetch(`${this._url}/movies`, {
       method: 'POST',
       headers: {
-        authorization: `Bearer ${token}`
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        owner: userId,
-        image: movie.image,
-        thumbnail: movie.thumbnail,
-        trailerLink: movie.trailerLink,
-        movieId: movie.movieId,
-        country: String(movie.country || "Нет"),
-        director: movie.director,
-        duration: movie.duration,
-        description: movie.description,
-        year: movie.year,
-        nameRU: movie.nameRU,
-        nameEN: movie.nameEN,
+        image: data.image,
+        thumbnail: data.thumbnail,
+        trailerLink: data.trailerLink,
+        movieId: data.movieId,
+        country: data.country || "Нет",
+        director: data.director,
+        duration: data.duration,
+        description: data.description,
+        year: data.year,
+        nameRU: data.nameRU,
+        nameEN: data.nameEN,
       }),
     })
       .then(this._checkResponse);
@@ -69,7 +69,8 @@ class Api {
     return fetch(`${this._url}/movies/${movieId}`, {
       method: 'DELETE',
       headers: {
-        authorization: `Bearer ${token}`
+        authorization: `Bearer ${token}`,
+        'Content-Type': 'application/json'
       }
     })
       .then(this._checkResponse);

@@ -1,9 +1,6 @@
 import './FilterCheckbox.css';
 
-function FilterCheckbox({ checked, onShortMoviesChange }) {
-  // const handleCheckboxChange = () => {
-  //   onShortMoviesChange();
-  // }
+function FilterCheckbox() {
 
   return (
     <section className='filterCheckbox'>
@@ -11,8 +8,6 @@ function FilterCheckbox({ checked, onShortMoviesChange }) {
         <input type="checkbox"
           id="short-films"
           className="checkbox-input"
-          // checked={checked}
-          // onChange={handleCheckboxChange} 
           />
         <div className="oval">
           <div className="circle-container">
@@ -23,7 +18,6 @@ function FilterCheckbox({ checked, onShortMoviesChange }) {
       <h2 className='filterCheckbox__title'>Короткометражки</h2>
     </section>
   )
-
 }
 
 export default FilterCheckbox;

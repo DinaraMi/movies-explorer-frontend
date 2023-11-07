@@ -4,10 +4,10 @@ import './MoviesCard.css';
 import saved from '../../../images/saved.svg';
 import removeIcon from '../../../images/removeIcon.svg';
 
-function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
+function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, isLiked }) {
   const location = useLocation();
-  const [isSaved, setIsSaved] = useState(false);
-  const [isRemoved, setIsRemoved] = useState(false);
+  // const [isLiked, setIsLiked] = useState(false);
+  // const [isRemoved, setIsRemoved] = useState(false);
   const isSavedMoviesPage = location.pathname === '/saved-movies';
 
   const handleSaveMovieClick = (e) => {
@@ -44,8 +44,8 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
             <button type="submit" className="movie-card__remove-icon">
               <img className="movie-card__remove-icon-img" src={removeIcon} alt="удалить" onClick={handleRemoveMovieClick} />
             </button>
-          ) : <button type="submit" className={isSaved ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveMovieClick}>
-          {isSaved ? (
+          ) : <button type="submit" className={isLiked ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveMovieClick}>
+          {isLiked ? (
             <img className="movie-card__save-icon-saved-img" src={saved} alt="Сохранено" />
           ) : (
             "Сохранить"
