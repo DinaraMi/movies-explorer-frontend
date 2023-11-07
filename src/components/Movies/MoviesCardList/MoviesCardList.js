@@ -3,24 +3,28 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import useViewport from '../../../hooks/useViewport';
 
-function MoviesCardList({ handleMoviesSaved, handleSaveMovie, handleRemoveMovie, searchResults, savedMovies, isLiked }) {
+function MoviesCardList({ handleMoviesSaved, handleSaveMovie, handleRemoveMovie, searchResults, savedMovies }) {
   const { width } = useViewport();
   const moviesToShowRef = useRef(5);
-
-  useEffect(() => {
-    if (width >= 1280) {
-      moviesToShowRef.current = 12;
-    } else if (width >= 768) {
-      moviesToShowRef.current = 8;
-    } else {
-      moviesToShowRef.current = 5;
-    }
-  }, [width]);
-
   const [visibleMovies, setVisibleMovies] = useState(moviesToShowRef.current);
 
+  useEffect(() => {
+    if (width >= 1165) {
+      moviesToShowRef.current = 12;
+    } else if (width >= 657) {
+      moviesToShowRef.current = 8;
+    } else if (width >= 320) {
+      moviesToShowRef.current = 5;
+    }
+    setVisibleMovies(moviesToShowRef.current);
+  }, [width]);
+
   const handleShowMoreClick = () => {
-    const newVisibleMovies = visibleMovies + 2;
+    let additionalMovies = 2;
+    if (width >= 1165) {
+      additionalMovies = 3;
+    }
+    const newVisibleMovies = visibleMovies + additionalMovies;
     setVisibleMovies(newVisibleMovies);
     if (newVisibleMovies >= searchResults.length) {
       setVisibleMovies(searchResults.length);
@@ -34,12 +38,12 @@ function MoviesCardList({ handleMoviesSaved, handleSaveMovie, handleRemoveMovie,
     <section className="movies-card-list">
       <div className='movies-card-list__content'>
         {moviesToDisplay.map((movie) => (
-          <MoviesCard key={movie.movieId} movie={movie} 
-          onMovieSaved={handleMoviesSaved} 
-          handleSaveMovie={handleSaveMovie}
-          onRemoveMovie={handleRemoveMovie}
-          savedMovies={savedMovies}
-          isLiked={isLiked} />
+          <MoviesCard key={movie.movieId} movie={movie}
+            onMovieSaved={handleMoviesSaved}
+            handleSaveMovie={handleSaveMovie}
+            onRemoveMovie={handleRemoveMovie}
+            savedMovies={savedMovies}
+            isLiked={movie.isLiked} />
         ))}
       </div>
       {visibleMovies < flatSearchResults.length && (

@@ -169,9 +169,6 @@ function App() {
         }));
         setSearchResults(formatMovies);
         localStorage.setItem('searchResults', JSON.stringify(formatMovies));
-        // if (formatMovies.length > 0) {
-        //   console.log("Поле country первой карточки:", formatMovies[0].country);
-        // }
       })
       .catch((err) => {
         err('Во время запроса произошла ошибка. Возможно, проблема с соединением или сервер недоступен. Подождите немного и попробуйте ещё раз')
@@ -210,10 +207,18 @@ useEffect(() => {
   }
 }, [loggedIn]);
 
+useEffect(() => {
+  const savedMoviesFromLocalStorage = JSON.parse(localStorage.getItem('savedMovies'));
+  if (savedMoviesFromLocalStorage) {
+    setSavedMovies(savedMoviesFromLocalStorage);
+  }
+}, []);
+
 const handleSaveMovie = (movie) => {
   api.addSaved(movie)
     .then((newCard) => {
       setSavedMovies([...savedMovies, newCard]);
+      localStorage.setItem('savedMovies', JSON.stringify([...savedMovies, newCard]));
       const updatedMovies = searchResults.map(searchMovie => {
         if (searchMovie.movieId === newCard.movieId) {
           return { ...searchMovie, isLiked: true };
@@ -232,6 +237,7 @@ const handleRemoveMovie = (movieToRemove) => {
     .then(() => {
       const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== movieToRemove._id);
       setSavedMovies(updatedSavedMovies);
+      localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
       const updatedMovies = searchResults.map(searchMovie => {
         if (searchMovie.movieId === movieToRemove.movieId) {
           return { ...searchMovie, isLiked: false };
