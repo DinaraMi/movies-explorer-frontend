@@ -1,17 +1,29 @@
-const filterMovies = (movies, query, shortMovies) => {
-  let lowercaseQuery;
-  if (typeof query === 'string') {
-    lowercaseQuery = query.toLowerCase();
-  }
-  const filteredMovies = movies.filter((movie) => {
-    const nameRULower = movie.nameRU.toLowerCase();
-    const nameENLower = movie.nameEN.toLowerCase();
-    const matchesQuery = nameRULower.includes(lowercaseQuery) || nameENLower.includes(lowercaseQuery);
-    const isShortMovie = shortMovies ? movie.duration <= 40 : true;
-    return matchesQuery && isShortMovie;
+// export function searchAndFilterMovies(movies, searchQuery, isShortFilm) {
+//   return movies.filter((movie) => {
+//     const searchQueryLowerCase = searchQuery ? searchQuery.toLowerCase() : '';
+//     const nameRU = movie.nameRU ? movie.nameRU.toLowerCase() : '';
+//     const nameEN = movie.nameEN ? movie.nameEN.toLowerCase() : '';
+//     if (isShortFilm) {
+//       return (nameRU.includes(searchQueryLowerCase) || nameEN.includes(searchQueryLowerCase)) && movie.duration <= 40;
+//     } else {
+//       return nameRU.includes(searchQueryLowerCase) || nameEN.includes(searchQueryLowerCase);
+//     }
+//   });
+// }
+
+// export default searchAndFilterMovies;
+
+export function filterMovies(movies, query) {
+  const moviesByQuery = movies.filter((movie) => {
+    const movieRu = String(movie.nameRU).toLowerCase().trim();
+    const movieEn = String(movie.nameEN).toLowerCase().trim();
+    const userQuery = query.toLowerCase().trim();
+    return movieRu.indexOf(userQuery) !== -1 || movieEn.indexOf(userQuery) !== -1;
   });
+  return moviesByQuery;
+}
 
-  return filteredMovies;
-};
-
-export default filterMovies;
+//фильтр по длительности
+export function filterDuration(movies) {
+  return movies.filter((movie) => movie.duration <= 40);
+}

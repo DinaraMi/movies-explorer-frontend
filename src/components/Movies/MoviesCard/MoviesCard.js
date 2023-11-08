@@ -6,10 +6,7 @@ import removeIcon from '../../../images/removeIcon.svg';
 
 function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, isLiked }) {
   const location = useLocation();
-  // const [isLiked, setIsLiked] = useState(false);
-  // const [isRemoved, setIsRemoved] = useState(false);
   const isSavedMoviesPage = location.pathname === '/saved-movies';
-
   const handleSaveMovieClick = (e) => {
     e.preventDefault();
     handleSaveMovie(movie);
