@@ -4,12 +4,14 @@ import './MoviesCard.css';
 import saved from '../../../images/saved.svg';
 import removeIcon from '../../../images/removeIcon.svg';
 
-function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, isLiked }) {
+function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
+  const [isLiked, setIsLiked] = useState(false);
   const handleSaveMovieClick = (e) => {
     e.preventDefault();
     handleSaveMovie(movie);
+    setIsLiked(true);
   };
   
   const handleRemoveMovieClick = (e) => {

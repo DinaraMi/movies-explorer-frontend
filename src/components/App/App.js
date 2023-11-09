@@ -24,7 +24,6 @@ function App() {
   const [currentUser, setCurrentUser] = React.useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
-  const [searchQuery, setSearchQuery] = useState('');
   const [isLiked, setIsLiked] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
@@ -143,8 +142,7 @@ function App() {
     localStorage.removeItem('movieSearch');
     localStorage.removeItem('shortMovies');
     localStorage.removeItem('allMovies');
-    // setSearchResults([]);
-    // setSearchQuery('');
+    setSearchResults([]);
     localStorage.removeItem('token');
     setLoggedIn(false);
     navigate('/');
@@ -168,16 +166,22 @@ function App() {
 
   const handleSaveMovie = (movie) => {
     api.addSaved(movie)
-      .then((newCard) => {
-        setSavedMovies([...savedMovies, newCard]);
-        localStorage.setItem('savedMovies', JSON.stringify([...savedMovies, newCard]));
-        const updatedMovies = searchResults.map(searchMovie => {
-          if (searchMovie.movieId === newCard.movieId) {
-            return { ...searchMovie, isLiked: true };
+      .then((newMovie) => {
+        setSavedMovies([newMovie, ...savedMovies]);
+        const updatedMovies = searchResults.map(filteredMovie => {
+          if (filteredMovie.movieId === newMovie.movieId) {
+            return { ...filteredMovie, isLiked: true };
           }
-          return searchMovie;
+          return filteredMovie;
         });
         setSearchResults(updatedMovies);
+        // Debugging: Log savedMovies and searchResults
+    console.log('Saved Movies:', savedMovies);
+    console.log('Search Results:', searchResults);
+
+    // Debugging: Log localStorage
+    console.log('localStorage savedMovies:', JSON.parse(localStorage.getItem('savedMovies')));
+    console.log('localStorage searchResults:', JSON.parse(localStorage.getItem('movies')));
       })
       .catch((error) => {
         console.log(error);
@@ -189,6 +193,10 @@ function App() {
       .then(() => {
         const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== movieToRemove._id);
         setSavedMovies(updatedSavedMovies);
+        // Debugging: Log updated savedMovies
+    console.log('Updated savedMovies:', updatedSavedMovies);
+
+    localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
         localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
         const updatedMovies = searchResults.map(searchMovie => {
           if (searchMovie.movieId === movieToRemove.movieId) {
@@ -202,6 +210,7 @@ function App() {
         console.log(error);
       });
   };
+  
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -227,7 +236,7 @@ function App() {
                 savedMovies={savedMovies}
                 setSavedMovies={setSavedMovies}
                 handleRemoveMovie={handleRemoveMovie}
-                // isLiked={isLiked}
+                isLiked={isLiked}
                 loggedIn={loggedIn}
               />} />
             <Route path="/signin" element={<Login onLogin={handleLogin} />} />

@@ -6,8 +6,8 @@ import { filterMovies, filterDuration } from '../../../utils/filterMovies';
 
 function SavedMovies({ savedMovies, handleRemoveMovie }) {
   const [filteredMovies, setFilteredMovies] = useState(savedMovies);
-  const [isShortMovies, setIsShortMovies] = useState(false);
-  const [isNotFound, setIsNotFound] = useState(false);
+  const [isShortFilm, setIsShortFilm] = useState(false);
+  const [isNotFoundError, setIsNotFoundError] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
   function onSearchMovies(query) {
@@ -15,25 +15,20 @@ function SavedMovies({ savedMovies, handleRemoveMovie }) {
   }
 
   function handleShortMovies() {
-    setIsShortMovies(!isShortMovies);
+    setIsShortFilm(!isShortFilm);
   }
 
   useEffect(() => {
-    // Фильтрация фильмов
-    const moviesList = filterMovies(savedMovies, searchQuery, isShortMovies);
-
-    // Сохранение фильмов в localStorage
+    const moviesList = filterMovies(savedMovies, searchQuery, isShortFilm);
     localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
-
-    // Установка отфильтрованных фильмов
-    setFilteredMovies(isShortMovies ? filterDuration(moviesList) : moviesList);
-  }, [savedMovies, searchQuery, isShortMovies]);
+    setFilteredMovies(isShortFilm ? filterDuration(moviesList) : moviesList);
+  }, [savedMovies, searchQuery, isShortFilm]);
 
   useEffect(() => {
     if (filteredMovies.length === 0) {
-      setIsNotFound(true);
+      setIsNotFoundError(true);
     } else {
-      setIsNotFound(false);
+      setIsNotFoundError(false);
     }
   }, [filteredMovies]);
 
@@ -46,10 +41,10 @@ function SavedMovies({ savedMovies, handleRemoveMovie }) {
 
   return (
     <div className="saved-movies">
-      <SearchForm onSearchMovies={onSearchMovies} onFilter={handleShortMovies} isShortMovies={isShortMovies} />
+      <SearchForm onSearchMovies={onSearchMovies} onFilter={handleShortMovies} isShortFilm={isShortFilm} />
       <div className='saved-movies__content'>
         {filteredMovies.map((movie) => (
-          <MoviesCard key={movie._id} movie={movie} handleRemoveMovie={handleRemoveMovie} isNotFound={isNotFound} isSavedFilms={true} />
+          <MoviesCard key={movie._id} movie={movie} handleRemoveMovie={handleRemoveMovie} isNotFound={isNotFoundError} />
         ))}
       </div>
     </div>
