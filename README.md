@@ -9,4 +9,4 @@ movies-explorer-frontend
 
 Ссылка на Pull requests: https://github.com/DinaraMi/movies-explorer-frontend/pull/2
 
-Ссылка на задеплоенный на сервере проект:
+Ссылка на задеплоенный на сервере проект: https://moviesexplorer69.nomoredomainsrocks.ru/
