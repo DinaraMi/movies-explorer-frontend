@@ -5,7 +5,7 @@ import AuthForm from '../AuthForm';
 import Input from '../../Input/Input';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 
-function Register({ onRegister }) {
+function Register({ onRegister, setErrorMessageAuth, errorMessageAuth }) {
   const location = useLocation();
   const isLoading = true;
 
@@ -13,10 +13,11 @@ function Register({ onRegister }) {
   const [isButtonActive, setIsButtonActive] = useState(false);
 
   useEffect(() => {
+    setErrorMessageAuth('');
     if (location.pathname === '/signup') {
       resetForm();
     }
-  }, [location.pathname, resetForm]);
+  }, [location.pathname, resetForm, setErrorMessageAuth]);
 
   useEffect(() => {
     setIsButtonActive(isValid);
@@ -24,7 +25,6 @@ function Register({ onRegister }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
     if (isButtonActive) {
       const { name, email, password } = values;
       onRegister(name, email, password);
@@ -44,6 +44,7 @@ function Register({ onRegister }) {
         blue="Войти"
         link="/signin"
         isActive={isButtonActive}
+        errorMessageAuth={errorMessageAuth}
       >
         <Input
           id="name"
@@ -85,6 +86,7 @@ function Register({ onRegister }) {
           error={errors.password}
         />
       </AuthForm>
+      {/* {errorMessageAuth && <span className="auth__error-submit">{errorMessageAuth}</span>} */}
     </main>
   );
 }

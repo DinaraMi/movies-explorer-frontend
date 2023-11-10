@@ -29,7 +29,7 @@ function Profile({ onUpdateUser, onLogout, isSaveSuccess, submitError, setIsSave
   const handleEditClick = () => {
     setIsEditing(true);
     setIsSaveSuccess(false);
-  setSubmitError('');
+    setSubmitError('');
   };
 
   const handleSaveClick = (evt) => {

@@ -4,7 +4,7 @@ import AuthForm from '../AuthForm';
 import Input from '../../Input/Input';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 
-function Login({ onLogin }) {
+function Login({ onLogin, errorMessageAuth }) {
   const { values, handleChange, errors, isValid } = useFormValidation();
 
   const isLoading = true;
@@ -12,7 +12,6 @@ function Login({ onLogin }) {
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-
     if (isButtonActive) {
       const { email, password } = values;
       onLogin(email, password);
@@ -36,6 +35,7 @@ function Login({ onLogin }) {
         blue="Регистрация"
         link="/signup"
         isActive={isButtonActive}
+        errorMessageAuth={errorMessageAuth}
       >
         <Input
           id="email"

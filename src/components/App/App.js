@@ -27,6 +27,7 @@ function App() {
   const [isLiked, setIsLiked] = useState(false);
   const [isSaveSuccess, setIsSaveSuccess] = useState(false);
   const [submitError, setSubmitError] = useState('');
+  const [errorMessageAuth, setErrorMessageAuth] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
   const displayHeader = ['/', '/saved-movies', '/movies', '/profile'].includes(location.pathname);
@@ -51,8 +52,13 @@ function App() {
       .then(() => {
         handleLogin(email, password);
       })
-      .catch(error => {
-        throw new Error(`Регистрация не удалась: ${error.message}`);
+      .catch((error) => {
+        if (error.status === 409) {
+          setErrorMessageAuth('Пользователь с таким email уже существует');
+        } else {
+          console.error(error);
+          setErrorMessageAuth(`При регистрации пользователя произошла ошибка: ${error.message}`);
+        }
       })
       .finally(() => {
         setLoading(false);
@@ -61,26 +67,35 @@ function App() {
 
   const handleLogin = (email, password) => {
     setLoading(true);
-    authentication.authorize(email, password)
+    authentication
+      .authorize(email, password)
       .then((data) => {
         if (data && data.token) {
           authentication.setToken(data.token);
           setLoggedIn(true);
           navigate('/movies');
         } else if (data && data.statusCode === 401) {
-          console.log('Неверные email или пароль');
+          setErrorMessageAuth('Вы ввели неправильный логин или пароль.');
         } else {
-          console.log('Что-то пошло не так!');
+          setErrorMessageAuth('При авторизации произошла неизвестная ошибка.');
         }
       })
-      .catch(error => {
-        console.error('Ошибка при авторизации:', error);
-        console.log('Что-то пошло не так!');
+      .catch((error) => {
+        if (error.status === 401) {
+          setErrorMessageAuth('Вы ввели неправильный логин или пароль.');
+        } else if (error.status === 400) {
+          setErrorMessageAuth('При авторизации произошла ошибка. Токен не передан или передан не в том формате.');
+        } else if (error.status === 403) {
+          setErrorMessageAuth('При авторизации произошла ошибка. Переданный токен некорректен.');
+        } else {
+          setErrorMessageAuth('При авторизации произошла неизвестная ошибка.');
+        }
       })
       .finally(() => {
         setLoading(false);
       });
   };
+
 
   useEffect(() => {
     if (loggedIn) {
@@ -235,8 +250,12 @@ function App() {
                 isLiked={isLiked}
                 loggedIn={loggedIn}
               />} />
-            <Route path="/signin" element={loggedIn ? <Navigate to="/movies" /> : <Login onLogin={handleLogin} />} />
-            <Route path="/signup" element={loggedIn ? <Navigate to="/movies" /> : <Register onRegister={handleRegister} />} />
+            <Route path="/signin" element={loggedIn ? <Navigate to="/movies" /> : <Login onLogin={handleLogin}
+              errorMessageAuth={errorMessageAuth}
+              setErrorMessageAuth={setErrorMessageAuth} />} />
+            <Route path="/signup" element={loggedIn ? <Navigate to="/movies" /> : <Register onRegister={handleRegister}
+              errorMessageAuth={errorMessageAuth}
+              setErrorMessageAuth={setErrorMessageAuth} />} />
             <Route path="/profile" element={
               <ProtectedRouteElement
                 element={Profile}
