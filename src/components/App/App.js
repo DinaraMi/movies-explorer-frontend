@@ -25,6 +25,8 @@ function App() {
   const [savedMovies, setSavedMovies] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
   const [isLiked, setIsLiked] = useState(false);
+  const [isSaveSuccess, setIsSaveSuccess] = useState(false);
+  const [submitError, setSubmitError] = useState('');
   const location = useLocation();
   const navigate = useNavigate();
   const displayHeader = ['/', '/saved-movies', '/movies', '/profile'].includes(location.pathname);
@@ -122,21 +124,25 @@ function App() {
   const handleUpdateUser = (dataUser) => {
     setLoading(true);
     api.editUserInformation(dataUser)
-      .then((res) => {
-        setCurrentUser(res);
+      .then((dataUser) => {
+        setCurrentUser(dataUser);
+        setIsSaveSuccess(true);
       })
       .catch((error) => {
-        if (error.response && error.response.status === 409) {
-          alert('Пользователь с таким email уже существует');
+        if (error.status === 409) {
+          setIsSaveSuccess(false);
+          setSubmitError('Пользователь с таким email уже существует');
         } else {
+          setIsSaveSuccess(false);
           console.error(error);
+          setSubmitError(`При обновлении профиля произошла ошибка: ${error.message}`);
         }
       })
       .finally(() => {
         setLoading(false);
       });
   };
-
+  
   const handleLogout = () => {
     localStorage.removeItem('movies');
     localStorage.removeItem('movieSearch');
@@ -186,7 +192,7 @@ function App() {
       .then(() => {
         const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== movieToRemove._id);
         setSavedMovies(updatedSavedMovies);
-    localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
+        localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
         localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
         const updatedMovies = searchResults.map(searchMovie => {
           if (searchMovie.movieId === movieToRemove.movieId) {
@@ -200,7 +206,7 @@ function App() {
         console.log(error);
       });
   };
-  
+
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
@@ -236,7 +242,11 @@ function App() {
                 element={Profile}
                 onUpdateUser={handleUpdateUser}
                 onLogout={handleLogout}
-                loggedIn={loggedIn} />} />
+                loggedIn={loggedIn}
+                submitError={submitError}
+                isSaveSuccess={isSaveSuccess}
+                setSubmitError={setSubmitError}
+                setIsSaveSuccess={setIsSaveSuccess} />} />
             <Route path="*" element={<ErrorNotFound />} />
           </Routes>
           {displayFooter && <Footer />}

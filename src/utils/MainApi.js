@@ -4,7 +4,11 @@ class Api {
     this._headers = options.headers;
   }
   _checkResponse(res) {
-    return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+    if (res.ok) {
+      return res.json();
+    } else {
+      return res.json().then((data) => Promise.reject({ status: res.status, message: data.message }));
+    }
   }
   getUserInformation() {
     const token = localStorage.getItem('token');

@@ -4,12 +4,12 @@ import './Profile.css';
 import CurrentUserContext from '../../../contexts/CurrentUserContext';
 import { useFormValidation } from '../../../hooks/useFormValidation';
 
-function Profile({ onUpdateUser, onLogout }) {
+function Profile({ onUpdateUser, onLogout, isSaveSuccess, submitError, setIsSaveSuccess, setSubmitError }) {
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid } = useFormValidation();
   const [isEditing, setIsEditing] = useState(false);
   const [isButtonActive, setIsButtonActive] = useState(true);
-  const [submitError, setSubmitError] = useState('');
+  const [isDataChanged, setIsDataChanged] = useState(false);
 
   useEffect(() => {
     if (currentUser) {
@@ -18,30 +18,31 @@ function Profile({ onUpdateUser, onLogout }) {
     }
   }, [currentUser]);
 
+  useEffect(() => {
+    if (currentUser) {
+      setIsDataChanged(values.name !== currentUser.name || values.email !== currentUser.email);
+    }
+  }, [currentUser, values.name, values.email]);
+
   const titleText = currentUser ? `Привет, ${values.name}!` : 'Привет';
 
   const handleEditClick = () => {
     setIsEditing(true);
+    setIsSaveSuccess(false);
+  setSubmitError('');
   };
 
-  const handleSaveClick = async (evt) => {
+  const handleSaveClick = (evt) => {
     evt.preventDefault();
-    if (isValid && isButtonActive) {
-      try {
-        await onUpdateUser({
-          name: values.name,
-          email: values.email,
-        });
-        setIsEditing(false);
-        errors.name = '';
-        errors.email = '';
-        setSubmitError('');
-      } catch (err) {
-        setSubmitError(`При обновлении профиля произошла ошибка: ${err.message}`);
-      }
+    if (isValid && isButtonActive && isDataChanged) {
+      onUpdateUser({
+        name: values.name,
+        email: values.email,
+      });
+      setIsEditing(false);
     }
   };
-  
+
   useEffect(() => {
     setIsButtonActive(isValid && values.name && values.email);
   }, [isValid, values.name, values.email]);
@@ -84,7 +85,10 @@ function Profile({ onUpdateUser, onLogout }) {
           />
         </div>
         {errors.email && <span className="profile__error">{errors.email}</span>}
-        {submitError && <span className="profile__error">{submitError}</span>}
+        <div className="profile__messages-container">
+          {submitError && <span className="profile__error-submit">{submitError}</span>}
+          {isSaveSuccess && <span className="profile__success">Профиль успешно сохранен!</span>}
+        </div>
         {isEditing ? (
           <button
             className={`profile__submit ${isButtonActive ? '' : 'profile__submit_inactive'}`}
