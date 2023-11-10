@@ -44,7 +44,7 @@ class Api {
       .then(res => this._checkResponse(res));
   }
   
-  addSaved(data ) {
+  createSavedMovie(data ) {
     const token = localStorage.getItem('token');
     return fetch(`${this._url}/movies`, {
       method: 'POST',
@@ -53,10 +53,10 @@ class Api {
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
-        image: data.image,
-        thumbnail: data.thumbnail,
+        image: `https://api.nomoreparties.co${data.image.url}`,
+        thumbnail: `https://api.nomoreparties.co${data.image.formats.thumbnail.url}`,
         trailerLink: data.trailerLink,
-        movieId: data.movieId,
+        movieId: data.id,
         country: data.country || "Нет",
         director: data.director,
         duration: data.duration,

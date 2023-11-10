@@ -171,7 +171,7 @@ function App() {
   }, [loggedIn]);
 
   const handleSaveMovie = (movie) => {
-    api.addSaved(movie)
+    api.createSavedMovie(movie)
       .then((newMovie) => {
         setSavedMovies([newMovie, ...savedMovies]);
         const updatedMovies = searchResults.map(filteredMovie => {
@@ -186,6 +186,7 @@ function App() {
         console.log(error);
       });
   };
+  
 
   const handleRemoveMovie = (movieToRemove) => {
     api.deleteSaved(movieToRemove._id)
@@ -206,7 +207,6 @@ function App() {
         console.log(error);
       });
   };
-
 
   return (
     <CurrentUserContext.Provider value={currentUser}>
