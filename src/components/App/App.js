@@ -47,7 +47,7 @@ function App() {
     setLoading(true);
     authentication.register(name, email, password)
       .then(() => {
-        navigate('/signin');
+        handleLogin(email, password);
       })
       .catch(error => {
         throw new Error(`Регистрация не удалась: ${error.message}`);
@@ -175,13 +175,6 @@ function App() {
           return filteredMovie;
         });
         setSearchResults(updatedMovies);
-        // Debugging: Log savedMovies and searchResults
-    console.log('Saved Movies:', savedMovies);
-    console.log('Search Results:', searchResults);
-
-    // Debugging: Log localStorage
-    console.log('localStorage savedMovies:', JSON.parse(localStorage.getItem('savedMovies')));
-    console.log('localStorage searchResults:', JSON.parse(localStorage.getItem('movies')));
       })
       .catch((error) => {
         console.log(error);
@@ -193,9 +186,6 @@ function App() {
       .then(() => {
         const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== movieToRemove._id);
         setSavedMovies(updatedSavedMovies);
-        // Debugging: Log updated savedMovies
-    console.log('Updated savedMovies:', updatedSavedMovies);
-
     localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
         localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
         const updatedMovies = searchResults.map(searchMovie => {
