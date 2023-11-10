@@ -8,7 +8,7 @@ const time = 60;
 const widthDesktop = 1165;
 const widthTablet = 657;
 const widthMobile = 320;
-const emailRegex = ''
+const emailRegex = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}$/;
 
 export {
   showMoreDesktop,
