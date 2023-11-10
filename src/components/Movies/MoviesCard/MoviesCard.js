@@ -3,6 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import saved from '../../../images/saved.svg';
 import removeIcon from '../../../images/removeIcon.svg';
+import { time } from '../../../utils/contants';
 
 function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
   const location = useLocation();
@@ -20,8 +21,8 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
   };
 
   const convertDuration = (duration) => {
-    const minutes = duration % 60;
-    const hours = Math.floor(duration / 60);
+    const minutes = duration % time;
+    const hours = Math.floor(duration / time);
     if (hours < 1) {
       return `${minutes}м`;
     } else {

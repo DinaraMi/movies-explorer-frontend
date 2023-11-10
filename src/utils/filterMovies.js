@@ -12,7 +12,7 @@
 // }
 
 // export default searchAndFilterMovies;
-
+import { short } from './contants';
 export function filterMovies(movies, query) {
   const moviesByQuery = movies.filter((movie) => {
     const movieRu = String(movie.nameRU).toLowerCase().trim();
@@ -25,5 +25,5 @@ export function filterMovies(movies, query) {
 
 //фильтр по длительности
 export function filterDuration(movies) {
-  return movies.filter((movie) => movie.duration <= 40);
+  return movies.filter((movie) => movie.duration <= short);
 }

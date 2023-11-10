@@ -3,28 +3,38 @@ import './MoviesCardList.css';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import useViewport from '../../../hooks/useViewport';
 import Preloader from '../../Preloader/Preloader';
+import {
+  widthDesktop,
+  widthTablet,
+  widthMobile,
+  showMoreDesktop,
+  showMoreTablet,
+  showMoreMobile,
+  showMoreAddDesktop,
+  showMoreAddMobile,
+} from '../../../utils/contants';
 
 function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked, filteredMovies, isNotFoundError, isServerError }) {
   const { width } = useViewport();
-  const moviesToShowRef = useRef(5);
+  const moviesToShowRef = useRef(showMoreMobile);
   const [visibleMovies, setVisibleMovies] = useState(moviesToShowRef.current);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
-    if (width >= 1165) {
-      moviesToShowRef.current = 12;
-    } else if (width >= 657) {
-      moviesToShowRef.current = 8;
-    } else if (width >= 320) {
-      moviesToShowRef.current = 5;
+    if (width >= widthDesktop) {
+      moviesToShowRef.current = showMoreDesktop;
+    } else if (width >= widthTablet) {
+      moviesToShowRef.current = showMoreTablet;
+    } else if (width >= widthMobile) {
+      moviesToShowRef.current = showMoreMobile;
     }
     setVisibleMovies(moviesToShowRef.current);
   }, [width]);
 
   const handleShowMoreClick = () => {
-    let additionalMovies = 2;
-    if (width >= 1165) {
-      additionalMovies = 3;
+    let additionalMovies = showMoreAddMobile;
+    if (width >= widthDesktop) {
+      additionalMovies = showMoreAddDesktop;
     }
     const newVisibleMovies = visibleMovies + additionalMovies;
     setVisibleMovies(newVisibleMovies);
