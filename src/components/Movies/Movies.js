@@ -96,7 +96,7 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
       <SearchForm onSearchMovies={onSearchMovies}
         onFilter={handleShortMovies}
         isShortFilm={isShortFilm}
-        />
+      />
       <MoviesCardList
         savedMovies={savedMovies}
         filteredMovies={filteredMovies}

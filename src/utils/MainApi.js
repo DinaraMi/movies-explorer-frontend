@@ -43,8 +43,8 @@ class Api {
     })
       .then(res => this._checkResponse(res));
   }
-  
-  createSavedMovie(data ) {
+
+  createSavedMovie(data) {
     const token = localStorage.getItem('token');
     return fetch(`${this._url}/movies`, {
       method: 'POST',

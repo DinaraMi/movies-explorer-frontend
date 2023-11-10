@@ -6,7 +6,6 @@ import { useFormValidation } from '../../../hooks/useFormValidation';
 
 function Login({ onLogin, errorMessageAuth }) {
   const { values, handleChange, errors, isValid } = useFormValidation();
-
   const isLoading = true;
   const [isButtonActive, setIsButtonActive] = useState(false);
 
@@ -21,7 +20,6 @@ function Login({ onLogin, errorMessageAuth }) {
   useEffect(() => {
     setIsButtonActive(isValid);
   }, [isValid]);
-
 
   return (
     <main className="login">

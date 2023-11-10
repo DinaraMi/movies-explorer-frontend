@@ -9,6 +9,7 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   const [isLiked, setIsLiked] = useState(false);
+  
   const handleSaveMovieClick = (e) => {
     e.preventDefault();
     handleSaveMovie(movie);

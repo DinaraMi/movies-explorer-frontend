@@ -209,7 +209,6 @@ function App() {
         const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== movieToRemove._id);
         setSavedMovies(updatedSavedMovies);
         localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
-        localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
         const updatedMovies = searchResults.map(searchMovie => {
           if (searchMovie.movieId === movieToRemove.movieId) {
             return { ...searchMovie, isLiked: false };

@@ -7,7 +7,7 @@ function AuthForm({ name, title, children, ariaLabel, onSubmit, formType, gray, 
   const submitButtonClassName = formType === 'register' ? 'auth__submit-register' : 'auth__submit-login';
   const errorButtonClassName = formType === 'register' ? 'auth__error-register' : 'auth__error-login';
   const buttonClasses = isActive ? submitButtonClassName : `${submitButtonClassName} auth__submit_inactive`;
-  
+
   return (
     <div className={`auth auth_type_${name}`}>
       <div className="auth__container">

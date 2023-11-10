@@ -3,7 +3,7 @@ import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 
-function SearchForm({onSearchMovies, onFilter, isShortFilm}) {
+function SearchForm({ onSearchMovies, onFilter, isShortFilm }) {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   const [isQueryError, setIsQueryError] = useState(false);
@@ -47,7 +47,7 @@ function SearchForm({onSearchMovies, onFilter, isShortFilm}) {
         </form>
       </div>
       {isQueryError && <p className="searchForm__error">Нужно ввести ключевое слово</p>}
-      <FilterCheckbox onFilter={onFilter} isShortFilm={isShortFilm}/>
+      <FilterCheckbox onFilter={onFilter} isShortFilm={isShortFilm} />
       <div className='searchForm__separator'></div>
     </div>
   );

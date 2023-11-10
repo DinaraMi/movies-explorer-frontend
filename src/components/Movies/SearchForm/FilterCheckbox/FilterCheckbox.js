@@ -3,7 +3,7 @@ import './FilterCheckbox.css'
 import filtr from '../../../../images/filtr.svg';
 import filtrClose from '../../../../images/smalltumboff.svg';
 
-function FilterCheckbox({ isShortFilm, onFilter}) {
+function FilterCheckbox({ isShortFilm, onFilter }) {
   return (
     <form className='filterCheckbox'>
       <label className='filterCheckbox__label'>

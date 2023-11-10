@@ -8,7 +8,6 @@ import { useFormValidation } from '../../../hooks/useFormValidation';
 function Register({ onRegister, setErrorMessageAuth, errorMessageAuth }) {
   const location = useLocation();
   const isLoading = true;
-
   const { values, handleChange, resetForm, errors, isValid } = useFormValidation();
   const [isButtonActive, setIsButtonActive] = useState(false);
 
@@ -86,7 +85,6 @@ function Register({ onRegister, setErrorMessageAuth, errorMessageAuth }) {
           error={errors.password}
         />
       </AuthForm>
-      {/* {errorMessageAuth && <span className="auth__error-submit">{errorMessageAuth}</span>} */}
     </main>
   );
 }
