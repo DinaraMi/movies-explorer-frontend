@@ -5,7 +5,7 @@ import filtrClose from '../../../../images/smalltumboff.svg';
 
 function FilterCheckbox({ isShortFilm, onFilter}) {
   return (
-    <section className='filterCheckbox'>
+    <form className='filterCheckbox'>
       <label className='filterCheckbox__label'>
         <input
           type="checkbox"
@@ -18,9 +18,9 @@ function FilterCheckbox({ isShortFilm, onFilter}) {
           src={filtrClose}
           alt="Иконка фильтра"
         />}
-        <h2 className='filterCheckbox__title'>Короткометражки</h2>
+        <span className='filterCheckbox__title'>Короткометражки</span>
       </label>
-    </section>
+    </form>
   );
 }
 

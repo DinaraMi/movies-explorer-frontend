@@ -1,4 +1,4 @@
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Navigate, Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import React, { useEffect, useState } from 'react';
 import 'normalize.css';
 import '../../vendor/fonts/fonts.css';
@@ -142,7 +142,7 @@ function App() {
         setLoading(false);
       });
   };
-  
+
   const handleLogout = () => {
     localStorage.removeItem('movies');
     localStorage.removeItem('movieSearch');
@@ -186,7 +186,7 @@ function App() {
         console.log(error);
       });
   };
-  
+
 
   const handleRemoveMovie = (movieToRemove) => {
     api.deleteSaved(movieToRemove._id)
@@ -235,8 +235,8 @@ function App() {
                 isLiked={isLiked}
                 loggedIn={loggedIn}
               />} />
-            <Route path="/signin" element={<Login onLogin={handleLogin} />} />
-            <Route path="/signup" element={<Register onRegister={handleRegister} />} />
+            <Route path="/signin" element={loggedIn ? <Navigate to="/movies" /> : <Login onLogin={handleLogin} />} />
+            <Route path="/signup" element={loggedIn ? <Navigate to="/movies" /> : <Register onRegister={handleRegister} />} />
             <Route path="/profile" element={
               <ProtectedRouteElement
                 element={Profile}
