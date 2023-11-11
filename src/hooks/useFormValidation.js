@@ -1,6 +1,5 @@
 import { useCallback, useState } from "react";
-import { emailRegex } from '../utils/contants'
-
+import { emailRegex } from '../utils/contants';
 
 export function useFormValidation() {
   const [values, setValues] = useState({});
@@ -12,19 +11,22 @@ export function useFormValidation() {
     const value = input.value;
     const name = input.name;
     setValues({ ...values, [name]: value });
+    let newErrors = { ...errors };
     if (name === 'email') {
-      setErrors({ ...errors, [name]: emailRegex.test(value) ? '' : 'Введите корректный email' });
+      newErrors[name] = emailRegex.test(value) ? '' : 'Введите корректный email';
     } else {
-      setErrors({ ...errors, [name]: input.validationMessage });
+      newErrors[name] = input.validationMessage;
     }
-    setIsValid(input.closest('form').checkValidity());
+    setErrors(newErrors);
+    const isFormValid = Object.values(newErrors).every(error => error === '') && Object.values(values).every(val => val !== '');
+    setIsValid(isFormValid);
   };
 
   const resetForm = useCallback(
-    (newValues = {}, newErrors = {}, newIsValid = false) => {
-      setValues(newValues);
-      setErrors(newErrors);
-      setIsValid(newIsValid);
+    () => {
+      setValues({});
+      setErrors({});
+      setIsValid(false);
     },
     [setValues, setErrors, setIsValid]
   );
