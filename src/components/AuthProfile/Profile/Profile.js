@@ -8,11 +8,13 @@ function Profile({ onUpdateUser, onLogout, isSaveSuccess, submitError, setIsSave
   const currentUser = useContext(CurrentUserContext);
   const { values, handleChange, errors, isValid } = useFormValidation();
   const [isEditing, setIsEditing] = useState(false);
-  const [isButtonActive, setIsButtonActive] = useState(true);
+  const [isButtonActive, setIsButtonActive] = useState(false);
   const [isDataChanged, setIsDataChanged] = useState(false);
+  const [displayName, setDisplayName] = useState('');
 
   useEffect(() => {
     if (currentUser) {
+      setDisplayName(currentUser.name);
       values.name = currentUser.name;
       values.email = currentUser.email;
     }
@@ -24,7 +26,11 @@ function Profile({ onUpdateUser, onLogout, isSaveSuccess, submitError, setIsSave
     }
   }, [currentUser, values.name, values.email]);
 
-  const titleText = currentUser ? `Привет, ${values.name}!` : 'Привет';
+  useEffect(() => {
+    setIsButtonActive(isValid && values.name && values.email && isDataChanged);
+  }, [isValid, values.name, values.email, isDataChanged]);
+
+  const titleText = currentUser ? `Привет, ${displayName}!` : 'Привет';
 
   const handleEditClick = () => {
     setIsEditing(true);
