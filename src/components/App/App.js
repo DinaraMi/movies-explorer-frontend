@@ -163,10 +163,15 @@ function App() {
     localStorage.removeItem('movieSearch');
     localStorage.removeItem('shortMovies');
     localStorage.removeItem('allMovies');
-    // localStorage.removeItem('allMovies');
-    setSearchResults([]);
     localStorage.removeItem('token');
+    setSearchResults([]);
     setLoggedIn(false);
+    setCurrentUser({});
+    setSavedMovies([]);
+    setSearchResults([]);
+    setIsLiked(false);
+    setIsSaveSuccess(false);
+    setSubmitError('');
     navigate('/');
   };
 
@@ -204,23 +209,23 @@ function App() {
   };
 
   const handleRemoveMovie = (_id, movieId) => {
-    api.deleteSaved(_id, movieId)
-      .then(() => {
-        const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== _id);
-        setSavedMovies(updatedSavedMovies);
-        localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
-        const updatedMovies = searchResults.map(searchMovie => {
-          if (searchMovie.movieId === movieId) {
-            return { ...searchMovie, isLiked: false };
-          }
-          return searchMovie;
-        });
-        setSearchResults(updatedMovies);
-      })
-      .catch((error) => {
-        console.log(error);
+  api.deleteSaved(_id, movieId)
+    .then(() => {
+      const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== _id);
+      setSavedMovies(updatedSavedMovies);
+      localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
+      const updatedMovies = searchResults.map(searchMovie => {
+        if (searchMovie.movieId === movieId) {
+          return { ...searchMovie, isLiked: false };
+        }
+        return searchMovie;
       });
-  };
+      setSearchResults(updatedMovies);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
   
   return (
     <CurrentUserContext.Provider value={currentUser}>

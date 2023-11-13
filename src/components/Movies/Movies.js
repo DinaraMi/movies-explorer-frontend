@@ -14,9 +14,10 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   function handleFilterMovies(movies, query, short) {
-    setSearchResults(filterMovies(movies, query, short));
-    setFilteredMovies(short ? filterDuration(searchResults) : searchResults);
-    localStorage.setItem('movies', JSON.stringify(searchResults));
+    const filteredResults = filterMovies(movies, query, short);
+    setSearchResults(filteredResults);
+    setFilteredMovies(short ? filterDuration(filteredResults) : filteredResults);
+    localStorage.setItem('movies', JSON.stringify(filteredResults));
     localStorage.setItem('allMovies', JSON.stringify(movies));
   }
 
@@ -28,6 +29,7 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
     setIsShortFilm(!isShortFilm);
     handleFilterMovies(searchResults, searchQuery, !isShortFilm);
     localStorage.setItem('shortMovies', !isShortFilm);
+    localStorage.setItem('movies', JSON.stringify(searchResults));
   }
 
   function onSearchMovies(query) {
@@ -46,8 +48,8 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
           } else {
             setIsNotFoundError(false);
             handleFilterMovies(dataMovies, query, isShortFilm);
+            localStorage.setItem('movies', JSON.stringify(dataMovies));
           }
-          setFilteredMovies(filteredMovies);
           setIsServerError(false);
         })
         .catch((err) => {

@@ -10,34 +10,34 @@ function SavedMovies({ savedMovies, handleRemoveMovie }) {
   const [isNotFoundError, setIsNotFoundError] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  useEffect(() => {
-    updateFilteredMovies(searchQuery, isShortFilm);
-  }, [savedMovies, searchQuery, isShortFilm]);
+  // useEffect(() => {
+  //   updateFilteredMovies(searchQuery, isShortFilm);
+  // }, [savedMovies, searchQuery, isShortFilm]);
 
-  const onSearchSavedMovies = (query) => {
-    setSearchQuery(query);
-    updateFilteredMovies(query, isShortFilm);
-  };
+  // const onSearchSavedMovies = (query) => {
+  //   setSearchQuery(query);
+  //   updateFilteredMovies(query, isShortFilm);
+  // };
 
-  const handleShortMovies = () => {
-    setIsShortFilm(prevState => !prevState);
-    updateFilteredMovies(searchQuery, !isShortFilm);
-  };
+  // const handleShortMovies = () => {
+  //   setIsShortFilm(prevState => !prevState);
+  //   updateFilteredMovies(searchQuery, !isShortFilm);
+  // };
 
-  const updateFilteredMovies = (query, shortFilm) => {
-    try {
-      const moviesList = filterMovies(savedMovies, query, shortFilm);
-      setFilteredMovies(shortFilm ? filterDuration(moviesList) : moviesList);
-      setIsNotFoundError(shortFilm && moviesList.length === 0);
-      setIsNotFoundError(false);
-    } catch (error) {
-      setIsNotFoundError(true);
-    }
-  };
+  // const updateFilteredMovies = (query, shortFilm) => {
+  //   try {
+  //     const moviesList = filterMovies(savedMovies, query, shortFilm);
+  //     setFilteredMovies(shortFilm ? filterDuration(moviesList) : moviesList);
+  //     setIsNotFoundError(shortFilm && moviesList.length === 0);
+  //     setIsNotFoundError(false);
+  //   } catch (error) {
+  //     setIsNotFoundError(true);
+  //   }
+  // };
   
   return (
     <div className="saved-movies">
-      <SearchForm onSearchSavedMovies={onSearchSavedMovies} setSearchQuery={setSearchQuery} searchQuery={searchQuery} onFilter={handleShortMovies} isShortFilm={isShortFilm} />
+      {/* <SearchForm onSearchSavedMovies={onSearchSavedMovies} setSearchQuery={setSearchQuery} searchQuery={searchQuery} onFilter={handleShortMovies} isShortFilm={isShortFilm} /> */}
       <div className='saved-movies__content'>
         {filteredMovies.map((movie) => (
           <MoviesCard key={movie.Id} movie={movie} handleRemoveMovie={handleRemoveMovie} isNotFoundError={isNotFoundError} />
