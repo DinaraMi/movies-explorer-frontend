@@ -52,13 +52,19 @@ function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
   };
 
   const updateFilteredMovies = (query, shortFilm) => {
-      const moviesList = filterMovies(savedMovies, query, shortFilm);
-      setFilteredMovies(shortFilm ? filterDuration(moviesList) : moviesList);
+    const moviesList = filterMovies(savedMovies, query, shortFilm);
+    setFilteredMovies(shortFilm ? filterDuration(moviesList) : moviesList);
   };
 
   useEffect(() => {
     setIsNotFoundError(isShortFilm && filteredMovies.length === 0);
   }, [filteredMovies, isShortFilm]);
+  const handleRemoveMovieInSavedMovies = (_id, movieId) => {
+    handleRemoveMovie(_id, movieId);
+    const updatedMoviesList = savedMovies.filter(savedMovie => savedMovie._id !== _id);
+    setFilteredMovies(filterMovies(updatedMoviesList, searchQuery, isShortFilm));
+    setIsNotFoundError(isShortFilm && updatedMoviesList.length === 0);
+  };
 
   return (
     <div className="saved-movies">
@@ -71,7 +77,7 @@ function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
       />
       <div className='saved-movies__content'>
         {filteredMovies.map((movie) => (
-          <MoviesCard key={movie.Id} movie={movie} handleRemoveMovie={handleRemoveMovie}/>
+          <MoviesCard key={movie.Id} movie={movie} handleRemoveMovieInSavedMovies={handleRemoveMovieInSavedMovies} />
         ))}
         {isNotFoundError && <span>Ничего не найдено</span>}
       </div>
