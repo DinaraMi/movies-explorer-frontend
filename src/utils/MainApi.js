@@ -34,6 +34,7 @@ class Api {
     })
       .then(this._checkResponse);
   }
+  
   getSavedMovies() {
     const token = localStorage.getItem('token');
     return fetch(`${this._url}/movies`, {

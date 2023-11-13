@@ -14,10 +14,10 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
   const [searchQuery, setSearchQuery] = useState('');
 
   function handleFilterMovies(movies, query, short) {
-    const filteredResults = filterMovies(movies, query, short);
-    setSearchResults(filteredResults);
-    setFilteredMovies(short ? filterDuration(filteredResults) : filteredResults);
-    localStorage.setItem('movies', JSON.stringify(filteredResults));
+    const filteredMovies = filterMovies(movies, query, short);
+    setSearchResults(filteredMovies);
+    setFilteredMovies(short ? filterDuration(filteredMovies) : filteredMovies);
+    localStorage.setItem('movies', JSON.stringify(filteredMovies));
     localStorage.setItem('allMovies', JSON.stringify(movies));
   }
 

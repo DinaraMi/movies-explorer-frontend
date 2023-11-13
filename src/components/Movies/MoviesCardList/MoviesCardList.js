@@ -31,6 +31,10 @@ function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isLik
     setVisibleMovies(moviesToShowRef.current);
   }, [width]);
 
+  useEffect(() => {
+    setVisibleMovies(moviesToShowRef.current);
+  }, [filteredMovies]);
+
   const handleShowMoreClick = () => {
     let additionalMovies = showMoreAddMobile;
     if (width >= widthDesktop) {

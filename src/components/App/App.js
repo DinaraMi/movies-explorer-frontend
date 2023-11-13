@@ -96,7 +96,6 @@ function App() {
       });
   };
 
-
   useEffect(() => {
     if (loggedIn) {
       const token = authentication.getToken();
@@ -175,22 +174,6 @@ function App() {
     navigate('/');
   };
 
-  useEffect(() => {
-    if (loggedIn) {
-      api.getSavedMovies()
-        .then((savedMovies) => {
-          const updatedMovies = searchResults.map(movie => ({
-            ...movie,
-            isLiked: savedMovies.some(savedMovie => savedMovie.movieId === movie.movieId),
-          }));
-          setSearchResults(updatedMovies);
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    }
-  }, [loggedIn]);
-
   const handleSaveMovie = (movie) => {
     api.createSavedMovie(movie)
       .then((newMovie) => {
@@ -209,24 +192,24 @@ function App() {
   };
 
   const handleRemoveMovie = (_id, movieId) => {
-  api.deleteSaved(_id, movieId)
-    .then(() => {
-      const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== _id);
-      setSavedMovies(updatedSavedMovies);
-      localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
-      const updatedMovies = searchResults.map(searchMovie => {
-        if (searchMovie.movieId === movieId) {
-          return { ...searchMovie, isLiked: false };
-        }
-        return searchMovie;
+    api.deleteSaved(_id, movieId)
+      .then(() => {
+        const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== _id);
+        setSavedMovies(updatedSavedMovies);
+        localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
+        const updatedMovies = searchResults.map(searchMovie => {
+          if (searchMovie.movieId === movieId) {
+            return { ...searchMovie, isLiked: false };
+          }
+          return searchMovie;
+        });
+        setSearchResults(updatedMovies);
+      })
+      .catch((error) => {
+        console.log(error);
       });
-      setSearchResults(updatedMovies);
-    })
-    .catch((error) => {
-      console.log(error);
-    });
-};
-  
+  };
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">

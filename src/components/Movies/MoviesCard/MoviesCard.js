@@ -5,7 +5,7 @@ import saved from '../../../images/saved.svg';
 import removeIcon from '../../../images/removeIcon.svg';
 import { time } from '../../../utils/contants';
 
-function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, isNotFoundError, savedMovies }) {
+function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies }) {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   const [isLiked, setIsLiked] = useState(false);
@@ -39,7 +39,6 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, isNotFoundError
 
   return (
     <div className="movie-card">
-      {isNotFoundError && <span>Ничего не найдено</span>}
       <Link to={movie.trailerLink} target="_blank" rel="noopener noreferrer" className='trailerLink'>
         <div className='movie-card__content'>
           <div className='movie-card__description'>
