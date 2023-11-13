@@ -20,7 +20,7 @@ import api from '../../utils/MainApi';
 
 function App() {
   const [isLoading, setLoading] = useState(false);
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(JSON.parse(localStorage.getItem('loggedIn')) || false);
   const [currentUser, setCurrentUser] = React.useState({});
   const [savedMovies, setSavedMovies] = useState([]);
   const [searchResults, setSearchResults] = useState([]);
@@ -73,6 +73,7 @@ function App() {
         if (data && data.token) {
           authentication.setToken(data.token);
           setLoggedIn(true);
+          localStorage.setItem('loggedIn', true);
           navigate('/movies');
         } else if (data && data.statusCode === 401) {
           setErrorMessageAuth('Вы ввели неправильный логин или пароль.');
@@ -112,6 +113,7 @@ function App() {
     setLoading(true);
     localStorage.setItem('token', token);
     setLoggedIn(true);
+    localStorage.setItem('loggedIn', true);
     setLoading(false);
   };
 
@@ -125,13 +127,16 @@ function App() {
       authentication.checkinValidityToken(authenticationToken)
         .then(() => {
           setLoggedIn(true);
+          localStorage.setItem('loggedIn', true);
         })
         .catch(error => {
           console.log(error);
           setLoggedIn(false);
+          localStorage.setItem('loggedIn', false);
         });
     } else {
       setLoggedIn(false);
+      localStorage.setItem('loggedIn', false);
     }
   }, []);
 
@@ -163,11 +168,11 @@ function App() {
     localStorage.removeItem('shortMovies');
     localStorage.removeItem('allMovies');
     localStorage.removeItem('token');
+    localStorage.setItem('loggedIn', false);
     setSearchResults([]);
     setLoggedIn(false);
     setCurrentUser({});
     setSavedMovies([]);
-    setSearchResults([]);
     setIsLiked(false);
     setIsSaveSuccess(false);
     setSubmitError('');
