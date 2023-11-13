@@ -163,6 +163,7 @@ function App() {
     localStorage.removeItem('movieSearch');
     localStorage.removeItem('shortMovies');
     localStorage.removeItem('allMovies');
+    // localStorage.removeItem('allMovies');
     setSearchResults([]);
     localStorage.removeItem('token');
     setLoggedIn(false);
@@ -202,15 +203,14 @@ function App() {
       });
   };
 
-
-  const handleRemoveMovie = (movieToRemove) => {
-    api.deleteSaved(movieToRemove._id)
+  const handleRemoveMovie = (_id, movieId) => {
+    api.deleteSaved(_id, movieId)
       .then(() => {
-        const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== movieToRemove._id);
+        const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== _id);
         setSavedMovies(updatedSavedMovies);
         localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
         const updatedMovies = searchResults.map(searchMovie => {
-          if (searchMovie.movieId === movieToRemove.movieId) {
+          if (searchMovie.movieId === movieId) {
             return { ...searchMovie, isLiked: false };
           }
           return searchMovie;
@@ -221,7 +221,7 @@ function App() {
         console.log(error);
       });
   };
-
+  
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">

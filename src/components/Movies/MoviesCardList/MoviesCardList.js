@@ -56,9 +56,9 @@ function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isLik
           Подождите немного и попробуйте ещё раз</span>)}
       <div className='movies-card-list__content'>
         {moviesToDisplay.map((movie) => (
-          <MoviesCard key={movie.movieId} movie={movie}
+          <MoviesCard key={movie._movieId} movie={movie}
             handleSaveMovie={handleSaveMovie}
-            onRemoveMovie={handleRemoveMovie}
+            handleRemoveMovie={handleRemoveMovie}
             savedMovies={savedMovies}
             isLiked={isLiked} />
         ))}

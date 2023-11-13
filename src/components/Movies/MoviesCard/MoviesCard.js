@@ -5,22 +5,28 @@ import saved from '../../../images/saved.svg';
 import removeIcon from '../../../images/removeIcon.svg';
 import { time } from '../../../utils/contants';
 
-function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
+function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, isNotFoundError, savedMovies }) {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   const [isLiked, setIsLiked] = useState(false);
-  
+
   const handleSaveMovieClick = (e) => {
     e.preventDefault();
-    handleSaveMovie(movie);
-    setIsLiked(true);
+    if (isLiked) {
+      const savedMovieId = savedMovies.find((savedMovie) => savedMovie.movie_id === movie._id)?._id;
+      handleRemoveMovie(savedMovieId, movie._id);
+      setIsLiked(false);
+    } else {
+      handleSaveMovie(movie);
+      setIsLiked(true);
+    }
   };
-
+  
   const handleRemoveMovieClick = (e) => {
     e.preventDefault();
-    handleRemoveMovie(movie);
+    handleRemoveMovie(movie._id, movie.movieId);
   };
-
+  
   const convertDuration = (duration) => {
     const minutes = duration % time;
     const hours = Math.floor(duration / time);
@@ -33,6 +39,7 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie }) {
 
   return (
     <div className="movie-card">
+      {isNotFoundError && <span>Ничего не найдено</span>}
       <Link to={movie.trailerLink} target="_blank" rel="noopener noreferrer" className='trailerLink'>
         <div className='movie-card__content'>
           <div className='movie-card__description'>

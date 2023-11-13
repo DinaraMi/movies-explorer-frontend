@@ -10,41 +10,37 @@ function SavedMovies({ savedMovies, handleRemoveMovie }) {
   const [isNotFoundError, setIsNotFoundError] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
 
-  function onSearchMovies(query) {
-    setSearchQuery(query);
-  }
-
-  function handleShortMovies() {
-    setIsShortFilm(!isShortFilm);
-  }
-
   useEffect(() => {
-    const moviesList = filterMovies(savedMovies, searchQuery, isShortFilm);
-    localStorage.setItem('savedMovies', JSON.stringify(savedMovies));
-    setFilteredMovies(isShortFilm ? filterDuration(moviesList) : moviesList);
+    updateFilteredMovies(searchQuery, isShortFilm);
   }, [savedMovies, searchQuery, isShortFilm]);
 
-  useEffect(() => {
-    if (filteredMovies.length === 0) {
-      setIsNotFoundError(true);
-    } else {
+  const onSearchSavedMovies = (query) => {
+    setSearchQuery(query);
+    updateFilteredMovies(query, isShortFilm);
+  };
+
+  const handleShortMovies = () => {
+    setIsShortFilm(prevState => !prevState);
+    updateFilteredMovies(searchQuery, !isShortFilm);
+  };
+
+  const updateFilteredMovies = (query, shortFilm) => {
+    try {
+      const moviesList = filterMovies(savedMovies, query, shortFilm);
+      setFilteredMovies(shortFilm ? filterDuration(moviesList) : moviesList);
+      setIsNotFoundError(shortFilm && moviesList.length === 0);
       setIsNotFoundError(false);
+    } catch (error) {
+      setIsNotFoundError(true);
     }
-  }, [filteredMovies]);
-
-  useEffect(() => {
-    const savedMoviesData = JSON.parse(localStorage.getItem('savedMovies'));
-    if (savedMoviesData) {
-      setFilteredMovies(savedMoviesData);
-    }
-  }, []);
-
+  };
+  
   return (
     <div className="saved-movies">
-      <SearchForm onSearchMovies={onSearchMovies} onFilter={handleShortMovies} isShortFilm={isShortFilm} />
+      <SearchForm onSearchSavedMovies={onSearchSavedMovies} setSearchQuery={setSearchQuery} searchQuery={searchQuery} onFilter={handleShortMovies} isShortFilm={isShortFilm} />
       <div className='saved-movies__content'>
         {filteredMovies.map((movie) => (
-          <MoviesCard key={movie._id} movie={movie} handleRemoveMovie={handleRemoveMovie} isNotFound={isNotFoundError} />
+          <MoviesCard key={movie.Id} movie={movie} handleRemoveMovie={handleRemoveMovie} isNotFoundError={isNotFoundError} />
         ))}
       </div>
     </div>

@@ -11,30 +11,27 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
   const [isShortFilm, setIsShortFilm] = useState(false);
   const [isServerError, setIsServerError] = useState(false);
   const [isNotFoundError, setIsNotFoundError] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
 
   function handleFilterMovies(movies, query, short) {
-    const moviesList = filterMovies(movies, query, short);
-    setSearchResults(moviesList);
-    setFilteredMovies(short ? filterDuration(moviesList) : moviesList);
-    localStorage.setItem('movies', JSON.stringify(moviesList));
+    setSearchResults(filterMovies(movies, query, short));
+    setFilteredMovies(short ? filterDuration(searchResults) : searchResults);
+    localStorage.setItem('movies', JSON.stringify(searchResults));
     localStorage.setItem('allMovies', JSON.stringify(movies));
   }
 
+  useEffect(() => {
+    setFilteredMovies(isShortFilm ? filterDuration(searchResults) : searchResults);
+  }, [searchResults, isShortFilm]);
+
   function handleShortMovies() {
     setIsShortFilm(!isShortFilm);
-    if (!isShortFilm) {
-      if (filterDuration(searchResults).length === 0) {
-        setFilteredMovies(filterDuration(searchResults));
-      } else {
-        setFilteredMovies(filterDuration(searchResults));
-      }
-    } else {
-      setFilteredMovies(searchResults);
-    }
+    handleFilterMovies(searchResults, searchQuery, !isShortFilm);
     localStorage.setItem('shortMovies', !isShortFilm);
   }
 
   function onSearchMovies(query) {
+    setSearchQuery(query);
     localStorage.setItem('movieSearch', query);
     localStorage.setItem('shortMovies', isShortFilm);
     if (localStorage.getItem('allMovies')) {
@@ -44,7 +41,12 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
       setIsLoading(true);
       apiMovies.getSearchMovies()
         .then((dataMovies) => {
-          handleFilterMovies(dataMovies, query, isShortFilm);
+          if (dataMovies.length === 0) {
+            setIsNotFoundError(true);
+          } else {
+            setIsNotFoundError(false);
+            handleFilterMovies(dataMovies, query, isShortFilm);
+          }
           setFilteredMovies(filteredMovies);
           setIsServerError(false);
         })
@@ -75,13 +77,12 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
       } else {
         setFilteredMovies(movies);
       }
-    } else {
     }
   }, []);
 
   useEffect(() => {
     if (localStorage.getItem('movieSearch')) {
-      if (filteredMovies.length === 0) {
+      if (filteredMovies.length === 0 && !isNotFoundError) {
         setIsNotFoundError(true);
       } else {
         setIsNotFoundError(false);
@@ -93,9 +94,12 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
 
   return (
     <main className='movies'>
-      <SearchForm onSearchMovies={onSearchMovies}
+      <SearchForm
+        onSearchMovies={onSearchMovies}
         onFilter={handleShortMovies}
         isShortFilm={isShortFilm}
+        searchQuery={searchQuery}
+        setSearchQuery={setSearchQuery}
       />
       <MoviesCardList
         savedMovies={savedMovies}
