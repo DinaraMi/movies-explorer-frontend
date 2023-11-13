@@ -168,7 +168,9 @@ function App() {
     localStorage.removeItem('shortMovies');
     localStorage.removeItem('allMovies');
     localStorage.removeItem('token');
-    localStorage.setItem('loggedIn', false);
+    localStorage.removeItem('loggedIn');
+    localStorage.removeItem('searchResults');
+    localStorage.removeItem('savedMovies');
     setSearchResults([]);
     setLoggedIn(false);
     setCurrentUser({});
@@ -227,6 +229,7 @@ function App() {
               <ProtectedRouteElement
                 element={Movies}
                 searchResults={searchResults}
+                setSearchResults={setSearchResults}
                 handleSaveMovie={handleSaveMovie}
                 handleRemoveMovie={handleRemoveMovie}
                 savedMovies={savedMovies}
