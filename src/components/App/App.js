@@ -203,7 +203,6 @@ function App() {
       .then(() => {
         const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== _id);
         setSavedMovies(updatedSavedMovies);
-        localStorage.setItem('savedMovies', JSON.stringify(updatedSavedMovies));
         const updatedMovies = searchResults.map(searchMovie => {
           if (searchMovie.movieId === movieId) {
             return { ...searchMovie, isLiked: false };
@@ -233,6 +232,7 @@ function App() {
                 handleSaveMovie={handleSaveMovie}
                 handleRemoveMovie={handleRemoveMovie}
                 savedMovies={savedMovies}
+                setSavedMovies={setSavedMovies}
                 isLiked={isLiked}
                 loggedIn={loggedIn}
               />} />

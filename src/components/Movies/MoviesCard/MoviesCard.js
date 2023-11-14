@@ -21,12 +21,12 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, ha
       setIsLiked(true);
     }
   };
-  
+
   const handleRemoveMovieClick = (e) => {
     e.preventDefault();
     handleRemoveMovieInSavedMovies(movie._id, movie.movieId);
   };
-  
+
   const convertDuration = (duration) => {
     const minutes = duration % time;
     const hours = Math.floor(duration / time);

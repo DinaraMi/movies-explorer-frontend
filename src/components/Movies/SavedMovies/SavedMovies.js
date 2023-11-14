@@ -59,6 +59,7 @@ function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
   useEffect(() => {
     setIsNotFoundError(isShortFilm && filteredMovies.length === 0);
   }, [filteredMovies, isShortFilm]);
+  
   const handleRemoveMovieInSavedMovies = (_id, movieId) => {
     handleRemoveMovie(_id, movieId);
     const updatedMoviesList = savedMovies.filter(savedMovie => savedMovie._id !== _id);
