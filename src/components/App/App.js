@@ -171,6 +171,7 @@ function App() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('searchResults');
     localStorage.removeItem('savedMovies');
+    // localStorage.removeItem('moviesSearch');
     setSearchResults([]);
     setLoggedIn(false);
     setCurrentUser({});
@@ -185,6 +186,7 @@ function App() {
     api.createSavedMovie(movie)
       .then((newMovie) => {
         setSavedMovies([newMovie, ...savedMovies]);
+        // console.log(newMovie);
         const updatedMovies = searchResults.map(filteredMovie => {
           if (filteredMovie.movieId === newMovie.movieId) {
             return { ...filteredMovie, isLiked: true };
@@ -235,6 +237,7 @@ function App() {
                 setSavedMovies={setSavedMovies}
                 isLiked={isLiked}
                 loggedIn={loggedIn}
+                // newMovie={newMovie}
               />} />
             <Route path='/saved-movies' element={
               <ProtectedRouteElement

@@ -64,7 +64,7 @@ function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isLik
             handleSaveMovie={handleSaveMovie}
             handleRemoveMovie={handleRemoveMovie}
             savedMovies={savedMovies}
-            isLiked={isLiked} />
+            isLiked={movie.isLiked} />
         ))}
       </div>
       {visibleMovies < flatDataMovies.length && (

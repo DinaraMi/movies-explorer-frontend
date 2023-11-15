@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import './MoviesCard.css';
 import saved from '../../../images/saved.svg';
@@ -12,10 +12,12 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, ha
 
   const handleSaveMovieClick = (e) => {
     e.preventDefault();
-    if (isLiked) {
-      const savedMovieId = savedMovies.find((savedMovie) => savedMovie.movie_id === movie._id)?._id;
-      handleRemoveMovie(savedMovieId, movie._id);
-      setIsLiked(false);
+    const savedMovieId = savedMovies.find((savedMovie) => savedMovie.movie_id === movie._id)?._id;
+    if (isLiked || movie.isLiked) {
+      if (savedMovieId) {
+        handleRemoveMovie(savedMovieId, movie._id);
+        setIsLiked(false);
+      }
     } else {
       handleSaveMovie(movie);
       setIsLiked(true);
@@ -53,8 +55,8 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, ha
               <button type="submit" className="movie-card__remove-icon">
                 <img className="movie-card__remove-icon-img" src={removeIcon} alt="удалить" onClick={handleRemoveMovieClick} />
               </button>
-            ) : <button type="submit" className={isLiked ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveMovieClick} >
-              {isLiked ? (
+            ) : <button type="submit" className={isLiked || movie.isLiked ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveMovieClick} >
+              {isLiked || movie.isLiked ? (
                 <img className="movie-card__save-icon-saved-img" src={saved} alt="Сохранено" />
               ) : (
                 "Сохранить"

@@ -20,18 +20,19 @@ function SearchForm({ onSearchMovies, onFilter, isShortFilm, searchQuery, setSea
   }
 
   function handleSubmit(e) {
-    e.preventDefault();
-    if (searchQuery.trim().length === 0) {
-      setIsQueryError(true);
+  e.preventDefault();
+  if (searchQuery.trim().length === 0) {
+    setIsQueryError(true);
+  } else {
+    setIsQueryError(false);
+    if (isSavedMoviesPage) {
+      onSearchSavedMovies(searchQuery);
     } else {
-      setIsQueryError(false);
-      if (isSavedMoviesPage) {
-        onSearchSavedMovies(searchQuery);
-      } else {
-        onSearchMovies(searchQuery);
-      }
+      onSearchMovies(searchQuery);
     }
   }
+}
+
 
   return (
     <div className={`searchForm ${isSavedMoviesPage ? 'searchForm-movies' : ''}`}>

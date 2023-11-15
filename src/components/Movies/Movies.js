@@ -3,8 +3,9 @@ import SearchForm from './SearchForm/SearchForm';
 import { filterMovies, filterDuration } from '../../utils/filterMovies';
 import { useEffect, useState } from 'react';
 import apiMovies from '../../utils/MoviesApi';
+import api from '../../utils/MainApi';
 
-function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
+function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
   const [isLoading, setIsLoading] = useState(false);
   const [searchResults, setSearchResults] = useState([]);
   const [filteredMovies, setFilteredMovies] = useState([]);
@@ -12,6 +13,25 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked }) {
   const [isServerError, setIsServerError] = useState(false);
   const [isNotFoundError, setIsNotFoundError] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isLiked, setIsLiked] = useState(false);
+
+  useEffect(() => {
+    const fetchSavedMovies = () => {
+      api.getSavedMovies()
+        .then(savedMoviesFromServer => {
+          const updatedMovies = searchResults.map(filteredMovie => {
+            const isLiked = savedMoviesFromServer.some(savedMovie => savedMovie.movieId === filteredMovie.id);
+            return { ...filteredMovie, isLiked };
+          });
+          setFilteredMovies(isShortFilm ? filterDuration(updatedMovies) : updatedMovies);
+        })
+        .catch(error => {
+          console.log(error);
+        });
+    };
+  
+    fetchSavedMovies();
+  }, [searchResults, isShortFilm]);
 
   function handleFilterMovies(movies, query, short) {
     const filteredMovies = filterMovies(movies, query, short);
