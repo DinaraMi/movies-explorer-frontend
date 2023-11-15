@@ -13,15 +13,15 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
   const [isServerError, setIsServerError] = useState(false);
   const [isNotFoundError, setIsNotFoundError] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
-  const [isLiked, setIsLiked] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
     const fetchSavedMovies = () => {
       api.getSavedMovies()
         .then(savedMoviesFromServer => {
           const updatedMovies = searchResults.map(filteredMovie => {
-            const isLiked = savedMoviesFromServer.some(savedMovie => savedMovie.movieId === filteredMovie.id);
-            return { ...filteredMovie, isLiked };
+            const isSaved = savedMoviesFromServer.some(savedMovie => savedMovie.movieId === filteredMovie.id);
+            return { ...filteredMovie, isSaved };
           });
           setFilteredMovies(isShortFilm ? filterDuration(updatedMovies) : updatedMovies);
         })
@@ -29,27 +29,34 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
           console.log(error);
         });
     };
-  
     fetchSavedMovies();
   }, [searchResults, isShortFilm]);
 
   function handleFilterMovies(movies, query, short) {
-    const filteredMovies = filterMovies(movies, query, short);
+    const filteredByQuery = filterMovies(movies, query, short);
+    const filteredMovies = short ? filterDuration(filteredByQuery) : filteredByQuery;
     setSearchResults(filteredMovies);
-    setFilteredMovies(short ? filterDuration(filteredMovies) : filteredMovies);
+    setFilteredMovies(filteredMovies);
+    localStorage.setItem('searchResults', JSON.stringify(filteredMovies));
   }
 
   useEffect(() => {
-    setFilteredMovies(isShortFilm ? filterDuration(searchResults) : searchResults);
-  }, [searchResults, isShortFilm]);
+    if (localStorage.getItem('searchResults')) {
+      const savedSearchResults = JSON.parse(localStorage.getItem('searchResults'));
+      setSearchResults(savedSearchResults);
+      setFilteredMovies(isShortFilm ? filterDuration(savedSearchResults) : savedSearchResults);
+    }
+  }, []);
 
   function handleShortMovies() {
     setIsShortFilm(!isShortFilm);
+    localStorage.setItem('shortMovies', JSON.stringify(!isShortFilm));
     handleFilterMovies(searchResults, searchQuery, !isShortFilm);
   }
 
   function onSearchMovies(query) {
     setSearchQuery(query);
+    localStorage.setItem('movieSearch', query);
     if (localStorage.getItem('allMovies')) {
       const movies = JSON.parse(localStorage.getItem('allMovies'));
       handleFilterMovies(movies, query, isShortFilm);
@@ -117,7 +124,7 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
         savedMovies={savedMovies}
         filteredMovies={filteredMovies}
         searchResults={searchResults}
-        isLiked={isLiked}
+        isSaved={isSaved}
         isLoading={isLoading}
         isServerError={isServerError}
         isNotFoundError={isNotFoundError}

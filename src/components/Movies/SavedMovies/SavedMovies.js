@@ -30,24 +30,24 @@ function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
     }
   }, [loggedIn, searchQuery, isShortFilm]);
 
-  useEffect(() => {
-    const storedSearchQuery = localStorage.getItem('movieSearch');
-    const storedIsShortFilm = localStorage.getItem('shortMovies') === 'true';
-    setSearchQuery(storedSearchQuery || '');
-    setIsShortFilm(storedIsShortFilm || false);
-    updateFilteredMovies(storedSearchQuery, storedIsShortFilm);
-  }, []);
+  // useEffect(() => {
+  //   const storedSearchQuery = localStorage.getItem('movieSearch');
+  //   const storedIsShortFilm = localStorage.getItem('shortMovies') === 'true';
+  //   setSearchQuery(storedSearchQuery || '');
+  //   setIsShortFilm(storedIsShortFilm || false);
+  //   updateFilteredMovies(storedSearchQuery, storedIsShortFilm);
+  // }, []);
 
   const onSearchSavedMovies = (query) => {
     setSearchQuery(query);
-    localStorage.setItem('movieSearch', query);
+    // localStorage.setItem('movieSearch', query);
     updateFilteredMovies(query, isShortFilm);
   };
 
   const handleShortMovies = () => {
     const newIsShortFilm = !isShortFilm;
     setIsShortFilm(newIsShortFilm);
-    localStorage.setItem('shortMovies', newIsShortFilm);
+    // localStorage.setItem('shortMovies', newIsShortFilm);
     updateFilteredMovies(searchQuery, newIsShortFilm);
   };
 
@@ -60,8 +60,8 @@ function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
     setIsNotFoundError(isShortFilm && filteredMovies.length === 0);
   }, [filteredMovies, isShortFilm]);
   
-  const handleRemoveMovieInSavedMovies = (_id, movieId) => {
-    handleRemoveMovie(_id, movieId);
+  const handleRemoveMovieInSavedMovies = (_id, movie_id) => {
+    handleRemoveMovie(_id, movie_id);
     const updatedMoviesList = savedMovies.filter(savedMovie => savedMovie._id !== _id);
     setFilteredMovies(filterMovies(updatedMoviesList, searchQuery, isShortFilm));
     setIsNotFoundError(isShortFilm && updatedMoviesList.length === 0);

@@ -4,8 +4,9 @@ import './MoviesCard.css';
 import saved from '../../../images/saved.svg';
 import removeIcon from '../../../images/removeIcon.svg';
 import { time } from '../../../utils/contants';
+// import api from '../../../utils/MainApi';
 
-function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, handleRemoveMovieInSavedMovies }) {
+function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, isSaved, filteredMovies, handleRemoveMovieInSavedMovies }) {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   const [isLiked, setIsLiked] = useState(false);
@@ -13,9 +14,11 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, ha
   const handleSaveMovieClick = (e) => {
     e.preventDefault();
     const savedMovieId = savedMovies.find((savedMovie) => savedMovie.movie_id === movie._id)?._id;
-    if (isLiked || movie.isLiked) {
+    if (isLiked || isSaved) {
       if (savedMovieId) {
         handleRemoveMovie(savedMovieId, movie._id);
+        console.log(savedMovieId);
+        console.log(movie._id);
         setIsLiked(false);
       }
     } else {
@@ -24,9 +27,36 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, ha
     }
   };
 
+  // const handleSaveMovieClick = async (e) => {
+  //   e.preventDefault();
+  
+  //   try {
+  //     const savedMoviesFromServer = await api.getSavedMovies();
+  //     const savedMovieId = savedMoviesFromServer.find((savedMovie) => savedMovie.movie_id === movie._id)?._id;
+      
+  //     if (isLiked || movie.isSaved) {
+  //       if (savedMovieId) {
+  //         await handleRemoveMovie(savedMovieId, movie._id);
+  
+  //         // Обновление movie, чтобы установить movie.isLiked в false
+  //         savedMovieId((prevMovie) => ({ ...prevMovie, isSaved: false }));
+  //         setIsLiked(false);
+  //       }
+  //     } else {
+  //       await handleSaveMovie(movie);
+  //       setIsLiked(true);
+  //     }
+  
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // };
+  
+  
+
   const handleRemoveMovieClick = (e) => {
     e.preventDefault();
-    handleRemoveMovieInSavedMovies(movie._id, movie.movieId);
+    handleRemoveMovieInSavedMovies(movie._id, movie.movie_id);
   };
 
   const convertDuration = (duration) => {
@@ -50,13 +80,13 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, ha
           {isSavedMoviesPage ? (<img className="movie-card__image" src={movie.image} alt={movie.nameRU} />) : (
             <img className="movie-card__image" src={`https://api.nomoreparties.co${movie.image.url}`} alt={movie.nameRU}
             />)}
-          <form onSubmit={isSavedMoviesPage ? handleRemoveMovieClick : handleSaveMovieClick}>
+          <form onSubmit={(isSavedMoviesPage ? handleRemoveMovieClick : handleSaveMovieClick)}>
             {isSavedMoviesPage ? (
               <button type="submit" className="movie-card__remove-icon">
                 <img className="movie-card__remove-icon-img" src={removeIcon} alt="удалить" onClick={handleRemoveMovieClick} />
               </button>
-            ) : <button type="submit" className={isLiked || movie.isLiked ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveMovieClick} >
-              {isLiked || movie.isLiked ? (
+            ) : <button type="submit" className={isLiked || isSaved ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveMovieClick} >
+              {isLiked || isSaved ? (
                 <img className="movie-card__save-icon-saved-img" src={saved} alt="Сохранено" />
               ) : (
                 "Сохранить"

@@ -14,7 +14,7 @@ import {
   showMoreAddMobile,
 } from '../../../utils/contants';
 
-function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isLiked, filteredMovies, isNotFoundError, isServerError }) {
+function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isSaved, filteredMovies, isNotFoundError, isServerError }) {
   const { width } = useViewport();
   const moviesToShowRef = useRef(showMoreMobile);
   const [visibleMovies, setVisibleMovies] = useState(moviesToShowRef.current);
@@ -60,11 +60,14 @@ function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isLik
           Подождите немного и попробуйте ещё раз</span>)}
       <div className='movies-card-list__content'>
         {moviesToDisplay.map((movie) => (
-          <MoviesCard key={movie._movieId} movie={movie}
+          <MoviesCard key={movie._id} movie={movie}
             handleSaveMovie={handleSaveMovie}
             handleRemoveMovie={handleRemoveMovie}
             savedMovies={savedMovies}
-            isLiked={movie.isLiked} />
+            // isLiked={movie.isLiked}
+            isSaved={movie.isSaved}
+            filteredMovies={filteredMovies}
+            />
         ))}
       </div>
       {visibleMovies < flatDataMovies.length && (
