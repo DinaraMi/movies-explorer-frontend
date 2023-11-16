@@ -4,9 +4,8 @@ import './MoviesCard.css';
 import saved from '../../../images/saved.svg';
 import removeIcon from '../../../images/removeIcon.svg';
 import { time } from '../../../utils/contants';
-// import api from '../../../utils/MainApi';
 
-function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, isSaved, filteredMovies, handleRemoveMovieInSavedMovies }) {
+function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, isSaved, handleRemoveMovieInSavedMovies }) {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   const [isLiked, setIsLiked] = useState(false);
@@ -17,8 +16,6 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, is
     if (isLiked || isSaved) {
       if (savedMovieId) {
         handleRemoveMovie(savedMovieId, movie._id);
-        console.log(savedMovieId);
-        console.log(movie._id);
         setIsLiked(false);
       }
     } else {
@@ -26,33 +23,6 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, is
       setIsLiked(true);
     }
   };
-
-  // const handleSaveMovieClick = async (e) => {
-  //   e.preventDefault();
-  
-  //   try {
-  //     const savedMoviesFromServer = await api.getSavedMovies();
-  //     const savedMovieId = savedMoviesFromServer.find((savedMovie) => savedMovie.movie_id === movie._id)?._id;
-      
-  //     if (isLiked || movie.isSaved) {
-  //       if (savedMovieId) {
-  //         await handleRemoveMovie(savedMovieId, movie._id);
-  
-  //         // Обновление movie, чтобы установить movie.isLiked в false
-  //         savedMovieId((prevMovie) => ({ ...prevMovie, isSaved: false }));
-  //         setIsLiked(false);
-  //       }
-  //     } else {
-  //       await handleSaveMovie(movie);
-  //       setIsLiked(true);
-  //     }
-  
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-  
-  
 
   const handleRemoveMovieClick = (e) => {
     e.preventDefault();
