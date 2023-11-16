@@ -64,7 +64,6 @@ function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isSav
             handleSaveMovie={handleSaveMovie}
             handleRemoveMovie={handleRemoveMovie}
             savedMovies={savedMovies}
-            // isLiked={movie.isLiked}
             isSaved={movie.isSaved}
             filteredMovies={filteredMovies}
             />

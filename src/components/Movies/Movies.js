@@ -111,7 +111,6 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
       setIsNotFoundError(false);
     }
   }, [filteredMovies]);
-  
 
   return (
     <main className='movies'>
@@ -127,6 +126,7 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
         filteredMovies={filteredMovies}
         searchResults={searchResults}
         isSaved={isSaved}
+        setIsSaved={setIsSaved}
         isLoading={isLoading}
         isServerError={isServerError}
         isNotFoundError={isNotFoundError}
