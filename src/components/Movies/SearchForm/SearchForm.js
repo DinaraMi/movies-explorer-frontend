@@ -3,36 +3,36 @@ import { useLocation } from 'react-router-dom';
 import './SearchForm.css';
 import FilterCheckbox from './FilterCheckbox/FilterCheckbox';
 
-function SearchForm({ onSearchMovies, onFilter, isShortFilm, searchQuery, setSearchQuery, onSearchSavedMovies }) {
+function SearchForm({ onSearch, onFilter, isShortFilm, isShortFilmSaved, searchQuery, setSearchQuery }) {
   const location = useLocation();
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   const [isQueryError, setIsQueryError] = useState(false);
 
-  useEffect(() => {
-    if (location.pathname === '/movies' && localStorage.getItem('movieSearch')) {
-      const localQuery = localStorage.getItem('movieSearch');
-      onSearchMovies(localQuery);
-    }
-  }, [location]);
+  // useEffect(() => {
+  //   if (location.pathname === '/movies' && localStorage.getItem('movieSearch')) {
+  //     const localQuery = localStorage.getItem('movieSearch');
+  //     onSearch(localQuery);
+  //   } else {
+  //     onSearch(searchQuery);
+  //   }
+  // }, [location]);
 
   function handleChangeQuery(e) {
     setSearchQuery(e.target.value);
+    // console.log(e.target.value);
+    setIsQueryError(false);
   }
 
   function handleSubmit(e) {
-  e.preventDefault();
-  if (searchQuery.trim().length === 0) {
-    setIsQueryError(true);
-  } else {
-    setIsQueryError(false);
-    if (isSavedMoviesPage) {
-      onSearchSavedMovies(searchQuery);
+    e.preventDefault();
+    if (searchQuery.trim().length === 0) {
+      setIsQueryError(true);
     } else {
-      onSearchMovies(searchQuery);
+      setIsQueryError(false);
+      onSearch(searchQuery);
+      // console.log(searchQuery)
     }
   }
-}
-
 
   return (
     <div className={`searchForm ${isSavedMoviesPage ? 'searchForm-movies' : ''}`}>
@@ -51,7 +51,7 @@ function SearchForm({ onSearchMovies, onFilter, isShortFilm, searchQuery, setSea
         </form>
       </div>
       {isQueryError && <p className="searchForm__error">Нужно ввести ключевое слово</p>}
-      <FilterCheckbox onFilter={onFilter} isShortFilm={isShortFilm} />
+      <FilterCheckbox onFilter={onFilter} isShortFilm={isShortFilm} isShortFilmSaved={isShortFilmSaved}/>
       <div className='searchForm__separator'></div>
     </div>
   );

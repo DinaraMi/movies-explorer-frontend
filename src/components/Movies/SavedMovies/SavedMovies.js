@@ -6,79 +6,81 @@ import { filterMovies, filterDuration } from '../../../utils/filterMovies';
 import api from '../../../utils/MainApi';
 
 function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
-  const [filteredMovies, setFilteredMovies] = useState(savedMovies);
-  const [isShortFilm, setIsShortFilm] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
+  const [originalMovies, setOriginalMovies] = useState([]);
+  const [filteredMovies, setFilteredMovies] = useState([]);
+  const [isShortFilmSaved, setIsShortFilmSaved] = useState(false);
+  const [searchQuerySaved, setSearchQuerySaved] = useState('');
   const [isNotFoundError, setIsNotFoundError] = useState(false);
 
   useEffect(() => {
+    setOriginalMovies(savedMovies);
+    setFilteredMovies(savedMovies);
+  }, [savedMovies]);
+  
+  useEffect(() => {
     if (loggedIn) {
       api.getSavedMovies()
-        .then((savedMovies) => {
-          const updatedMovies = filteredMovies.map(movie => ({
-            ...movie,
-            isLiked: savedMovies.some(savedMovie => savedMovie.movieId === movie.movieId),
+        .then((savedMoviesFromServer) => {
+          const updatedMovies = savedMoviesFromServer.map(serverMovie => ({
+            ...serverMovie,
+            isLiked: true,
           }));
+          setOriginalMovies(updatedMovies);
           setFilteredMovies(updatedMovies);
-          const moviesList = filterMovies(savedMovies, searchQuery, isShortFilm);
-          setFilteredMovies(isShortFilm ? filterDuration(moviesList) : moviesList);
-          setIsNotFoundError(isShortFilm && moviesList.length === 0);
         })
         .catch((error) => {
-          console.log(error);
+          console.error(error);
         });
     }
-  }, [loggedIn, searchQuery, isShortFilm]);
-
-  // useEffect(() => {
-  //   const storedSearchQuery = localStorage.getItem('movieSearch');
-  //   const storedIsShortFilm = localStorage.getItem('shortMovies') === 'true';
-  //   setSearchQuery(storedSearchQuery || '');
-  //   setIsShortFilm(storedIsShortFilm || false);
-  //   updateFilteredMovies(storedSearchQuery, storedIsShortFilm);
-  // }, []);
+  }, [loggedIn]);
 
   const onSearchSavedMovies = (query) => {
-    setSearchQuery(query);
-    // localStorage.setItem('movieSearch', query);
-    updateFilteredMovies(query, isShortFilm);
+    setSearchQuerySaved(query);
+    updateFilteredMovies(query, isShortFilmSaved);
   };
-
-  const handleShortMovies = () => {
-    const newIsShortFilm = !isShortFilm;
-    setIsShortFilm(newIsShortFilm);
-    // localStorage.setItem('shortMovies', newIsShortFilm);
-    updateFilteredMovies(searchQuery, newIsShortFilm);
+  
+  const handleShortMoviesSaved = () => {
+    setIsShortFilmSaved(!isShortFilmSaved);
+    updateFilteredMovies(searchQuerySaved, !isShortFilmSaved);
   };
 
   const updateFilteredMovies = (query, shortFilm) => {
-    const moviesList = filterMovies(savedMovies, query, shortFilm);
-    setFilteredMovies(shortFilm ? filterDuration(moviesList) : moviesList);
+    let moviesToFilter = [...originalMovies];
+    if (query.trim() !== '' || shortFilm) {
+      if (query.trim() !== '') {
+        moviesToFilter = filterMovies(moviesToFilter, query, false);
+      }
+      if (shortFilm) {
+        moviesToFilter = filterDuration(moviesToFilter);
+      }
+    }
+    setFilteredMovies(moviesToFilter);
+    setIsNotFoundError((query.trim() !== '' || shortFilm) && moviesToFilter.length === 0);
   };
-
+  
   useEffect(() => {
-    setIsNotFoundError(isShortFilm && filteredMovies.length === 0);
-  }, [filteredMovies, isShortFilm]);
+    setIsNotFoundError(isShortFilmSaved && filteredMovies.length === 0);
+  }, [filteredMovies, isShortFilmSaved]);
   
   const handleRemoveMovieInSavedMovies = (_id, movie_id) => {
     handleRemoveMovie(_id, movie_id);
-    const updatedMoviesList = savedMovies.filter(savedMovie => savedMovie._id !== _id);
-    setFilteredMovies(filterMovies(updatedMoviesList, searchQuery, isShortFilm));
-    setIsNotFoundError(isShortFilm && updatedMoviesList.length === 0);
+    const updatedMoviesList = originalMovies.filter(savedMovie => savedMovie._id !== _id);
+    setOriginalMovies(updatedMoviesList);
+    updateFilteredMovies(searchQuerySaved, isShortFilmSaved);
   };
 
   return (
     <div className="saved-movies">
       <SearchForm
-        onSearchSavedMovies={onSearchSavedMovies}
-        setSearchQuery={setSearchQuery}
-        searchQuery={searchQuery}
-        onFilter={handleShortMovies}
-        isShortFilm={isShortFilm}
+        onSearch={onSearchSavedMovies}
+        setSearchQuery={setSearchQuerySaved}
+        searchQuery={searchQuerySaved}
+        onFilter={handleShortMoviesSaved}
+        isShortFilmSaved={isShortFilmSaved}
       />
       <div className='saved-movies__content'>
         {filteredMovies.map((movie) => (
-          <MoviesCard key={movie.Id} movie={movie} handleRemoveMovieInSavedMovies={handleRemoveMovieInSavedMovies} />
+          <MoviesCard key={movie.movieId} movie={movie} handleRemoveMovieInSavedMovies={handleRemoveMovieInSavedMovies} />
         ))}
         {isNotFoundError && <span>Ничего не найдено</span>}
       </div>

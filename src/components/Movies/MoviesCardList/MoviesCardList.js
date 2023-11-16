@@ -49,7 +49,7 @@ function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isSav
 
   const flatDataMovies = filteredMovies.flat();
   const moviesToDisplay = flatDataMovies.slice(0, visibleMovies);
-
+// console.log(moviesToDisplay)
   return (
     <section className="movies-card-list">
       {isLoading && <Preloader />}
@@ -60,7 +60,7 @@ function MoviesCardList({ handleSaveMovie, handleRemoveMovie, savedMovies, isSav
           Подождите немного и попробуйте ещё раз</span>)}
       <div className='movies-card-list__content'>
         {moviesToDisplay.map((movie) => (
-          <MoviesCard key={movie._id} movie={movie}
+          <MoviesCard key={movie.id} movie={movie}
             handleSaveMovie={handleSaveMovie}
             handleRemoveMovie={handleRemoveMovie}
             savedMovies={savedMovies}
