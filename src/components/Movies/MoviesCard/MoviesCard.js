@@ -10,25 +10,6 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, is
   const isSavedMoviesPage = location.pathname === '/saved-movies';
   const [isLiked, setIsLiked] = useState(false);
 
-  const handleSaveMovieClick = (e) => {
-    e.preventDefault();
-    const savedMovieId = savedMovies.find((savedMovie) => savedMovie.movie_id === movie._id)?._id;
-    if (isLiked || isSaved) {
-      if (savedMovieId) {
-        handleRemoveMovie(savedMovieId, movie._id);
-        setIsLiked(false);
-      }
-    } else {
-      handleSaveMovie(movie);
-      setIsLiked(true);
-    }
-  };
-
-  const handleRemoveMovieClick = (e) => {
-    e.preventDefault();
-    handleRemoveMovieInSavedMovies(movie._id, movie.movie_id);
-  };
-
   const convertDuration = (duration) => {
     const minutes = duration % time;
     const hours = Math.floor(duration / time);
@@ -38,6 +19,22 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, is
       return `${hours}ч ${minutes}м`;
     }
   }
+  const onSubmit = e => {
+    e.preventDefault();
+    if (isSavedMoviesPage) {
+      handleRemoveMovieInSavedMovies(movie._id, movie.movie_id);
+    } else {
+      if (isLiked || isSaved) {
+
+        const savedMovieId = savedMovies.find((savedMovie) => savedMovie.movieId === movie.id)?._id;
+        handleRemoveMovie(savedMovieId, movie._id);
+        setIsLiked(false);
+      } else {
+        handleSaveMovie(movie);
+        setIsLiked(true);
+      }
+    }
+  };
 
   return (
     <div className="movie-card">
@@ -50,12 +47,12 @@ function MoviesCard({ movie, handleSaveMovie, handleRemoveMovie, savedMovies, is
           {isSavedMoviesPage ? (<img className="movie-card__image" src={movie.image} alt={movie.nameRU} />) : (
             <img className="movie-card__image" src={`https://api.nomoreparties.co${movie.image.url}`} alt={movie.nameRU}
             />)}
-          <form onSubmit={(isSavedMoviesPage ? handleRemoveMovieClick : handleSaveMovieClick)}>
+          <form onSubmit={onSubmit}>
             {isSavedMoviesPage ? (
               <button type="submit" className="movie-card__remove-icon">
-                <img className="movie-card__remove-icon-img" src={removeIcon} alt="удалить" onClick={handleRemoveMovieClick} />
+                <img className="movie-card__remove-icon-img" src={removeIcon} alt="удалить" />
               </button>
-            ) : <button type="submit" className={isLiked || isSaved ? "movie-card__save-icon-saved" : "movie-card__save-button"} onClick={handleSaveMovieClick} >
+            ) : <button type="submit" className={isLiked || isSaved ? "movie-card__save-icon-saved" : "movie-card__save-button"}>
               {isLiked || isSaved ? (
                 <img className="movie-card__save-icon-saved-img" src={saved} alt="Сохранено" />
               ) : (

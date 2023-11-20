@@ -3,7 +3,6 @@ import SearchForm from './SearchForm/SearchForm';
 import { filterMovies, filterDuration } from '../../utils/filterMovies';
 import { useEffect, useState } from 'react';
 import apiMovies from '../../utils/MoviesApi';
-import api from '../../utils/MainApi';
 
 function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -16,21 +15,12 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
   const [isSaved, setIsSaved] = useState(false);
 
   useEffect(() => {
-    const fetchSavedMovies = () => {
-      api.getSavedMovies()
-        .then(savedMoviesFromServer => {
-          const updatedMovies = searchResults.map(filteredMovie => {
-            const isSaved = savedMoviesFromServer.some(savedMovie => savedMovie.movieId === filteredMovie.id);
-            return { ...filteredMovie, isSaved };
-          });
-          setFilteredMovies(isShortFilm ? filterDuration(updatedMovies) : updatedMovies);
-        })
-        .catch(error => {
-          console.log(error);
-        });
-    };
-    fetchSavedMovies();
-  }, [searchResults, isShortFilm]);
+      const updatedMovies = searchResults.map(filteredMovie => {
+        const isSaved = savedMovies.some(savedMovie => savedMovie.movieId === filteredMovie.id);
+        return { ...filteredMovie, isSaved };
+      });
+      setFilteredMovies(isShortFilm ? filterDuration(updatedMovies) : updatedMovies);
+  }, [searchResults, isShortFilm, savedMovies]);
 
   function handleFilterMovies(movies, query, short) {
     let filteredMovies = movies;
@@ -47,16 +37,16 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
 
   function handleShortMovies() {
     setIsShortFilm(!isShortFilm);
+    onSearchMovies(searchQueryMovies, !isShortFilm);
     localStorage.setItem('shortMovies', JSON.stringify(!isShortFilm));
-    handleFilterMovies(searchResults, searchQueryMovies, !isShortFilm);
   }
 
-  function onSearchMovies(query) {
+  function onSearchMovies(query, isShort = isShortFilm) {
     setSearchQueryMovies(query);
     localStorage.setItem('movieSearch', query);
     if (localStorage.getItem('allMovies')) {
       const movies = JSON.parse(localStorage.getItem('allMovies'));
-      handleFilterMovies(movies, query, isShortFilm);
+      handleFilterMovies(movies, query, isShort);
     } else {
       setIsLoading(true);
       apiMovies.getSearchMovies()
@@ -93,10 +83,14 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
   }, [isShortFilm]);
   
   useEffect(() => {
+    const movieSearch = localStorage.getItem('movieSearch');
     if (localStorage.getItem('shortMovies') === 'true') {
       setIsShortFilm(true);
     } else {
       setIsShortFilm(false);
+    }
+    if(movieSearch?.length > 0){
+      setSearchQueryMovies(movieSearch);
     }
   }, []);
 
@@ -111,7 +105,7 @@ function Movies({ handleSaveMovie, handleRemoveMovie, savedMovies }) {
       setIsNotFoundError(false);
     }
   }, [filteredMovies]);
-
+  
   return (
     <main className='movies'>
       <SearchForm

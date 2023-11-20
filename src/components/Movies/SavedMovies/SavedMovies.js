@@ -3,7 +3,6 @@ import './SavedMovies.css';
 import SearchForm from '../SearchForm/SearchForm';
 import MoviesCard from '../MoviesCard/MoviesCard';
 import { filterMovies, filterDuration } from '../../../utils/filterMovies';
-import api from '../../../utils/MainApi';
 
 function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
   const [originalMovies, setOriginalMovies] = useState([]);
@@ -16,25 +15,10 @@ function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
     setOriginalMovies(savedMovies);
     setFilteredMovies(savedMovies);
   }, [savedMovies]);
-  
-  useEffect(() => {
-    if (loggedIn) {
-      api.getSavedMovies()
-        .then((savedMoviesFromServer) => {
-          const updatedMovies = savedMoviesFromServer.map(serverMovie => ({
-            ...serverMovie,
-            isLiked: true,
-          }));
-          setOriginalMovies(updatedMovies);
-          setFilteredMovies(updatedMovies);
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
-  }, [loggedIn]);
+
 
   const onSearchSavedMovies = (query) => {
+    localStorage.setItem('movieSaveSearch', query);
     setSearchQuerySaved(query);
     updateFilteredMovies(query, isShortFilmSaved);
   };
@@ -68,6 +52,8 @@ function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
     setOriginalMovies(updatedMoviesList);
     updateFilteredMovies(searchQuerySaved, isShortFilmSaved);
   };
+  
+  const movieSaveSearch = localStorage.getItem('movieSaveSearch');
 
   return (
     <div className="saved-movies">
@@ -82,7 +68,7 @@ function SavedMovies({ savedMovies, handleRemoveMovie, loggedIn }) {
         {filteredMovies.map((movie) => (
           <MoviesCard key={movie.movieId} movie={movie} handleRemoveMovieInSavedMovies={handleRemoveMovieInSavedMovies} />
         ))}
-        {isNotFoundError && <span>Ничего не найдено</span>}
+        {movieSaveSearch?.length > 0 && filteredMovies.length === 0 && <span>Ничего не найдено</span>}
       </div>
     </div>
   );

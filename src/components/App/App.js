@@ -43,6 +43,8 @@ function App() {
         .catch((error) => {
           console.log(error)
         })
+        api.getSavedMovies()
+        .then(setSavedMovies)
     }
   }, [loggedIn]);
 
@@ -171,6 +173,7 @@ function App() {
     localStorage.removeItem('loggedIn');
     localStorage.removeItem('searchResults');
     localStorage.removeItem('savedMovies');
+    localStorage.clear();
     setSearchResults([]);
     setLoggedIn(false);
     setCurrentUser({});
@@ -199,6 +202,7 @@ function App() {
   };
 
   const handleRemoveMovie = (_id, movie_id) => {
+
     api.deleteSaved(_id, movie_id)
       .then(() => {
         const updatedSavedMovies = savedMovies.filter(savedMovie => savedMovie._id !== _id);
@@ -215,7 +219,6 @@ function App() {
         console.log(error);
       });
   };
-
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="body">
