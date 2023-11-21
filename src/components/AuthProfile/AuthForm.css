@@ -23,6 +23,7 @@
 
 .auth__form-element{
   width: 100%;
+  position: relative;
 }
 
 .auth__title{

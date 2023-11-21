@@ -3,8 +3,10 @@ import './AuthForm.css';
 import logoAuthForm from '../../images/logo.svg'
 import { Link } from 'react-router-dom';
 
-function AuthForm({ name, title, children, ariaLabel, onSubmit, formType, gray, blue, link }) {
+function AuthForm({ name, title, children, ariaLabel, onSubmit, formType, gray, blue, link, isActive, errorMessageAuth }) {
   const submitButtonClassName = formType === 'register' ? 'auth__submit-register' : 'auth__submit-login';
+  const errorButtonClassName = formType === 'register' ? 'auth__error-register' : 'auth__error-login';
+  const buttonClasses = isActive ? submitButtonClassName : `${submitButtonClassName} auth__submit_inactive`;
 
   return (
     <div className={`auth auth_type_${name}`}>
@@ -13,8 +15,9 @@ function AuthForm({ name, title, children, ariaLabel, onSubmit, formType, gray, 
         <h1 className="auth__title">{title}</h1>
         <form className={`auth__form-element auth__form-element_type_${name}`} name={`${name}-form`} onSubmit={onSubmit} >
           {children}
+          {errorMessageAuth && <span className={errorButtonClassName}>{errorMessageAuth}</span>}
           <button
-            className={submitButtonClassName}
+            className={`auth__submit ${buttonClasses}`}
             type="submit"
             aria-label={ariaLabel}
           >{ariaLabel}

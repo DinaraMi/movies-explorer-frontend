@@ -26,6 +26,22 @@
   cursor: pointer;
 }
 
+.auth__error-login {
+  font-weight: 400;
+  font-size: 10px;
+  line-height: 121%;
+  color: #FF004C;
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  margin-top: 255px;
+  width: 100%;
+}
+
+.auth__submit_inactive {
+  background-color: #F8F8F8;
+}
+
 .auth__submit-login:hover {
   opacity: 0.8;
 }
@@ -38,6 +54,10 @@
 
   .login__link {
     font-size: 14px;
+  }
+
+  .auth__error-login {
+    margin-top: 165px;
   }
 }
 

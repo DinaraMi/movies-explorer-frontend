@@ -1,8 +1,12 @@
 .filterCheckbox {
   width: 100%;
+}
+
+.filterCheckbox__label {
+  width: 36px;
+  height: 20px;
   display: flex;
   align-items: center;
-  
 }
 
 .filterCheckbox__title {
@@ -18,43 +22,9 @@
   display: none;
 }
 
-.oval {
-  width: 36px;
-  height: 20px;
-  background: #313131;
-  border-radius: 35%;
-  display: inline-block;
+.filter-icon {
   margin-right: 13px;
-  position: relative;
   cursor: pointer;
-}
-
-.circle-container {
-  width: 12px;
-  height: 12px;
-  overflow: hidden;
-  position: absolute;
-  top: 3px;
-  left: 3px;
-  transition: left 0.3s, background 0.3s;
-}
-
-.circle {
-  width: 12px;
-  height: 12px;
-  background: #FFFFFF;
-  border-radius: 50%;
-  position: absolute;
-  left: 0;
-  transition: left 0.3s, background 0.3s;
-}
-
-.checkbox-input:checked + .oval .circle-container {
-  left: 24px;
-}
-
-.filterCheckbox .checkbox-input:checked + .oval {
-  background: #3DDC84;
 }
 
 @media screen and (min-width: 768px) {

@@ -1,31 +1,28 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Login.css';
 import AuthForm from '../AuthForm';
 import Input from '../../Input/Input';
-import { useForm } from '../../../hooks/useForm';
+import { useFormValidation } from '../../../hooks/useFormValidation';
 
-function Login({ onLogin }) {
-  const { values, handleChange } = useForm({
-    email: '',
-    password: '',
-  });
-
+function Login({ onLogin, errorMessageAuth }) {
+  const { values, handleChange, errors, isValid } = useFormValidation();
   const isLoading = true;
-
-  const [message, setMessage] = useState('');
+  const [isButtonActive, setIsButtonActive] = useState(false);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
-    const { email, password } = values;
-    if (!email || !password) {
-      setMessage('Необходимо заполнить все поля!');
-      return;
+    if (isButtonActive) {
+      const { email, password } = values;
+      onLogin(email, password);
     }
-    onLogin(email, password);
-  }
+  };
+
+  useEffect(() => {
+    setIsButtonActive(isValid);
+  }, [isValid]);
 
   return (
-    <main className='login'>
+    <main className="login">
       <AuthForm
         title="Рады видеть!"
         name="login"
@@ -35,6 +32,8 @@ function Login({ onLogin }) {
         gray="Ещё не зарегистрированы?"
         blue="Регистрация"
         link="/signup"
+        isActive={isButtonActive}
+        errorMessageAuth={errorMessageAuth}
       >
         <Input
           id="email"
@@ -46,6 +45,7 @@ function Login({ onLogin }) {
           value={values.email || ''}
           onChange={handleChange}
           placeholder="Email"
+          error={errors.email}
         />
         <Input
           id="password"
@@ -59,6 +59,7 @@ function Login({ onLogin }) {
           value={values.password || ''}
           onChange={handleChange}
           placeholder="Пароль"
+          error={errors.password}
         />
       </AuthForm>
     </main>

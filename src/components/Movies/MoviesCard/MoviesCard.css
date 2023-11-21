@@ -15,6 +15,11 @@
 
 }
 
+.trailerLink {
+  color: #FFFFFF;
+  text-decoration: none;
+}
+
 .movie-card__description {
   width: 90.66%;
   display: flex;

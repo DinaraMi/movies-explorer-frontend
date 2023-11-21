@@ -7,3 +7,6 @@ movies-explorer-frontend
 по роуту /profile отображается страница с профилем пользователя;
 по роутам /signin и /signup отображаются страницы авторизации и регистрации.
 
+Ссылка на Pull requests: https://github.com/DinaraMi/movies-explorer-frontend/pull/2
+
+Ссылка на задеплоенный на сервере проект: https://moviesexplorer69.nomoredomainsrocks.ru/

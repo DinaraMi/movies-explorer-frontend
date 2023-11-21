@@ -1,6 +1,10 @@
 export const BASE_URL = 'https://movies.explorer.api.nomoredomainsrocks.ru';
 const checkResponse = (res) => {
-  return res.ok ? res.json() : Promise.reject(`Ошибка: ${res.status}`);
+  if (res.ok) {
+    return res.json();
+  } else {
+    return res.json().then((data) => Promise.reject({ status: res.status, message: data.message }));
+  }
 }
 
 export const register = (name, email, password) => {
